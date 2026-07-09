@@ -44,53 +44,56 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
     }
   }
 
+  const fieldClass =
+    "focus-ring min-h-11 rounded-[var(--radius-button)] border border-[var(--color-line)] px-3 text-base font-medium text-[var(--color-ink)]";
+
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-md border border-[#153b4f]/10 bg-white p-5 shadow-xl shadow-[#153b4f]/8 sm:p-6"
+      className="soft-card p-5 sm:p-6"
     >
       <div className={compact ? "mb-5" : "mb-7"}>
-        <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f8a8f]">Outreach form</p>
-        <h2 className="mt-2 text-2xl font-black text-[#153b4f]">{title}</h2>
-        <p className="mt-2 text-sm leading-6 text-[#57717d]">
+        <p className="section-kicker">Outreach form</p>
+        <h2 className="mt-2 text-2xl font-black tracking-[-0.015em] text-[var(--color-ink)]">{title}</h2>
+        <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">
           Send the basics. SKYPA can follow up with the right program, sponsorship, or volunteer path.
         </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Name
           <input
             required
             name="name"
             autoComplete="name"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Email
           <input
             required
             type="email"
             name="email"
             autoComplete="email"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Organization
           <input
             name="organization"
             autoComplete="organization"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Interest
           <select
             required
             name="interest"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           >
             <option value="">Choose one</option>
             {interestOptions[formType].map((option) => (
@@ -100,13 +103,13 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
         </label>
       </div>
 
-      <label className="mt-4 grid gap-2 text-sm font-bold text-[#153b4f]">
+      <label className="mt-4 grid gap-2 text-sm font-bold text-[var(--color-ink)]">
         Message
         <textarea
           required
           name="message"
           rows={compact ? 3 : 5}
-          className="rounded-md border border-[#153b4f]/15 px-3 py-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+          className={`${fieldClass} py-3`}
           placeholder="Tell us about grade levels, timeline, location, or how you would like to help."
         />
       </label>
@@ -114,19 +117,19 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-[#153b4f] px-5 py-3 text-sm font-black text-white transition hover:bg-[#0f2a39] disabled:cursor-not-allowed disabled:opacity-60"
+        className="focus-ring mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-button)] bg-[var(--color-deep)] px-5 py-3 text-sm font-black text-white transition hover:bg-[var(--color-ink)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Send aria-hidden="true" size={16} />
         {status === "loading" ? "Sending..." : "Send inquiry"}
       </button>
 
       {status === "success" ? (
-        <p className="mt-4 rounded-md bg-[#e5f6f3] px-4 py-3 text-sm font-bold text-[#0f6f73]">
+        <p className="mt-4 rounded-[var(--radius-button)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-bold text-[var(--color-deep)]">
           Thanks. Your inquiry was received.
         </p>
       ) : null}
       {status === "error" ? (
-        <p className="mt-4 rounded-md bg-[#fff2ee] px-4 py-3 text-sm font-bold text-[#a34731]">
+        <p className="mt-4 rounded-[var(--radius-button)] bg-[oklch(0.96_0.03_35)] px-4 py-3 text-sm font-bold text-[oklch(0.42_0.12_32)]">
           Something went wrong. Please try again or email SKYPA directly.
         </p>
       ) : null}

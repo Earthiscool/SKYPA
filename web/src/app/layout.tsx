@@ -58,7 +58,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-white text-[#153b4f]">
+      <body className="min-h-full bg-[var(--background)] text-[var(--color-ink)]">
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <SiteChrome>{children}</SiteChrome>

@@ -14,10 +14,10 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
             <section className="section-pad" key={`${section.type}-${index}`}>
               <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8">
                 {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
-                <h2 className="text-3xl font-black leading-tight text-[#153b4f] sm:text-4xl">
+                <h2 className="balance text-3xl font-black leading-tight tracking-[-0.015em] text-[var(--color-ink)] sm:text-4xl">
                   {section.title}
                 </h2>
-                <div className="mt-6 grid gap-5 text-lg leading-8 text-[#445f6b]">
+                <div className="pretty mt-6 grid gap-5 text-lg leading-8 text-[var(--color-ink-soft)]">
                   {section.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
@@ -30,27 +30,27 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
 
         if (section.type === "cards") {
           return (
-            <section className="section-pad bg-[#f8fbf7]" key={`${section.type}-${index}`}>
+            <section className="section-pad bg-[var(--color-surface-tint)]" key={`${section.type}-${index}`}>
               <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
                 <SectionIntro eyebrow={section.eyebrow} title={section.title} body={section.body} />
                 <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {section.cards.map((card) => (
                     <article
                       key={card.title}
-                      className="flex min-h-[230px] flex-col rounded-md border border-[#153b4f]/10 bg-white p-6 shadow-sm shadow-[#153b4f]/5"
+                      className="soft-card flex min-h-[230px] flex-col p-6"
                     >
                       <IconBadge icon={card.icon} />
                       {card.eyebrow ? (
-                        <p className="mt-5 text-xs font-black uppercase tracking-[0.16em] text-[#0f8a8f]">
+                        <p className="mt-5 text-sm font-bold text-[var(--color-teal)]">
                           {card.eyebrow}
                         </p>
                       ) : null}
-                      <h3 className="mt-4 text-xl font-black leading-7 text-[#153b4f]">{card.title}</h3>
-                      <p className="mt-3 flex-1 text-sm leading-6 text-[#57717d]">{card.body}</p>
+                      <h3 className="mt-4 text-xl font-black leading-7 tracking-[-0.01em] text-[var(--color-ink)]">{card.title}</h3>
+                      <p className="pretty mt-3 flex-1 text-sm leading-6 text-[var(--color-muted)]">{card.body}</p>
                       {card.href ? (
                         <Link
                           href={card.href}
-                          className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#0f8a8f] hover:text-[#153b4f]"
+                          className="focus-ring mt-5 inline-flex items-center gap-2 rounded-[var(--radius-button)] text-sm font-black text-[var(--color-teal)] hover:text-[var(--color-ink)]"
                         >
                           Learn more
                           <ArrowRight aria-hidden="true" size={15} />
@@ -73,14 +73,14 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
                   {section.steps.map((step, stepIndex) => (
                     <li
                       key={step.title}
-                      className="grid grid-cols-[auto_1fr] gap-5 rounded-md border border-[#153b4f]/10 bg-white p-6"
+                      className="soft-card grid grid-cols-[auto_1fr] gap-5 p-6"
                     >
-                      <span className="grid h-11 w-11 place-items-center rounded-md bg-[#153b4f] text-sm font-black text-white">
+                      <span className="grid h-11 w-11 place-items-center rounded-[var(--radius-button)] bg-[var(--color-deep)] text-sm font-black text-white">
                         {String(stepIndex + 1).padStart(2, "0")}
                       </span>
                       <div>
-                        <h3 className="text-lg font-black text-[#153b4f]">{step.title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-[#57717d]">{step.body}</p>
+                        <h3 className="text-lg font-black text-[var(--color-ink)]">{step.title}</h3>
+                        <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">{step.body}</p>
                       </div>
                     </li>
                   ))}
@@ -92,9 +92,9 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
 
         if (section.type === "image") {
           return (
-            <section className="section-pad bg-[#102f3f] text-white" key={`${section.type}-${index}`}>
+            <section className="section-pad bg-[var(--color-deep)] text-white" key={`${section.type}-${index}`}>
               <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:px-8">
-                <div className="relative min-h-[360px] overflow-hidden rounded-md">
+                <div className="relative min-h-[360px] overflow-hidden rounded-[var(--radius-card)]">
                   <Image
                     src={section.image}
                     alt={section.imageAlt}
@@ -105,12 +105,12 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
                 </div>
                 <div className="flex flex-col justify-center">
                   {section.eyebrow ? (
-                    <p className="text-sm font-black uppercase tracking-[0.18em] text-[#f7c948]">
+                    <p className="section-kicker text-[var(--color-gold)]">
                       {section.eyebrow}
                     </p>
                   ) : null}
-                  <h2 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">{section.title}</h2>
-                  <p className="mt-5 text-lg leading-8 text-white/75">{section.body}</p>
+                  <h2 className="balance mt-4 text-3xl font-black leading-tight tracking-[-0.015em] sm:text-4xl">{section.title}</h2>
+                  <p className="pretty mt-5 text-lg leading-8 text-white/75">{section.body}</p>
                   {section.cta ? <ButtonLink {...section.cta} variant="light" className="mt-8 w-fit" /> : null}
                 </div>
               </div>
@@ -120,16 +120,16 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
 
         if (section.type === "faq") {
           return (
-            <section className="section-pad bg-[#f8fbf7]" key={`${section.type}-${index}`}>
+            <section className="section-pad bg-[var(--color-surface-tint)]" key={`${section.type}-${index}`}>
               <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8">
                 <SectionIntro eyebrow={section.eyebrow} title={section.title} />
-                <div className="mt-8 divide-y divide-[#153b4f]/10 rounded-md border border-[#153b4f]/10 bg-white">
+                <div className="mt-8 divide-y divide-[var(--color-line)] rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white">
                   {section.faqs.map((faq) => (
                     <details key={faq.question} className="group p-6">
-                      <summary className="cursor-pointer list-none text-base font-black text-[#153b4f] marker:hidden">
+                      <summary className="cursor-pointer list-none text-base font-black text-[var(--color-ink)] marker:hidden">
                         {faq.question}
                       </summary>
-                      <p className="mt-3 text-sm leading-6 text-[#57717d]">{faq.answer}</p>
+                      <p className="pretty mt-3 text-sm leading-6 text-[var(--color-muted)]">{faq.answer}</p>
                     </details>
                   ))}
                 </div>
@@ -139,15 +139,15 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
         }
 
         return (
-          <section className="section-pad bg-[#f26d4f] text-white" key={`${section.type}-${index}`}>
+          <section className="section-pad bg-[var(--color-coral)] text-white" key={`${section.type}-${index}`}>
             <div className="mx-auto max-w-5xl px-5 text-center sm:px-6 lg:px-8">
               {section.eyebrow ? (
-                <p className="text-sm font-black uppercase tracking-[0.18em] text-white/80">
+                <p className="text-sm font-black text-white/82">
                   {section.eyebrow}
                 </p>
               ) : null}
-              <h2 className="text-3xl font-black leading-tight sm:text-5xl">{section.title}</h2>
-              <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/82">{section.body}</p>
+              <h2 className="balance text-3xl font-black leading-tight tracking-[-0.02em] sm:text-5xl">{section.title}</h2>
+              <p className="pretty mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/84">{section.body}</p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 {section.ctas.map((cta) => (
                   <ButtonLink
@@ -177,12 +177,12 @@ function SectionIntro({
   return (
     <div className="max-w-3xl">
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2 className="text-3xl font-black leading-tight text-[#153b4f] sm:text-4xl">{title}</h2>
-      {body ? <p className="mt-4 text-lg leading-8 text-[#57717d]">{body}</p> : null}
+      <h2 className="balance text-3xl font-black leading-tight tracking-[-0.015em] text-[var(--color-ink)] sm:text-4xl">{title}</h2>
+      {body ? <p className="pretty mt-4 text-lg leading-8 text-[var(--color-muted)]">{body}</p> : null}
     </div>
   );
 }
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">{children}</p>;
+  return <p className="section-kicker mb-3">{children}</p>;
 }

@@ -14,19 +14,19 @@ export const metadata = createMetadata({
 export default function PartnersPage() {
   return (
     <>
-      <section className="bg-[#f4fbfa]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-24">
+      <section className="bg-[var(--color-surface-tint)]">
+        <div className="section-shell grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
           <div className="flex flex-col justify-center">
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">Partners</p>
-            <h1 className="mt-4 text-5xl font-black leading-tight text-[#153b4f] sm:text-6xl">
-              Schools and companies can open the door to AI literacy.
+            <p className="section-kicker">Partners</p>
+            <h1 className="balance mt-4 text-4xl font-black leading-tight tracking-[-0.025em] text-[var(--color-ink)] sm:text-5xl">
+              Open the door to AI literacy.
             </h1>
-            <p className="mt-5 text-lg leading-8 text-[#445f6b]">
+            <p className="pretty mt-5 text-lg leading-8 text-[var(--color-ink-soft)]">
               SKYPA partners with schools, companies, nonprofits, libraries, and community groups
               to deliver programs, distribute textbooks, and support responsible AI readiness.
             </p>
           </div>
-          <div className="relative min-h-[380px] overflow-hidden rounded-md border border-[#153b4f]/10 bg-white shadow-2xl shadow-[#153b4f]/10">
+          <div className="relative min-h-[380px] overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white">
             <Image
               src="/images/skypa-partnership-workshop.png"
               alt="Students, teachers, and volunteers collaborating in a school workshop."
@@ -39,7 +39,7 @@ export default function PartnersPage() {
         </div>
       </section>
       <section className="section-pad bg-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+        <div className="section-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="grid gap-4">
             {[
               {
@@ -58,26 +58,23 @@ export default function PartnersPage() {
                 body: "Bring AI literacy to libraries, youth programs, and family learning nights.",
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-md border border-[#153b4f]/10 p-6">
-                <item.icon aria-hidden="true" className="text-[#f26d4f]" size={28} />
-                <h2 className="mt-4 text-xl font-black text-[#153b4f]">{item.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-[#57717d]">{item.body}</p>
+              <div key={item.title} className="soft-card p-6">
+                <item.icon aria-hidden="true" className="text-[var(--color-coral)]" size={28} />
+                <h2 className="mt-4 text-xl font-black tracking-[-0.01em] text-[var(--color-ink)]">{item.title}</h2>
+                <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">{item.body}</p>
               </div>
             ))}
           </div>
           <LeadForm formType="school" title="Start a partnership inquiry" />
         </div>
       </section>
-      <section className="section-pad bg-[#f8fbf7]">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <section className="section-pad bg-[var(--color-surface-tint)]">
+        <div className="section-shell">
           <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">
-              Partnership menu
-            </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight text-[#153b4f]">
+            <h2 className="balance text-4xl font-black leading-tight tracking-[-0.02em] text-[var(--color-ink)]">
               Choose the kind of access you want to create.
             </h2>
-            <p className="mt-4 text-lg leading-8 text-[#57717d]">
+            <p className="pretty mt-4 text-lg leading-8 text-[var(--color-muted)]">
               The best partnership starts with a specific audience and a realistic first step. SKYPA
               can help shape the format around school calendars, volunteer capacity, sponsorship
               interest, and student needs.
@@ -106,22 +103,20 @@ export default function PartnersPage() {
                 body: "Connect schools, companies, parent groups, and community organizations around a shared education goal.",
               },
             ].map((item) => (
-              <article key={item.title} className="rounded-md border border-[#153b4f]/10 bg-white p-6">
-                <item.icon aria-hidden="true" className="text-[#f26d4f]" size={28} />
-                <h3 className="mt-5 text-xl font-black text-[#153b4f]">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#57717d]">{item.body}</p>
+              <article key={item.title} className="soft-card p-6">
+                <item.icon aria-hidden="true" className="text-[var(--color-coral)]" size={28} />
+                <h3 className="mt-5 text-xl font-black tracking-[-0.01em] text-[var(--color-ink)]">{item.title}</h3>
+                <p className="pretty mt-3 text-sm leading-6 text-[var(--color-muted)]">{item.body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
       <section className="section-pad bg-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+        <div className="section-shell grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">
-              What happens next
-            </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight text-[#153b4f]">
+            <p className="section-kicker">What happens next</p>
+            <h2 className="balance mt-4 text-4xl font-black leading-tight tracking-[-0.02em] text-[var(--color-ink)]">
               A partnership should be easy to understand before anyone commits.
             </h2>
           </div>
@@ -132,13 +127,13 @@ export default function PartnersPage() {
               ["Pick a pilot size", "Start with a session or small cohort before expanding into a semester pilot, larger distribution effort, or recurring partnership."],
               ["Review outcomes", "Use feedback from students, educators, families, and partners to shape the next version of the program."],
             ].map(([title, body], index) => (
-              <li key={title} className="grid grid-cols-[auto_1fr] gap-4 rounded-md border border-[#153b4f]/10 p-5">
-                <span className="grid h-10 w-10 place-items-center rounded-md bg-[#153b4f] text-sm font-black text-white">
+              <li key={title} className="soft-card grid grid-cols-[auto_1fr] gap-4 p-5">
+                <span className="grid h-10 w-10 place-items-center rounded-[var(--radius-button)] bg-[var(--color-deep)] text-sm font-black text-white">
                   {index + 1}
                 </span>
                 <div>
-                  <h3 className="font-black text-[#153b4f]">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#57717d]">{body}</p>
+                  <h3 className="font-black text-[var(--color-ink)]">{title}</h3>
+                  <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">{body}</p>
                 </div>
               </li>
             ))}

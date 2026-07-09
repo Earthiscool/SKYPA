@@ -17,13 +17,13 @@ export function ButtonLink({
     <Link
       href={href}
       className={cx(
-        "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-offset-2",
+        "focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-button)] px-5 py-3 text-sm font-black transition duration-200 active:translate-y-px",
         variant === "primary" &&
-          "bg-[#f26d4f] text-white shadow-sm shadow-[#f26d4f]/25 hover:bg-[#d95c41] focus:ring-[#f26d4f]",
+          "bg-[var(--color-coral)] text-white hover:bg-[var(--color-coral-deep)]",
         variant === "secondary" &&
-          "border border-[#153b4f]/20 bg-white text-[#153b4f] hover:border-[#153b4f]/40 hover:bg-[#f7fbfa] focus:ring-[#1b9aaa]",
+          "border border-[var(--color-line)] bg-white text-[var(--color-ink)] hover:border-[var(--color-teal)] hover:bg-[var(--color-surface-tint)]",
         variant === "light" &&
-          "border border-white/30 bg-white text-[#153b4f] hover:bg-[#f7fbfa] focus:ring-white",
+          "bg-white text-[var(--color-ink)] hover:bg-[var(--color-surface-tint)]",
         className,
       )}
     >

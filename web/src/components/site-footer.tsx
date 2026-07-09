@@ -5,21 +5,21 @@ import { footerColumns, siteConfig } from "@/content/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[#153b4f]/10 bg-[#102f3f] text-white">
+    <footer className="border-t border-white/10 bg-[var(--color-deep)] text-white">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 sm:px-6 lg:grid-cols-[1.25fr_2fr] lg:px-8">
         <div>
           <Link href="/" className="flex items-center gap-3" aria-label="SKYPA Foundation home">
-            <span className="grid h-14 w-14 place-items-center rounded-md border border-white/20 bg-white shadow-sm shadow-black/10">
+            <span className="grid h-14 w-14 place-items-center rounded-[var(--radius-button)] border border-white/20 bg-white">
               <Image
                 src="/images/skypa-logo.png"
                 alt=""
                 width={48}
-                height={46}
-                className="h-12 w-auto object-contain"
+                height={48}
+                className="h-12 w-12 object-contain"
               />
             </span>
             <span>
-              <span className="block text-xl font-black">{siteConfig.name}</span>
+              <span className="block text-xl font-black tracking-[-0.01em]">{siteConfig.name}</span>
               <span className="block text-sm font-semibold text-white/70">{siteConfig.tagline}</span>
             </span>
           </Link>
@@ -39,7 +39,7 @@ export function SiteFooter() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {footerColumns.map((column) => (
             <div key={column.title}>
-              <h2 className="text-sm font-black uppercase tracking-[0.16em] text-[#f7c948]">
+              <h2 className="text-sm font-black text-[var(--color-gold)]">
                 {column.title}
               </h2>
               <ul className="mt-4 grid gap-3">

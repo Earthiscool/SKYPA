@@ -32,7 +32,7 @@ export function IconBadge({ icon = "sparkles" }: { icon?: string }) {
   const Icon = icons[icon as keyof typeof icons] || Sparkles;
 
   return (
-    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-[#e5f6f3] text-[#0f8a8f]">
+    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-button)] bg-[var(--color-teal-soft)] text-[var(--color-teal)]">
       <Icon aria-hidden="true" size={22} strokeWidth={2.2} />
     </span>
   );

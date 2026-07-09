@@ -26,14 +26,14 @@ export default async function ProgramsPage() {
 
   return (
     <>
-      <section className="bg-[#f4fbfa]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-24">
-          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">Programs</p>
-          <div className="mt-4 grid gap-6 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
-            <h1 className="max-w-3xl text-5xl font-black leading-tight text-[#153b4f] sm:text-6xl">
-              AI literacy programs schools can actually use.
+      <section className="bg-[var(--color-surface-tint)]">
+        <div className="section-shell py-16 lg:py-24">
+          <p className="section-kicker">Programs</p>
+          <div className="mt-4 max-w-4xl">
+            <h1 className="balance text-4xl font-black leading-tight tracking-[-0.025em] text-[var(--color-ink)] sm:text-5xl">
+              AI literacy schools can use.
             </h1>
-            <p className="text-lg leading-8 text-[#445f6b]">
+            <p className="pretty mt-5 max-w-3xl text-lg leading-8 text-[var(--color-ink-soft)]">
               SKYPA programs are designed for flexible school schedules, student curiosity,
               responsible AI use, and practical next steps for families and partners.
             </p>
@@ -46,24 +46,31 @@ export default async function ProgramsPage() {
       </section>
 
       <section className="section-pad bg-white">
-        <div className="mx-auto grid max-w-7xl gap-4 px-5 sm:px-6 lg:grid-cols-3 lg:px-8">
-          {programList.map((program) => (
+        <div className="section-shell grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {programList.map((program, index) => (
             <Link
               key={program.slug}
               href={`/programs/${program.slug}`}
-              className="group flex min-h-[330px] flex-col rounded-md border border-[#153b4f]/10 bg-white p-6 shadow-sm shadow-[#153b4f]/5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#153b4f]/10"
+              className={[
+                "group flex min-h-[310px] flex-col rounded-[var(--radius-card)] p-6 transition duration-200 hover:-translate-y-1",
+                index === 0
+                  ? "bg-[var(--color-deep)] text-white md:col-span-2"
+                  : "soft-card text-[var(--color-ink)]",
+              ].join(" ")}
             >
               <IconBadge icon="school" />
-              <p className="mt-5 text-xs font-black uppercase tracking-[0.16em] text-[#0f8a8f]">
+              <p className={["mt-5 text-sm font-bold", index === 0 ? "text-[var(--color-gold)]" : "text-[var(--color-teal)]"].join(" ")}>
                 {program.eyebrow}
               </p>
-              <h2 className="mt-3 text-2xl font-black leading-8 text-[#153b4f]">{program.title}</h2>
-              <p className="mt-3 flex-1 text-sm leading-6 text-[#57717d]">{program.summary}</p>
-              <div className="mt-5 grid gap-2 text-xs font-bold text-[#57717d]">
+              <h2 className="balance mt-3 text-2xl font-black leading-8 tracking-[-0.015em]">{program.title}</h2>
+              <p className={["pretty mt-3 flex-1 text-sm leading-6", index === 0 ? "text-white/76" : "text-[var(--color-muted)]"].join(" ")}>
+                {program.summary}
+              </p>
+              <div className={["mt-5 grid gap-2 text-xs font-bold", index === 0 ? "text-white/68" : "text-[var(--color-muted)]"].join(" ")}>
                 <span>Audience: {program.audience}</span>
                 <span>Format: {program.length}</span>
               </div>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#0f8a8f] group-hover:text-[#153b4f]">
+              <span className={["mt-5 inline-flex items-center gap-2 text-sm font-black", index === 0 ? "text-[var(--color-gold)]" : "text-[var(--color-teal)] group-hover:text-[var(--color-ink)]"].join(" ")}>
                 Open program
                 <ArrowRight aria-hidden="true" size={15} />
               </span>

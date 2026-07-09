@@ -32,52 +32,53 @@ export function UpdatesSignup() {
     }
   }
 
+  const fieldClass =
+    "focus-ring min-h-11 rounded-[var(--radius-button)] border border-[var(--color-line)] px-3 text-base font-medium text-[var(--color-ink)]";
+
   return (
     <form
       onSubmit={onSubmit}
-      className="grid gap-3 rounded-md border border-[#153b4f]/10 bg-white p-5 shadow-sm shadow-[#153b4f]/5"
+      className="soft-card grid gap-3 p-5"
     >
       <div>
-        <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f8a8f]">
-          Updates
-        </p>
-        <h2 className="mt-2 text-2xl font-black text-[#153b4f]">Get new posts and events.</h2>
+        <p className="section-kicker">Updates</p>
+        <h2 className="mt-2 text-2xl font-black tracking-[-0.015em] text-[var(--color-ink)]">Get new posts and events.</h2>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Name
           <input
             name="name"
             autoComplete="name"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-[#153b4f]">
+        <label className="grid gap-2 text-sm font-bold text-[var(--color-ink)]">
           Email
           <input
             required
             type="email"
             name="email"
             autoComplete="email"
-            className="min-h-11 rounded-md border border-[#153b4f]/15 px-3 text-base font-medium text-[#153b4f] outline-none focus:border-[#0f8a8f] focus:ring-2 focus:ring-[#0f8a8f]/20"
+            className={fieldClass}
           />
         </label>
       </div>
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#153b4f] px-5 py-3 text-sm font-black text-white transition hover:bg-[#0f2a39] disabled:cursor-not-allowed disabled:opacity-60"
+        className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-button)] bg-[var(--color-deep)] px-5 py-3 text-sm font-black text-white transition hover:bg-[var(--color-ink)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <MailPlus aria-hidden="true" size={16} />
         {status === "loading" ? "Subscribing..." : "Subscribe"}
       </button>
       {status === "success" ? (
-        <p className="rounded-md bg-[#e5f6f3] px-4 py-3 text-sm font-bold text-[#0f6f73]">
+        <p className="rounded-[var(--radius-button)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-bold text-[var(--color-deep)]">
           You are on the updates list.
         </p>
       ) : null}
       {status === "error" ? (
-        <p className="rounded-md bg-[#fff2ee] px-4 py-3 text-sm font-bold text-[#a34731]">
+        <p className="rounded-[var(--radius-button)] bg-[oklch(0.96_0.03_35)] px-4 py-3 text-sm font-bold text-[oklch(0.42_0.12_32)]">
           The signup did not go through. Please try again.
         </p>
       ) : null}

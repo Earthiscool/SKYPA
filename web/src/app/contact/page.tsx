@@ -11,22 +11,22 @@ export const metadata = createMetadata({
 export default function ContactPage() {
   return (
     <>
-      <section className="section-pad bg-[#f4fbfa]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+      <section className="section-pad bg-[var(--color-surface-tint)]">
+        <div className="section-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">Contact</p>
-            <h1 className="mt-4 text-5xl font-black leading-tight text-[#153b4f] sm:text-6xl">
-              Tell SKYPA how you want to help or learn.
+            <p className="section-kicker">Contact</p>
+            <h1 className="balance mt-4 text-4xl font-black leading-tight tracking-[-0.025em] text-[var(--color-ink)] sm:text-5xl">
+              Contact SKYPA.
             </h1>
-            <p className="mt-5 text-lg leading-8 text-[#445f6b]">
+            <p className="pretty mt-5 text-lg leading-8 text-[var(--color-ink-soft)]">
               Use this form for school partnerships, sponsorship interest, volunteer roles, textbook
               distribution, or general questions. Payment processing is intentionally not enabled yet;
               donation and sponsorship interest is collected through the form.
             </p>
-            <div className="mt-8 grid gap-4 rounded-md border border-[#153b4f]/10 bg-white p-5">
+            <div className="soft-card mt-8 grid gap-4 p-5">
               <div>
-                <h2 className="text-base font-black text-[#153b4f]">Best details to include</h2>
-                <p className="mt-2 text-sm leading-6 text-[#57717d]">
+                <h2 className="text-base font-black text-[var(--color-ink)]">Best details to include</h2>
+                <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">
                   School or organization name, grade levels, location, timeline, budget or sponsor
                   interest, and what kind of AI literacy support you need.
                 </p>
@@ -37,16 +37,13 @@ export default function ContactPage() {
         </div>
       </section>
       <section className="section-pad bg-white">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="section-shell">
           <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f8a8f]">
-              Contact guide
-            </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight text-[#153b4f]">
+            <h2 className="balance text-4xl font-black leading-tight tracking-[-0.02em] text-[var(--color-ink)]">
               Pick the message that matches your goal.
             </h2>
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-line)] md:grid-cols-2 xl:grid-cols-4">
             {[
               {
                 title: "School inquiry",
@@ -65,9 +62,9 @@ export default function ContactPage() {
                 body: "Ask what you need to know. SKYPA can route the conversation to programs, resources, partnerships, or updates.",
               },
             ].map((item) => (
-              <article key={item.title} className="rounded-md border border-[#153b4f]/10 bg-[#f8fbf7] p-6">
-                <h3 className="text-xl font-black text-[#153b4f]">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#57717d]">{item.body}</p>
+              <article key={item.title} className="bg-white p-6">
+                <h3 className="text-xl font-black tracking-[-0.01em] text-[var(--color-ink)]">{item.title}</h3>
+                <p className="pretty mt-3 text-sm leading-6 text-[var(--color-muted)]">{item.body}</p>
               </article>
             ))}
           </div>
