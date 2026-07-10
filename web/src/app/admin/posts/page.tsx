@@ -8,7 +8,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Updates",
-  description: "Create and manage SKYPA updates.",
+  description: "Create and manage SetuAI updates.",
   path: "/admin/posts",
 });
 

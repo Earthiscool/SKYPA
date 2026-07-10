@@ -11,6 +11,7 @@ import {
   PenLine,
   School,
   Settings,
+  SlidersHorizontal,
 } from "lucide-react";
 import { logoutAdminAction } from "@/app/admin/auth-actions";
 import { siteConfig } from "@/content/site";
@@ -25,6 +26,7 @@ type AdminShellProps = {
 
 const navItems = [
   { label: "Overview", href: "/admin", key: "overview", icon: LayoutDashboard },
+  { label: "Site Content", href: "/admin/site-content", key: "site-content", icon: SlidersHorizontal },
   { label: "Updates", href: "/admin/posts", key: "posts", icon: FileText },
   { label: "Pages", href: "/admin/pages", key: "pages", icon: BookOpen },
   { label: "Programs", href: "/admin/programs", key: "programs", icon: School },

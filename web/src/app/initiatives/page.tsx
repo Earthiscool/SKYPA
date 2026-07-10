@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "Initiatives",
   description:
-    "Explore SKYPA Foundation initiatives for AI literacy access, schools, families, students, sponsors, volunteers, and communities.",
+    "Explore SetuAI.org initiatives for AI literacy access, schools, families, students, sponsors, volunteers, and communities.",
   path: "/initiatives",
 });
 
@@ -20,8 +20,8 @@ export default function InitiativesPage() {
             A scalable map for AI literacy outreach.
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-[#445f6b]">
-            These initiative pages help SKYPA speak clearly to different audiences, programs, and
-            community needs. Sanity can control this collection as the foundation grows.
+            These initiative pages help SetuAI speak clearly to different audiences, programs, and
+            community needs. The admin dashboard can control this collection as SetuAI grows.
           </p>
         </div>
       </section>

@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Dashboard",
-  description: "SKYPA Foundation structured admin dashboard for content, updates, submissions, and settings.",
+  description: "SetuAI.org structured admin dashboard for content, updates, submissions, and settings.",
   path: "/admin",
 });
 
@@ -31,7 +31,7 @@ export default async function AdminPage() {
     <AdminShell
       active="overview"
       title="Dashboard"
-      description="A clear control room for SKYPA content and recent activity."
+      description="A clear control room for SetuAI content and recent activity."
       actions={
         <Link
           href="/admin/posts/new"
@@ -100,6 +100,7 @@ export default async function AdminPage() {
         <h2 className="text-2xl font-black text-[#2a1b22]">Manage Content</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {[
+            ["Site Content", "/admin/site-content"],
             ["Updates", "/admin/posts"],
             ["Pages", "/admin/pages"],
             ["Programs", "/admin/programs"],

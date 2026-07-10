@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Programs",
-  description: "Edit SKYPA program content.",
+  description: "Edit SetuAI program content.",
   path: "/admin/programs",
 });
 

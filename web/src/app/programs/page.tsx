@@ -10,7 +10,7 @@ import { loadPrograms } from "@/sanity/loaders";
 export const metadata = createMetadata({
   title: "Programs",
   description:
-    "Explore SKYPA Foundation's AI literacy programs for schools, students, teachers, sponsors, and community partners.",
+    "Explore SetuAI.org's AI literacy programs for schools, students, teachers, sponsors, and community partners.",
   path: "/programs",
 });
 
@@ -34,7 +34,7 @@ export default async function ProgramsPage() {
               AI literacy schools can use.
             </h1>
             <p className="pretty mt-5 max-w-3xl text-lg leading-8 text-[var(--color-ink-soft)]">
-              SKYPA programs are designed for flexible school schedules, student curiosity,
+              SetuAI programs are designed for flexible school schedules, student curiosity,
               responsible AI use, and practical next steps for families and partners.
             </p>
           </div>

@@ -127,7 +127,11 @@ export async function POST(request: Request) {
   const configuredSecret = process.env.UPDATES_WEBHOOK_SECRET;
   const providedSecret = request.headers.get("x-updates-secret") || body.secret;
 
-  if (configuredSecret && providedSecret !== configuredSecret) {
+  if (!configuredSecret) {
+    return NextResponse.json({ error: "Update email webhook secret is not configured" }, { status: 503 });
+  }
+
+  if (providedSecret !== configuredSecret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -148,7 +152,7 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(resendKey);
-    const from = process.env.UPDATES_FROM_EMAIL || "SKYPA Foundation <onboarding@resend.dev>";
+    const from = process.env.UPDATES_FROM_EMAIL || "SetuAI.org <onboarding@resend.dev>";
     const { subject, html, text } = updateEmailContent(cmsUpdate);
     const results = await Promise.allSettled(
       subscribers.map((subscriber) =>
@@ -211,7 +215,7 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(resendKey);
-  const from = process.env.UPDATES_FROM_EMAIL || "SKYPA Foundation <onboarding@resend.dev>";
+  const from = process.env.UPDATES_FROM_EMAIL || "SetuAI.org <onboarding@resend.dev>";
   const { subject, html, text } = updateEmailContent(update);
 
   const results = await Promise.allSettled(

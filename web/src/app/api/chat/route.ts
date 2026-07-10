@@ -2,6 +2,7 @@ import { createGateway } from "@ai-sdk/gateway";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
 import { chatbotKnowledge, siteConfig } from "@/content/site";
+import { checkPublicRateLimit, clampText, rateLimitResponse } from "@/lib/security";
 
 type IncomingMessage = {
   role: "user" | "assistant";
@@ -9,13 +10,35 @@ type IncomingMessage = {
 };
 
 const defaultModel = "amazon/nova-micro";
+const maxMessageLength = 900;
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { messages?: IncomingMessage[] } | null;
-  const messages = body?.messages?.filter((message) => message.content?.trim()).slice(-6) || [];
+  const rate = await checkPublicRateLimit({
+    request,
+    scope: "chat",
+    limit: 12,
+    windowSeconds: 10 * 60,
+  });
+
+  if (!rate.allowed) return rateLimitResponse(rate.retryAfter);
+
+  const body = (await request.json().catch(() => null)) as { messages?: IncomingMessage[]; locale?: string } | null;
+  const locale = body?.locale === "hi" ? "hi" : "en";
+  const messages =
+    body?.messages
+      ?.filter((message) => (message.role === "user" || message.role === "assistant") && message.content?.trim())
+      .map((message) => ({
+        role: message.role,
+        content: clampText(message.content, maxMessageLength),
+      }))
+      .slice(-6) || [];
 
   if (!messages.length) {
     return NextResponse.json({ error: "Message is required" }, { status: 400 });
+  }
+
+  if (messages.some((message) => message.content.length > maxMessageLength)) {
+    return NextResponse.json({ error: "Message is too long" }, { status: 400 });
   }
 
   const apiKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_AI_GATEWAY_API_KEY;
@@ -23,7 +46,9 @@ export async function POST(request: Request) {
   if (!apiKey) {
     return NextResponse.json({
       reply:
-        "The SKYPA assistant is installed, but the Vercel AI Gateway key is not configured on the server yet. Please use the contact form for now.",
+        locale === "hi"
+          ? "SetuAI assistant लगा हुआ है, लेकिन सर्वर पर Vercel AI Gateway key अभी configure नहीं है। अभी के लिए संपर्क फॉर्म इस्तेमाल करें।"
+          : "The SetuAI assistant is installed, but the Vercel AI Gateway key is not configured on the server yet. Please use the contact form for now.",
     });
   }
 
@@ -34,8 +59,11 @@ export async function POST(request: Request) {
       model: aiGateway(model),
       system: [
         `You are the website assistant for ${siteConfig.name}.`,
+        locale === "hi"
+          ? "Reply in simple, friendly Hindi. Keep proper nouns such as SetuAI.org, Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation unchanged."
+          : "Reply in simple, friendly English.",
         "Be concise, warm, and practical. Help visitors find the right page or form.",
-        "Use only approved facts below. If a detail is not provided, say that SKYPA can follow up through the contact form.",
+        "Use only approved facts below. If a detail is not provided, say that SetuAI can follow up through the contact form.",
         "Do not invent confirmed schools, company partners, tax status details, dollar amounts, or impact results.",
         "Approved facts:",
         ...chatbotKnowledge.map((fact) => `- ${fact}`),
@@ -48,13 +76,13 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ reply: result.text, model });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+  } catch {
     return NextResponse.json(
       {
         reply:
-          "I could not reach the AI Gateway right now. Please use the contact form and the SKYPA team can follow up.",
-        error: message,
+          locale === "hi"
+            ? "मैं अभी AI Gateway तक नहीं पहुंच पा रहा हूं। कृपया संपर्क फॉर्म इस्तेमाल करें और SetuAI टीम जवाब देगी।"
+            : "I could not reach the AI Gateway right now. Please use the contact form and the SetuAI team can follow up.",
       },
       { status: 200 },
     );

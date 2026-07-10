@@ -53,23 +53,23 @@ export default async function UpdatePage({ params }: Props) {
         ])}
       />
       <article>
-        <section className="bg-[#f4fbfa]">
-          <div className="mx-auto max-w-5xl px-5 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <section className="bg-[var(--color-surface)]">
+          <div className="mx-auto max-w-5xl px-4 py-16 md:px-8 lg:py-24">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-[#e5f6f3] px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#0f6f73]">
+              <span className="border border-[var(--color-coral)] bg-[var(--color-teal-soft)] px-3 py-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-coral)]">
                 {update.category}
               </span>
-              <span className="text-sm font-bold text-[#57717d]">
+              <span className="text-sm font-medium text-[var(--color-muted)]">
                 {formatDate(update.publishedAt)}
               </span>
             </div>
-            <h1 className="mt-5 text-5xl font-black leading-tight text-[#153b4f] sm:text-6xl">
+            <h1 className="mt-5 text-[clamp(3rem,7vw,5.5rem)] font-light leading-none tracking-tight text-[var(--color-ink)]">
               {update.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[#445f6b]">{update.summary}</p>
+            <p className="mt-6 max-w-[60ch] text-lg leading-8 text-[var(--color-muted)]">{update.summary}</p>
           </div>
         </section>
-        <div className="relative mx-auto -mt-10 aspect-[16/8] max-w-6xl overflow-hidden rounded-md border border-[#153b4f]/10 bg-white shadow-2xl shadow-[#153b4f]/10">
+        <div className="relative mx-auto -mt-10 aspect-[16/8] max-w-6xl overflow-hidden border border-[var(--color-line)] bg-[var(--background)]">
           <Image
             src={update.image || "/images/skypa-hero-classroom.png"}
             alt={update.imageAlt || update.title}
@@ -79,9 +79,9 @@ export default async function UpdatePage({ params }: Props) {
             priority
           />
         </div>
-        <section className="section-pad bg-white">
-          <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
-            <div className="grid gap-6 text-lg leading-8 text-[#445f6b]">
+        <section className="section-pad bg-[var(--background)]">
+          <div className="section-shell grid gap-10 lg:grid-cols-[1fr_360px]">
+            <div className="grid gap-6 text-lg leading-8 text-[var(--color-muted)]">
               {update.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

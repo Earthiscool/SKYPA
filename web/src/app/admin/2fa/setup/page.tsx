@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Set Up Admin 2FA",
-  description: "Enroll an authenticator app for SKYPA admin access.",
+  description: "Enroll an authenticator app for SetuAI admin access.",
   path: "/admin/2fa/setup",
 });
 
@@ -16,7 +16,7 @@ export default async function AdminTwoFactorSetupPage() {
   if (!pending) redirect("/admin/login");
 
   const otpUri = createOtpAuthUri({
-    issuer: "SKYPA Foundation",
+    issuer: "SetuAI.org",
     account: pending.user.email,
     secret: pending.user.totpSecret,
   });

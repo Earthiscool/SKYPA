@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Site Settings",
-  description: "Edit SKYPA site-wide settings.",
+  description: "Edit SetuAI site-wide settings.",
   path: "/admin/site-settings",
 });
 

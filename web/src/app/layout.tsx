@@ -1,29 +1,40 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Noto_Sans_Devanagari } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
 import { SiteChrome } from "@/components/site-chrome";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const notoDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari",
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://skypafoundation.org"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://setuai.org"),
   title: {
-    default: "SKYPA Foundation | AI Literacy for Kids",
-    template: "%s | SKYPA Foundation",
+    default: "SetuAI.org | AI Literacy for Schools and Communities",
+    template: "%s | SetuAI.org",
   },
   description:
-    "SKYPA Foundation provides AI literacy education for children through school partnerships, workshops, textbook distribution, and community programs.",
-  applicationName: "SKYPA Foundation",
+    "SetuAI.org is a joint AI literacy initiative helping schools, education nonprofits, and sponsors bring practical AI learning to students.",
+  applicationName: "SetuAI.org",
   keywords: [
     "AI literacy",
     "AI education for kids",
@@ -31,10 +42,12 @@ export const metadata: Metadata = {
     "school AI workshops",
     "responsible AI",
     "AI textbook",
+    "Hindi AI education",
+    "AI literacy partnerships",
   ],
-  authors: [{ name: "SKYPA Foundation" }],
-  creator: "SKYPA Foundation",
-  publisher: "SKYPA Foundation",
+  authors: [{ name: "SetuAI.org" }],
+  creator: "SetuAI.org",
+  publisher: "SetuAI.org",
   robots: {
     index: true,
     follow: true,
@@ -48,6 +61,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#fafaf9",
+  colorScheme: "light",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,7 +76,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${plexSans.variable} ${plexMono.variable} ${notoDevanagari.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[var(--background)] text-[var(--color-ink)]">
         <JsonLd data={organizationJsonLd()} />

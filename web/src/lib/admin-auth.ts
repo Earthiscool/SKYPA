@@ -272,7 +272,7 @@ async function createSessionCookie(user: AdminUser, context: RequestContext) {
   return session;
 }
 
-export async function getAdminSessionFromToken(token: string | undefined) {
+export async function getAdminSessionFromToken(token: string | undefined, context?: RequestContext) {
   if (!authIsConfiguredForRuntime()) return null;
 
   const payload = verifyAdminSessionToken(token);
@@ -280,6 +280,21 @@ export async function getAdminSessionFromToken(token: string | undefined) {
 
   const session = await getAdminSession(payload.sid);
   if (!session || session.userId !== payload.uid || new Date(session.expiresAt).getTime() <= Date.now()) {
+    return null;
+  }
+
+  if (
+    context &&
+    (session.ipHash !== context.ipHash || session.userAgentHash !== context.userAgentHash)
+  ) {
+    await deleteAdminSession(session.id);
+    await appendAdminAuditEvent({
+      type: "admin-api-blocked",
+      userId: payload.uid,
+      detail: "Blocked admin session context mismatch.",
+      ipHash: context.ipHash,
+      userAgentHash: context.userAgentHash,
+    });
     return null;
   }
 
@@ -300,7 +315,8 @@ export async function getAdminSessionFromToken(token: string | undefined) {
 
 export async function getOptionalAdminSession() {
   const token = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
-  return getAdminSessionFromToken(token);
+  const context = await getServerActionContext();
+  return getAdminSessionFromToken(token, context);
 }
 
 export async function requireAdminPage(nextPath = "/admin") {
@@ -309,7 +325,10 @@ export async function requireAdminPage(nextPath = "/admin") {
   return session;
 }
 
-export async function requireAdminApi(request: Request) {
+export async function requireAdminApi(
+  request: Request,
+  options: { allowedContentTypes?: string[] } = {},
+) {
   const context = contextFromHeaders(request.headers);
   const method = request.method.toUpperCase();
 
@@ -321,7 +340,7 @@ export async function requireAdminApi(request: Request) {
 
     if ((origin && origin !== expectedOrigin) || fetchSite === "cross-site") {
       await appendAdminAuditEvent({
-        type: "login-password-failed",
+        type: "admin-api-blocked",
         detail: "Blocked cross-site admin API request.",
         ipHash: context.ipHash,
         userAgentHash: context.userAgentHash,
@@ -329,14 +348,28 @@ export async function requireAdminApi(request: Request) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    if (!contentType.includes("application/json")) {
-      return NextResponse.json({ error: "JSON body required" }, { status: 415 });
+    const allowedContentTypes = options.allowedContentTypes || ["application/json"];
+
+    if (!allowedContentTypes.some((allowedType) => contentType.includes(allowedType))) {
+      return NextResponse.json({ error: "Unsupported body type" }, { status: 415 });
     }
   }
 
   const token = readCookie(request.headers.get("cookie"), ADMIN_SESSION_COOKIE);
-  const session = await getAdminSessionFromToken(token);
+  const session = await getAdminSessionFromToken(token, context);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  if (["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
+    const url = new URL(request.url);
+    await appendAdminAuditEvent({
+      type: "admin-api-mutation",
+      email: session.user.email,
+      userId: session.user.id,
+      detail: `${method} ${url.pathname}`,
+      ipHash: context.ipHash,
+      userAgentHash: context.userAgentHash,
+    });
+  }
 
   return null;
 }
@@ -399,7 +432,7 @@ export async function bootstrapAdminAction(_state: AdminAuthFormState, formData:
   }
 
   const email = normalizeEmail(formData.get("email"));
-  const name = normalizeText(formData.get("name")) || "SKYPA Admin";
+  const name = normalizeText(formData.get("name")) || "SetuAI Admin";
   const password = String(formData.get("password") || "");
   const confirmPassword = String(formData.get("confirmPassword") || "");
   const problems = passwordProblems(password);

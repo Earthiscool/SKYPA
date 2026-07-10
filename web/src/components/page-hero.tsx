@@ -4,11 +4,11 @@ import type { SitePage } from "@/content/site";
 
 export function PageHero({ page }: { page: SitePage }) {
   return (
-    <section className="relative overflow-hidden bg-[var(--color-surface-tint)]">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-16 sm:px-6 lg:grid-cols-[1fr_0.86fr] lg:px-8 lg:py-24">
-        <div className="flex max-w-3xl flex-col justify-center">
+    <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[var(--color-surface)]">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-12 gap-8 px-4 py-16 md:px-8 lg:py-24">
+        <div className="col-span-12 flex max-w-[60ch] flex-col justify-center lg:col-span-7">
           <p className="section-kicker">{page.eyebrow}</p>
-          <h1 className="balance mt-4 text-4xl font-black leading-[1.02] tracking-[-0.025em] text-[var(--color-ink)] sm:text-5xl lg:text-6xl">
+          <h1 className="balance mt-5 text-[clamp(2.75rem,7vw,5.5rem)] font-light leading-none tracking-tight text-[var(--color-ink)]">
             {page.title}
           </h1>
           <p className="pretty mt-6 max-w-2xl text-lg leading-8 text-[var(--color-ink-soft)]">{page.summary}</p>
@@ -18,7 +18,7 @@ export function PageHero({ page }: { page: SitePage }) {
           </div>
         </div>
         {page.image ? (
-          <div className="relative min-h-[320px] overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white">
+          <div className="relative col-span-12 min-h-[320px] overflow-hidden border border-[var(--color-line)] bg-[var(--background)] lg:col-span-5">
             <Image
               src={page.image}
               alt={page.imageAlt || ""}
@@ -29,17 +29,17 @@ export function PageHero({ page }: { page: SitePage }) {
             />
           </div>
         ) : (
-          <div className="grid min-h-[320px] grid-cols-2 gap-3">
-            <div className="rounded-[var(--radius-card)] bg-[var(--color-deep)] p-5 text-white">
-              <p className="text-sm font-bold text-white/70">Education</p>
-              <p className="mt-16 text-4xl font-black">AI literacy</p>
+          <div className="col-span-12 grid min-h-[320px] grid-cols-2 gap-px bg-[var(--color-line)] lg:col-span-5">
+            <div className="bg-[var(--color-deep)] p-5 text-white">
+              <p className="text-sm font-medium text-white/70">Education</p>
+              <p className="mt-16 text-4xl font-light">AI literacy</p>
             </div>
-            <div className="grid gap-3">
-              <div className="rounded-[var(--radius-card)] bg-[var(--color-gold)] p-5 text-[var(--color-ink)]">
-                <p className="text-3xl font-black">Access</p>
+            <div className="grid gap-px">
+              <div className="bg-[var(--color-coral)] p-5 text-white">
+                <p className="text-3xl font-light">Access</p>
               </div>
-              <div className="rounded-[var(--radius-card)] bg-[var(--color-coral)] p-5 text-white">
-                <p className="text-3xl font-black">Action</p>
+              <div className="bg-[var(--background)] p-5 text-[var(--color-ink)]">
+                <p className="text-3xl font-light">Action</p>
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Submissions",
-  description: "Review SKYPA website form submissions.",
+  description: "Review SetuAI website form submissions.",
   path: "/admin/submissions",
 });
 

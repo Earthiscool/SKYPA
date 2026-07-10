@@ -46,13 +46,17 @@ export type AdminAuditEvent = {
     | "login-password-failed"
     | "totp-success"
     | "totp-failed"
-    | "logout";
+    | "logout"
+    | "admin-api-blocked"
+    | "admin-api-mutation";
   email?: string;
   userId?: string;
   detail?: string;
   ipHash: string;
   userAgentHash: string;
   createdAt: string;
+  prevHash?: string;
+  hash?: string;
 };
 
 const keys = {
@@ -199,16 +203,19 @@ export async function checkAdminRateLimit(scope: string, identifier: string, lim
   };
 }
 
-export async function appendAdminAuditEvent(event: Omit<AdminAuditEvent, "id" | "createdAt">) {
+export async function appendAdminAuditEvent(event: Omit<AdminAuditEvent, "id" | "createdAt" | "prevHash" | "hash">) {
   const client = redis();
   if (!client) return;
 
   const events = parseStored<AdminAuditEvent[]>(await client.get(keys.audit)) || [];
+  const prevHash = events.find((storedEvent) => storedEvent.hash)?.hash || "";
   const nextEvent: AdminAuditEvent = {
     id: randomUUID(),
     createdAt: now(),
+    prevHash,
     ...event,
   };
+  nextEvent.hash = hashAuditEvent(nextEvent);
 
   await client.set(keys.audit, [nextEvent, ...events].slice(0, 100));
 }
@@ -217,4 +224,33 @@ export async function getAdminAuditEvents() {
   const client = redis();
   if (!client) return [];
   return parseStored<AdminAuditEvent[]>(await client.get(keys.audit)) || [];
+}
+
+function hashAuditEvent(event: AdminAuditEvent) {
+  const { hash, ...eventWithoutHash } = event;
+  void hash;
+  return createHash("sha256").update(JSON.stringify(eventWithoutHash)).digest("hex");
+}
+
+export function verifyAdminAuditChain(events: AdminAuditEvent[]) {
+  const hashedEvents = events.filter((event) => event.hash).slice().reverse();
+  let expectedPrevHash = "";
+
+  for (const event of hashedEvents) {
+    if ((event.prevHash || "") !== expectedPrevHash) {
+      return { verified: false, checked: hashedEvents.length, legacy: events.length - hashedEvents.length };
+    }
+
+    if (hashAuditEvent(event) !== event.hash) {
+      return { verified: false, checked: hashedEvents.length, legacy: events.length - hashedEvents.length };
+    }
+
+    expectedPrevHash = event.hash || "";
+  }
+
+  return {
+    verified: hashedEvents.length > 0,
+    checked: hashedEvents.length,
+    legacy: events.length - hashedEvents.length,
+  };
 }

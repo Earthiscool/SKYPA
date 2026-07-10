@@ -8,7 +8,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Gallery",
-  description: "Manage SKYPA photo albums.",
+  description: "Manage SetuAI photo albums.",
   path: "/admin/gallery",
 });
 

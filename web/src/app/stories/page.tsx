@@ -8,7 +8,7 @@ import { loadStories } from "@/sanity/loaders";
 export const metadata = createMetadata({
   title: "Stories",
   description:
-    "Read SKYPA Foundation stories about AI literacy, school partnerships, textbook access, and student-centered learning.",
+    "Read SetuAI.org stories about AI literacy, school partnerships, textbook access, and student-centered learning.",
   path: "/stories",
 });
 
@@ -24,7 +24,7 @@ export default async function StoriesPage() {
             Field notes from the AI literacy movement.
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-[#445f6b]">
-            Stories give schools, sponsors, families, and volunteers a clear sense of what SKYPA is
+            Stories give schools, sponsors, families, and volunteers a clear sense of what SetuAI is
             building and why it matters.
           </p>
         </div>

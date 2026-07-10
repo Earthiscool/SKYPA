@@ -3,6 +3,6 @@ export function cx(...classes: Array<string | false | null | undefined>) {
 }
 
 export function absoluteUrl(path = "") {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://skypafoundation.org";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://setuai.org";
   return new URL(path, base).toString();
 }

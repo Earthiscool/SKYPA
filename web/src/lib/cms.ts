@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
-import { corePages, programs, siteConfig, updates, type Program, type SitePage, type Update } from "@/content/site";
+import { fallbackSiteContent, type EditableSiteContent } from "@/content/editable-site";
+import { corePages, programs, siteConfig, updates, type PageSection, type Program, type SitePage, type Update } from "@/content/site";
 
 export type CmsStatus = "draft" | "published";
 
@@ -11,7 +12,7 @@ export type CmsPost = Update & {
   notificationStatus?: "not-sent" | "sent" | "failed";
 };
 
-export type CmsPage = Pick<SitePage, "slug" | "title" | "summary" | "description"> & {
+export type CmsPage = SitePage & {
   id: string;
   status: CmsStatus;
   updatedAt: string;
@@ -65,12 +66,24 @@ export type CmsSubscriber = {
   updatedAt: string;
 };
 
+export type CmsMediaUpload = {
+  id: string;
+  filename: string;
+  contentType: string;
+  size: number;
+  alt: string;
+  data: string;
+  createdAt: string;
+};
+
 const keys = {
   posts: "skypa:cms:posts",
   pages: "skypa:cms:pages",
   programs: "skypa:cms:programs",
   gallery: "skypa:cms:gallery",
   settings: "skypa:cms:settings",
+  siteContent: "skypa:cms:site-content",
+  media: "skypa:cms:media:",
   submissions: "skypa:cms:submissions",
   subscribers: "skypa:cms:subscribers",
 };
@@ -145,11 +158,8 @@ function fallbackPosts(): CmsPost[] {
 
 function fallbackPages(): CmsPage[] {
   return corePages.map((page) => ({
+    ...page,
     id: idFromSlug("page", page.slug),
-    slug: page.slug,
-    title: page.title,
-    summary: page.summary,
-    description: page.description,
     status: "published",
     updatedAt: now(),
   }));
@@ -221,9 +231,9 @@ export async function savePost(input: Partial<CmsPost>) {
     publishedAt: input.publishedAt || now(),
     body: Array.isArray(input.body) ? input.body : [],
     image: input.image || "/images/skypa-hero-classroom.png",
-    imageAlt: input.imageAlt || input.title || "SKYPA Foundation update",
+    imageAlt: input.imageAlt || input.title || "SetuAI.org update",
     status: input.status || "draft",
-    author: input.author || "SKYPA Foundation",
+    author: input.author || "SetuAI.org",
     updatedAt: now(),
     notificationStatus: input.notificationStatus || "not-sent",
   };
@@ -248,14 +258,21 @@ export async function getPage(idOrSlug: string) {
 
 export async function savePage(input: Partial<CmsPage>) {
   const pages = await getPages();
-  const slug = slugify(input.slug || input.title || "page");
+  const existing = input.id ? pages.find((item) => item.id === input.id) : undefined;
+  const slug = slugify(input.slug || existing?.slug || input.title || "page");
   const id = input.id || idFromSlug("page", slug);
   const page: CmsPage = {
     id,
     slug,
     title: input.title || "Untitled page",
+    eyebrow: input.eyebrow || existing?.eyebrow || "SetuAI.org",
     summary: input.summary || "",
     description: input.description || input.summary || "",
+    image: input.image || existing?.image,
+    imageAlt: input.imageAlt || existing?.imageAlt,
+    cta: input.cta || existing?.cta,
+    secondaryCta: input.secondaryCta || existing?.secondaryCta,
+    sections: Array.isArray(input.sections) ? (input.sections as PageSection[]) : existing?.sections || [],
     status: input.status || "published",
     updatedAt: now(),
   };
@@ -335,6 +352,181 @@ export async function saveSettings(input: Partial<CmsSettings>) {
   };
   await writeValue(keys.settings, settings);
   return settings;
+}
+
+function mergeSiteContent(input: Partial<EditableSiteContent> | null): EditableSiteContent {
+  const migratedInput = migrateLegacySiteContent(input);
+  const home = (migratedInput?.home || {}) as Partial<EditableSiteContent["home"]>;
+
+  return {
+    global: {
+      ...fallbackSiteContent.global,
+      ...migratedInput?.global,
+      logo: {
+        ...fallbackSiteContent.global.logo,
+        ...migratedInput?.global?.logo,
+      },
+      navCta: {
+        ...fallbackSiteContent.global.navCta,
+        ...migratedInput?.global?.navCta,
+      },
+      navigation: migratedInput?.global?.navigation || fallbackSiteContent.global.navigation,
+      footerColumns: migratedInput?.global?.footerColumns || fallbackSiteContent.global.footerColumns,
+      footerUtilityLinks: migratedInput?.global?.footerUtilityLinks || fallbackSiteContent.global.footerUtilityLinks,
+    },
+    seo: {
+      ...fallbackSiteContent.seo,
+      ...migratedInput?.seo,
+    },
+    home: {
+      ...fallbackSiteContent.home,
+      ...home,
+      hero: {
+        ...fallbackSiteContent.home.hero,
+        ...home.hero,
+        image: {
+          ...fallbackSiteContent.home.hero.image,
+          ...home.hero?.image,
+        },
+        primaryCta: {
+          ...fallbackSiteContent.home.hero.primaryCta,
+          ...home.hero?.primaryCta,
+        },
+        secondaryCta: {
+          ...fallbackSiteContent.home.hero.secondaryCta,
+          ...home.hero?.secondaryCta,
+        },
+      },
+      intro: {
+        ...fallbackSiteContent.home.intro,
+        ...home.intro,
+        body: home.intro?.body || fallbackSiteContent.home.intro.body,
+      },
+      stats: home.stats || fallbackSiteContent.home.stats,
+      learning: {
+        ...fallbackSiteContent.home.learning,
+        ...home.learning,
+        cards: home.learning?.cards || fallbackSiteContent.home.learning.cards,
+      },
+      heartbeat: {
+        ...fallbackSiteContent.home.heartbeat,
+        ...home.heartbeat,
+        image: {
+          ...fallbackSiteContent.home.heartbeat.image,
+          ...home.heartbeat?.image,
+        },
+        pulses: home.heartbeat?.pulses || fallbackSiteContent.home.heartbeat.pulses,
+      },
+      textbook: {
+        ...fallbackSiteContent.home.textbook,
+        ...home.textbook,
+        image: {
+          ...fallbackSiteContent.home.textbook.image,
+          ...home.textbook?.image,
+        },
+        bullets: home.textbook?.bullets || fallbackSiteContent.home.textbook.bullets,
+        primaryCta: {
+          ...fallbackSiteContent.home.textbook.primaryCta,
+          ...home.textbook?.primaryCta,
+        },
+        secondaryCta: {
+          ...fallbackSiteContent.home.textbook.secondaryCta,
+          ...home.textbook?.secondaryCta,
+        },
+      },
+      audience: {
+        ...fallbackSiteContent.home.audience,
+        ...home.audience,
+        cards: home.audience?.cards || fallbackSiteContent.home.audience.cards,
+      },
+      process: {
+        ...fallbackSiteContent.home.process,
+        ...home.process,
+        steps: home.process?.steps || fallbackSiteContent.home.process.steps,
+      },
+      closingCta: {
+        ...fallbackSiteContent.home.closingCta,
+        ...home.closingCta,
+        primaryCta: {
+          ...fallbackSiteContent.home.closingCta.primaryCta,
+          ...home.closingCta?.primaryCta,
+        },
+        secondaryCta: {
+          ...fallbackSiteContent.home.closingCta.secondaryCta,
+          ...home.closingCta?.secondaryCta,
+        },
+      },
+    },
+    visuals: {
+      ...fallbackSiteContent.visuals,
+      ...migratedInput?.visuals,
+    },
+    updatedAt: migratedInput?.updatedAt || fallbackSiteContent.updatedAt,
+  };
+}
+
+function migrateLegacySiteContent(input: Partial<EditableSiteContent> | null) {
+  if (!input) return input;
+
+  const editableText = JSON.stringify({
+    global: input.global,
+    seo: input.seo,
+    home: input.home,
+  });
+
+  if (!editableText.includes("SKYPA") && !editableText.includes("skypafoundation.org")) {
+    return input;
+  }
+
+  return {
+    ...input,
+    global: fallbackSiteContent.global,
+    seo: fallbackSiteContent.seo,
+    home: fallbackSiteContent.home,
+  };
+}
+
+
+export async function getSiteContent() {
+  return mergeSiteContent(await readValue<EditableSiteContent>(keys.siteContent));
+}
+
+export async function saveSiteContent(input: Partial<EditableSiteContent>) {
+  const existing = await getSiteContent();
+  const siteContent: EditableSiteContent = {
+    global: {
+      ...existing.global,
+      ...input.global,
+    },
+    seo: {
+      ...existing.seo,
+      ...input.seo,
+    },
+    home: {
+      ...existing.home,
+      ...input.home,
+    },
+    visuals: {
+      ...existing.visuals,
+      ...input.visuals,
+    },
+    updatedAt: now(),
+  };
+  await writeValue(keys.siteContent, siteContent);
+  return siteContent;
+}
+
+export async function saveMediaUpload(input: Omit<CmsMediaUpload, "createdAt">) {
+  const media: CmsMediaUpload = {
+    ...input,
+    createdAt: now(),
+  };
+  await writeValue(`${keys.media}${media.id}`, media);
+  return media;
+}
+
+export async function getMediaUpload(id: string) {
+  return readValue<CmsMediaUpload>(`${keys.media}${id}`);
 }
 
 export async function getSubmissions() {

@@ -2,33 +2,43 @@
 
 import { useMemo, useRef, useState } from "react";
 import { Bot, Loader2, MessageCircle, Send, X } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
+import { translatePhrase, type Locale } from "@/lib/i18n";
 
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
 };
 
+function initialAssistantMessage(locale: Locale) {
+  if (locale === "hi") {
+    return "नमस्ते, मैं SetuAI assistant हूं। स्कूल पार्टनरशिप, AI पाठ्यपुस्तक, स्वयंसेवा, स्पॉन्सरशिप या कार्यक्रमों के बारे में पूछें।";
+  }
+
+  return "Hi, I am the SetuAI assistant. Ask about school partnerships, the AI textbook, volunteering, sponsorship, or programs.";
+}
+
 export function Chatbot() {
+  const { locale } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi, I am the SKYPA assistant. Ask about school partnerships, the AI textbook, volunteering, sponsorship, or programs.",
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
+  const t = (value: string) => translatePhrase(value, locale);
 
-  const visibleMessages = useMemo(() => messages.slice(-8), [messages]);
+  const conversationMessages = useMemo<ChatMessage[]>(
+    () => (messages.length ? messages : [{ role: "assistant", content: initialAssistantMessage(locale) }]),
+    [locale, messages],
+  );
+  const visibleMessages = useMemo(() => conversationMessages.slice(-8), [conversationMessages]);
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const text = input.trim();
     if (!text || loading) return;
 
-    const nextMessages: ChatMessage[] = [...messages, { role: "user", content: text }];
+    const nextMessages: ChatMessage[] = [...conversationMessages, { role: "user", content: text }];
     setMessages(nextMessages);
     setInput("");
     setLoading(true);
@@ -37,7 +47,7 @@ export function Chatbot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages.slice(-6) }),
+        body: JSON.stringify({ messages: nextMessages.slice(-6), locale }),
       });
       const data = (await response.json()) as { reply?: string; error?: string };
 
@@ -48,7 +58,9 @@ export function Chatbot() {
           content:
             data.reply ||
             data.error ||
-            "I could not answer that yet. Please use the contact form and the SKYPA team can follow up.",
+            (locale === "hi"
+              ? "मैं अभी इसका जवाब नहीं दे पाया। कृपया संपर्क फॉर्म इस्तेमाल करें और SetuAI टीम जवाब देगी।"
+              : "I could not answer that yet. Please use the contact form and the SetuAI team can follow up."),
         },
       ]);
     } catch {
@@ -57,7 +69,9 @@ export function Chatbot() {
         {
           role: "assistant",
           content:
-            "I am having trouble connecting right now. Please use the contact form and SKYPA can follow up.",
+            locale === "hi"
+              ? "अभी कनेक्शन में समस्या है। कृपया संपर्क फॉर्म इस्तेमाल करें और SetuAI जवाब देगा।"
+              : "I am having trouble connecting right now. Please use the contact form and SetuAI can follow up.",
         },
       ]);
     } finally {
@@ -68,28 +82,28 @@ export function Chatbot() {
   return (
     <div className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5">
       {open ? (
-        <div className="mb-3 flex h-[min(620px,calc(100dvh-120px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white shadow-[var(--shadow-soft)]">
+        <div className="mb-3 flex h-[min(620px,calc(100dvh-120px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden border border-[var(--color-line)] bg-[var(--background)]">
           <div className="flex items-center justify-between bg-[var(--color-deep)] px-4 py-3 text-white">
             <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-[var(--radius-button)] bg-white/12">
+              <span className="grid h-9 w-9 place-items-center border border-white/15">
                 <Bot aria-hidden="true" size={19} />
               </span>
               <div>
-                <p className="text-sm font-black">SKYPA Assistant</p>
-                <p className="text-xs font-semibold text-white/68">AI literacy support</p>
+                <p className="text-sm font-semibold">SetuAI Assistant</p>
+                <p className="text-xs font-normal text-white/68">{t("AI literacy support")}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="focus-ring grid h-9 w-9 place-items-center rounded-[var(--radius-button)] hover:bg-white/10"
+              className="focus-ring grid h-9 w-9 place-items-center hover:bg-white/10"
+              aria-label={t("Close assistant")}
             >
               <X aria-hidden="true" size={18} />
-              <span className="sr-only">Close assistant</span>
             </button>
           </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-surface-tint)] p-4">
+          <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-surface)] p-4" aria-live="polite">
             {visibleMessages.map((message, index) => (
               <div
                 key={`${message.role}-${index}-${message.content.slice(0, 20)}`}
@@ -98,8 +112,8 @@ export function Chatbot() {
                 <div
                   className={
                     message.role === "user"
-                      ? "max-w-[84%] rounded-[var(--radius-button)] bg-[var(--color-teal)] px-4 py-3 text-sm leading-6 text-white"
-                      : "max-w-[84%] rounded-[var(--radius-button)] border border-[var(--color-line)] bg-white px-4 py-3 text-sm leading-6 text-[var(--color-ink)]"
+                      ? "max-w-[84%] bg-[var(--color-coral)] px-4 py-3 text-sm leading-6 text-white"
+                      : "max-w-[84%] border border-[var(--color-line)] bg-[var(--background)] px-4 py-3 text-sm leading-6 text-[var(--color-ink)]"
                   }
                 >
                   {message.content}
@@ -108,17 +122,17 @@ export function Chatbot() {
             ))}
             {loading ? (
               <div className="flex justify-start">
-                <div className="inline-flex items-center gap-2 rounded-[var(--radius-button)] border border-[var(--color-line)] bg-white px-4 py-3 text-sm font-bold text-[var(--color-muted)]">
+                <div className="inline-flex items-center gap-2 border border-[var(--color-line)] bg-[var(--background)] px-4 py-3 text-sm font-medium text-[var(--color-muted)]">
                   <Loader2 aria-hidden="true" size={16} className="animate-spin" />
-                  Thinking
+                  {t("Thinking…")}
                 </div>
               </div>
             ) : null}
           </div>
 
-          <form ref={formRef} onSubmit={sendMessage} className="border-t border-[var(--color-line)] bg-white p-3">
+          <form ref={formRef} onSubmit={sendMessage} className="border-t border-[var(--color-line)] bg-[var(--background)] p-3">
             <label className="sr-only" htmlFor="chat-message">
-              Message
+              {t("Message")}
             </label>
             <div className="grid grid-cols-[1fr_auto] gap-2">
               <textarea
@@ -126,30 +140,35 @@ export function Chatbot() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 rows={2}
-                className="focus-ring resize-none rounded-[var(--radius-button)] border border-[var(--color-line)] px-3 py-2 text-sm font-medium text-[var(--color-ink)]"
-                placeholder="Ask about programs..."
+                name="message"
+                autoComplete="off"
+                spellCheck={true}
+                className="focus-ring resize-none border border-[var(--color-line)] bg-[var(--background)] px-3 py-2 text-sm font-normal text-[var(--color-ink)] placeholder:text-[rgb(28_25_23/0.48)]"
+                placeholder={t("Ask about programs…")}
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="focus-ring grid h-full min-h-11 w-11 place-items-center rounded-[var(--radius-button)] bg-[var(--color-coral)] text-white transition hover:bg-[var(--color-coral-deep)] disabled:cursor-not-allowed disabled:opacity-50"
+                className="focus-ring grid h-full min-h-11 w-11 place-items-center bg-[var(--color-coral)] text-white transition-colors duration-150 hover:bg-[var(--color-coral-deep)] disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label={t("Send message")}
               >
                 <Send aria-hidden="true" size={17} />
-                <span className="sr-only">Send</span>
               </button>
             </div>
           </form>
         </div>
       ) : null}
 
-      <button
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        className="focus-ring grid h-12 w-12 place-items-center rounded-[var(--radius-button)] bg-[var(--color-coral)] text-white shadow-[0_8px_16px_oklch(0.235_0.055_220/0.16)] transition hover:bg-[var(--color-coral-deep)] sm:h-14 sm:w-14"
-      >
-        <MessageCircle aria-hidden="true" size={24} />
-        <span className="sr-only">Open SKYPA assistant</span>
-      </button>
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="focus-ring grid h-12 w-12 place-items-center bg-[var(--color-coral)] text-white transition-colors duration-150 hover:bg-[var(--color-coral-deep)] sm:h-14 sm:w-14"
+          aria-label={t("Open SetuAI assistant")}
+        >
+          <MessageCircle aria-hidden="true" size={24} />
+        </button>
+      ) : null}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Two-Factor Verification",
-  description: "Verify SKYPA admin access with an authenticator app.",
+  description: "Verify SetuAI admin access with an authenticator app.",
   path: "/admin/2fa",
 });
 

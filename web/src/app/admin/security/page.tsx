@@ -1,10 +1,11 @@
 import { AdminShell } from "@/components/admin-shell";
 import { getAdminAuthStatus, requireAdminPage } from "@/lib/admin-auth";
+import { getAdminAuditEvents, verifyAdminAuditChain } from "@/lib/admin-store";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Security",
-  description: "Review SKYPA admin environment configuration status.",
+  description: "Review SetuAI admin environment configuration status.",
   path: "/admin/security",
 });
 
@@ -22,6 +23,7 @@ function EnvRow({ label, configured }: { label: string; configured: boolean }) {
 export default async function AdminSecurityPage() {
   const session = await requireAdminPage("/admin/security");
   const adminAuth = getAdminAuthStatus();
+  const audit = verifyAdminAuditChain(await getAdminAuditEvents());
 
   return (
     <AdminShell active="security" title="Security" description="Check whether required backend services are configured without exposing secret values.">
@@ -46,6 +48,17 @@ export default async function AdminSecurityPage() {
             <EnvRow label="Upstash Redis REST token" configured={Boolean(process.env.UPSTASH_REDIS_REST_TOKEN)} />
             <EnvRow label="Resend API key" configured={Boolean(process.env.RESEND_API_KEY)} />
             <EnvRow label="Sanity write token" configured={Boolean(process.env.SANITY_API_WRITE_TOKEN)} />
+          </div>
+        </section>
+        <section className="rounded-md border border-[#e4d9dc] bg-white p-6">
+          <h2 className="text-2xl font-black text-[#2a1b22]">Audit Integrity</h2>
+          <p className="mt-2 text-sm leading-6 text-[#7b6a70]">
+            New admin security events are chained with SHA-256 hashes. Legacy events created before this hardening pass are counted separately.
+          </p>
+          <div className="mt-5">
+            <EnvRow label="Hash chain verified" configured={audit.verified} />
+            <EnvRow label={`${audit.checked} chained audit events`} configured={audit.checked > 0} />
+            <EnvRow label={`${audit.legacy} legacy audit events`} configured={audit.legacy === 0} />
           </div>
         </section>
       </div>

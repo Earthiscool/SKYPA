@@ -138,15 +138,36 @@ export type Initiative = SitePage & {
 };
 
 export const siteConfig = {
-  name: "SKYPA Foundation",
-  shortName: "SKYPA",
-  tagline: "AI literacy for every curious student.",
+  name: "SetuAI.org",
+  shortName: "SetuAI",
+  tagline: "Bridging AI literacy and community access.",
   description:
-    "SKYPA Foundation helps schools, families, and community partners bring practical AI literacy education to children through workshops, curriculum, textbooks, and partnerships.",
-  url: "https://skypafoundation.org",
-  email: "hello@skypafoundation.org",
+    "SetuAI.org is a joint AI literacy initiative created by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation to help schools, education nonprofits, and sponsors bring practical AI learning to students.",
+  url: "https://setuai.org",
+  email: "hello@setuai.org",
   image: "/images/skypa-hero-classroom.png",
 };
+
+export const foundingPartners = [
+  {
+    name: "Summit Intelligent Systems",
+    href: "https://summitintelligentsystems.com/",
+    role: "Technology and implementation partner",
+    body: "Summit brings AI systems, automation, and web engineering experience to help SetuAI turn literacy goals into reliable digital tools and school-ready workflows.",
+  },
+  {
+    name: "Shikivaa Foundation",
+    href: "https://www.shikvaafoundation.org/",
+    role: "Education and community access partner",
+    body: "Shikivaa contributes an education-first nonprofit lens, helping the initiative stay grounded in access, community trust, and programs that meet learners where they are.",
+  },
+  {
+    name: "SKYPA Foundation",
+    href: "/partners",
+    role: "AI literacy initiative partner",
+    body: "SKYPA contributes the student-centered AI literacy work, textbook initiative, school outreach, and volunteer energy that helped spark SetuAI.",
+  },
+];
 
 export const headerNav: LinkItem[] = [
   {
@@ -159,6 +180,11 @@ export const headerNav: LinkItem[] = [
         description: "Why AI literacy belongs in every community.",
       },
       {
+        label: "Founding Partners",
+        href: "/partners",
+        description: "The collaboration behind SetuAI.org.",
+      },
+      {
         label: "Impact",
         href: "/impact",
         description: "Signals, outcomes, and the roadmap ahead.",
@@ -166,7 +192,7 @@ export const headerNav: LinkItem[] = [
       {
         label: "Team",
         href: "/team",
-        description: "The people building the foundation.",
+        description: "The people and partners building SetuAI.",
       },
     ],
   },
@@ -182,7 +208,7 @@ export const headerNav: LinkItem[] = [
       {
         label: "School Partnerships",
         href: "/programs/school-partnerships",
-        description: "Bring SKYPA workshops to your school.",
+        description: "Bring SetuAI pilots, workshops, and resources to your school.",
       },
       {
         label: "AI Textbook",
@@ -222,7 +248,7 @@ export const footerColumns: { title: string; links: LinkItem[] }[] = [
   {
     title: "Take Action",
     links: [
-      { label: "Partner with SKYPA", href: "/partners" },
+      { label: "Partner with SetuAI", href: "/partners" },
       { label: "Volunteer", href: "/volunteer" },
       { label: "Sponsor", href: "/donate" },
       { label: "Get Updates", href: "/updates" },
@@ -248,8 +274,8 @@ export const impactStats: Stat[] = [
   },
   {
     value: "25+",
-    label: "school conversations",
-    detail: "A partnership pipeline for AI literacy pilots, educator support, and community events.",
+    label: "partner conversations",
+    detail: "A pipeline for schools, education nonprofits, and companies that want to sponsor access.",
   },
   {
     value: "6",
@@ -274,14 +300,14 @@ export const homePillars: Card[] = [
   {
     eyebrow: "School partnerships",
     title: "A partner schools can actually run",
-    body: "SKYPA supports assemblies, workshops, teacher sessions, and custom pilots that fit school schedules.",
+    body: "SetuAI supports assemblies, workshops, teacher sessions, and custom pilots that fit school schedules.",
     href: "/programs/school-partnerships",
     icon: "school",
   },
   {
     eyebrow: "Textbook initiative",
     title: "A practical AI book for local students",
-    body: "The foundation is developing an accessible AI textbook to distribute through school and community partners.",
+    body: "SetuAI is developing an accessible AI textbook to distribute through school and community partners.",
     href: "/textbook",
     icon: "book",
   },
@@ -297,12 +323,12 @@ export const homePillars: Card[] = [
 const corePagesBase: SitePage[] = [
   {
     slug: "about",
-    title: "About SKYPA Foundation",
+    title: "About SetuAI.org",
     eyebrow: "Who we are",
     summary:
-      "SKYPA Foundation is building practical AI literacy pathways for children, schools, and communities.",
+      "SetuAI.org is building practical AI literacy pathways for children, schools, and communities.",
     description:
-      "Learn about SKYPA Foundation, an AI literacy nonprofit helping students understand, question, and use AI responsibly.",
+      "Learn about SetuAI.org, a collaborative AI literacy initiative helping students understand, question, and use AI responsibly.",
     image: "/images/skypa-partnership-workshop.png",
     imageAlt: "Students, teachers, and volunteers collaborating during an AI literacy workshop.",
     cta: { label: "Partner with us", href: "/partners" },
@@ -313,13 +339,13 @@ const corePagesBase: SitePage[] = [
         eyebrow: "Our role",
         title: "We translate AI into learning children can use.",
         body: [
-          "AI is already shaping homework, creativity, search, media, future careers, and community life. SKYPA Foundation exists so students are not left to figure it out alone.",
-          "The foundation works with schools and partners to deliver age-aware AI education: clear concepts, hands-on activities, safety habits, and the confidence to ask better questions.",
+          "AI is already shaping homework, creativity, search, media, future careers, and community life. SetuAI.org exists so students are not left to figure it out alone.",
+          "The initiative works with schools, education nonprofits, and sponsors to deliver age-aware AI education: clear concepts, hands-on activities, safety habits, and the confidence to ask better questions.",
         ],
       },
       {
         type: "cards",
-        eyebrow: "What makes SKYPA different",
+        eyebrow: "What makes SetuAI different",
         title: "Practical, responsible, and built with schools in mind.",
         cards: [
           {
@@ -346,9 +372,9 @@ const corePagesBase: SitePage[] = [
     title: "AI Literacy Should Be a Public Good",
     eyebrow: "Mission",
     summary:
-      "SKYPA Foundation helps students build the language, judgment, and confidence to participate in an AI-shaped world.",
+      "SetuAI.org helps students build the language, judgment, and confidence to participate in an AI-shaped world.",
     description:
-      "Explore SKYPA Foundation's mission to make AI literacy accessible through schools, textbooks, workshops, and community partnerships.",
+      "Explore SetuAI.org's mission to make AI literacy accessible through schools, textbooks, workshops, and community partnerships.",
     cta: { label: "Join the mission", href: "/get-involved" },
     sections: [
       {
@@ -356,13 +382,13 @@ const corePagesBase: SitePage[] = [
         title: "The mission is simple: make AI understandable before it becomes invisible.",
         body: [
           "Children are encountering AI through search, writing tools, recommendation systems, images, chatbots, and learning platforms. Understanding these systems is becoming a basic literacy skill.",
-          "SKYPA Foundation teaches students how AI works at a high level, how to use it productively, how to recognize limitations, and how to make ethical choices.",
+          "SetuAI.org teaches students how AI works at a high level, how to use it productively, how to recognize limitations, and how to make ethical choices.",
         ],
       },
       {
         type: "steps",
         eyebrow: "Our learning promise",
-        title: "Every SKYPA experience should help students do four things.",
+        title: "Every SetuAI experience should help students do four things.",
         steps: [
           {
             title: "Name what AI is",
@@ -389,15 +415,15 @@ const corePagesBase: SitePage[] = [
     title: "Impact Built One Classroom at a Time",
     eyebrow: "Impact",
     summary:
-      "Track the foundation's education model, partnership pipeline, and measurable outcomes as programs expand.",
+      "Track SetuAI's education model, partnership pipeline, and measurable outcomes as programs expand.",
     description:
-      "View SKYPA Foundation's impact goals, student learning outcomes, and school partnership roadmap.",
+      "View SetuAI.org's impact goals, student learning outcomes, and school partnership roadmap.",
     cta: { label: "Support expansion", href: "/donate" },
     sections: [
       {
         type: "cards",
         eyebrow: "Measurement",
-        title: "SKYPA measures what schools and families actually care about.",
+        title: "SetuAI measures what schools and families actually care about.",
         cards: [
           {
             title: "Student confidence",
@@ -418,7 +444,7 @@ const corePagesBase: SitePage[] = [
       },
       {
         type: "cta",
-        title: "Help SKYPA turn early momentum into durable access.",
+        title: "Help SetuAI turn early momentum into durable access.",
         body: "Sponsors and school partners can fund workshops, textbook printing, educator training, and local distribution.",
         ctas: [
           { label: "Become a sponsor", href: "/donate" },
@@ -429,12 +455,12 @@ const corePagesBase: SitePage[] = [
   },
   {
     slug: "textbook",
-    title: "The SKYPA AI Textbook Initiative",
+    title: "The SetuAI AI Textbook Initiative",
     eyebrow: "Current initiative",
     summary:
       "A student-friendly AI literacy textbook designed for local distribution through schools and community partners.",
     description:
-      "Learn about SKYPA Foundation's AI textbook initiative for children, including planned modules, distribution, and sponsorship opportunities.",
+      "Learn about SetuAI.org's AI textbook initiative for children, including planned modules, distribution, and sponsorship opportunities.",
     image: "/images/skypa-ai-textbook.png",
     imageAlt: "AI literacy workbooks and classroom materials on a student desk.",
     cta: { label: "Sponsor textbooks", href: "/donate" },
@@ -482,9 +508,9 @@ const corePagesBase: SitePage[] = [
     title: "Bring AI Literacy to Your School",
     eyebrow: "For schools",
     summary:
-      "SKYPA partners with schools to run workshops, pilots, assemblies, and curriculum-supported AI literacy programs.",
+      "SetuAI partners with schools to run workshops, pilots, assemblies, and curriculum-supported AI literacy programs.",
     description:
-      "School leaders can partner with SKYPA Foundation for AI literacy workshops, textbook pilots, and teacher support.",
+      "School leaders can partner with SetuAI.org for AI literacy workshops, textbook pilots, and teacher support.",
     cta: { label: "Start a school inquiry", href: "/contact" },
     sections: [
       {
@@ -501,7 +527,7 @@ const corePagesBase: SitePage[] = [
           },
           {
             title: "Delivery",
-            body: "SKYPA prepares student-facing materials and coordinates volunteers where useful.",
+            body: "SetuAI prepares student-facing materials and coordinates volunteers where useful.",
           },
           {
             title: "Follow-up",
@@ -518,7 +544,7 @@ const corePagesBase: SitePage[] = [
     summary:
       "Explore AI basics, creativity, safety, and future careers through projects that are approachable and hands-on.",
     description:
-      "Student-facing AI literacy resources from SKYPA Foundation for learning, creativity, responsible use, and future readiness.",
+      "Student-facing AI literacy resources from SetuAI.org for learning, creativity, responsible use, and future readiness.",
     cta: { label: "Browse resources", href: "/resources" },
     sections: [
       {
@@ -551,7 +577,7 @@ const corePagesBase: SitePage[] = [
     summary:
       "Straightforward guidance for families navigating AI tools, school expectations, and online safety.",
     description:
-      "Parent resources from SKYPA Foundation for supporting children with AI literacy, responsible tool use, and school conversations.",
+      "Parent resources from SetuAI.org for supporting children with AI literacy, responsible tool use, and school conversations.",
     cta: { label: "Ask a question", href: "/contact" },
     sections: [
       {
@@ -561,7 +587,7 @@ const corePagesBase: SitePage[] = [
           {
             question: "Is AI literacy the same as teaching children to depend on AI?",
             answer:
-              "No. SKYPA teaches students to understand and question AI, use it with judgment, and keep their own reasoning visible.",
+              "No. SetuAI teaches students to understand and question AI, use it with judgment, and keep their own reasoning visible.",
           },
           {
             question: "What ages can participate?",
@@ -571,7 +597,7 @@ const corePagesBase: SitePage[] = [
           {
             question: "Can parents request a session?",
             answer:
-              "Yes. Parents can introduce SKYPA to a school, PTA, library, or community group through the contact form.",
+              "Yes. Parents can introduce SetuAI to a school, PTA, library, or community group through the contact form.",
           },
         ],
       },
@@ -584,7 +610,7 @@ const corePagesBase: SitePage[] = [
     summary:
       "Companies can support textbook distribution, volunteer programs, school pilots, and equitable AI readiness.",
     description:
-      "Corporate partnership opportunities with SKYPA Foundation, including sponsorships, volunteer days, school pilots, and textbook funding.",
+      "Corporate partnership opportunities with SetuAI.org, including sponsorships, volunteer days, school pilots, and textbook funding.",
     image: "/images/skypa-partnership-workshop.png",
     imageAlt: "Corporate volunteers and educators supporting students in a workshop.",
     cta: { label: "Discuss sponsorship", href: "/contact" },
@@ -605,7 +631,7 @@ const corePagesBase: SitePage[] = [
           },
           {
             title: "Scale a local pilot",
-            body: "Help SKYPA expand from individual classrooms to district-level programming.",
+            body: "Help SetuAI expand from individual classrooms to district-level programming.",
             icon: "building",
           },
         ],
@@ -614,12 +640,12 @@ const corePagesBase: SitePage[] = [
   },
   {
     slug: "volunteer",
-    title: "Volunteer with SKYPA",
+    title: "Volunteer with SetuAI",
     eyebrow: "Get involved",
     summary:
       "Help facilitate workshops, prepare materials, mentor students, translate resources, or support operations.",
     description:
-      "Volunteer with SKYPA Foundation to support AI literacy workshops, content creation, school outreach, and operations.",
+      "Volunteer with SetuAI.org to support AI literacy workshops, content creation, school outreach, and operations.",
     cta: { label: "Apply to volunteer", href: "/contact" },
     sections: [
       {
@@ -638,7 +664,7 @@ const corePagesBase: SitePage[] = [
           },
           {
             title: "School outreach",
-            body: "Introduce SKYPA to educators, parent groups, and local organizations.",
+            body: "Introduce SetuAI to educators, parent groups, and local organizations.",
             icon: "school",
           },
         ],
@@ -650,9 +676,9 @@ const corePagesBase: SitePage[] = [
     title: "Sponsor AI Literacy Access",
     eyebrow: "Support",
     summary:
-      "SKYPA is currently collecting sponsorship and donation interest through forms while operations scale.",
+      "SetuAI is currently collecting sponsorship and donation interest through forms while operations scale.",
     description:
-      "Support SKYPA Foundation through sponsorship interest for AI literacy workshops, textbook distribution, and school partnerships.",
+      "Support SetuAI.org through sponsorship interest for AI literacy workshops, textbook distribution, and school partnerships.",
     cta: { label: "Submit sponsor interest", href: "/contact" },
     sections: [
       {
@@ -680,20 +706,20 @@ const corePagesBase: SitePage[] = [
   },
   {
     slug: "team",
-    title: "The Team Growing SKYPA",
+    title: "The Team Growing SetuAI",
     eyebrow: "People",
     summary:
-      "SKYPA is founder-led and expanding through volunteers, educators, mentors, and partner organizations.",
+      "SetuAI is partner-led and expanding through volunteers, educators, mentors, and founding organizations.",
     description:
-      "Meet the growing team and volunteer network behind SKYPA Foundation's AI literacy programs.",
+      "Meet the growing team and volunteer network behind SetuAI.org's AI literacy programs.",
     cta: { label: "Join the team", href: "/volunteer" },
     sections: [
       {
         type: "text",
-        title: "A growing foundation needs builders.",
+        title: "A growing initiative needs builders.",
         body: [
-          "SKYPA is expanding from early AI literacy initiatives into a more formal nonprofit platform with programs, resources, partnerships, and a textbook initiative.",
-          "As the foundation grows, the website and Sanity dashboard are designed so new team members can update content, publish stories, and manage outreach without touching code.",
+          "SetuAI is expanding from early AI literacy initiatives into an independent collaborative platform with programs, resources, partnerships, and a textbook initiative.",
+          "As the initiative grows, the website and custom admin dashboard are designed so new team members can update content, publish stories, and manage outreach without touching code.",
         ],
       },
     ],
@@ -703,10 +729,10 @@ const corePagesBase: SitePage[] = [
     title: "Frequently Asked Questions",
     eyebrow: "FAQ",
     summary:
-      "Answers for schools, families, sponsors, volunteers, and students interested in SKYPA Foundation.",
+      "Answers for schools, families, sponsors, volunteers, and students interested in SetuAI.org.",
     description:
-      "Frequently asked questions about SKYPA Foundation, AI literacy programs, textbook distribution, school partnerships, and volunteering.",
-    cta: { label: "Contact SKYPA", href: "/contact" },
+      "Frequently asked questions about SetuAI.org, AI literacy programs, textbook distribution, school partnerships, and volunteering.",
+    cta: { label: "Contact SetuAI", href: "/contact" },
     sections: [
       {
         type: "faq",
@@ -715,7 +741,7 @@ const corePagesBase: SitePage[] = [
           {
             question: "Can a school request a custom program?",
             answer:
-              "Yes. SKYPA can adapt workshop length, grade range, activities, and follow-up based on school needs.",
+              "Yes. SetuAI can adapt workshop length, grade range, activities, and follow-up based on school needs.",
           },
           {
             question: "Is the AI textbook available yet?",
@@ -723,7 +749,7 @@ const corePagesBase: SitePage[] = [
               "It is currently an active initiative. The site is built to share updates, recruit sponsors, and coordinate distribution interest.",
           },
           {
-            question: "Does SKYPA collect donations on the site?",
+            question: "Does SetuAI collect donations on the site?",
             answer:
               "The current version uses forms for sponsor and donor interest. Payment processing can be added later.",
           },
@@ -740,7 +766,7 @@ function sharedAudienceSections(page: SitePage): PageSection[] {
       eyebrow: "Audience guide",
       title: `How different visitors can use ${page.title}.`,
       body:
-        "SKYPA pages are written for school leaders, families, students, sponsors, and volunteers. Each audience can find a practical next step without needing technical background.",
+        "SetuAI pages are written for school leaders, families, students, sponsors, and volunteers. Each audience can find a practical next step without needing technical background.",
       cards: [
         {
           title: "For schools and educators",
@@ -785,7 +811,7 @@ function sharedAudienceSections(page: SitePage): PageSection[] {
         {
           title: "Choose the support path",
           body:
-            "SKYPA can recommend workshops, textbook distribution, teacher support, parent nights, volunteer roles, or sponsorship options based on your goals.",
+            "SetuAI can recommend workshops, textbook distribution, teacher support, parent nights, volunteer roles, or sponsorship options based on your goals.",
         },
         {
           title: "Plan a small start",
@@ -802,10 +828,10 @@ function sharedAudienceSections(page: SitePage): PageSection[] {
         {
           question: "Do visitors need technical AI experience to understand the site?",
           answer:
-            "No. SKYPA uses plain language and practical examples so educators, parents, students, sponsors, and volunteers can understand the work without technical training.",
+            "No. SetuAI uses plain language and practical examples so educators, parents, students, sponsors, and volunteers can understand the work without technical training.",
         },
         {
-          question: "Can SKYPA adapt content for different ages?",
+          question: "Can SetuAI adapt content for different ages?",
           answer:
             "Yes. The same core ideas can be adapted for younger students, middle school students, high school students, families, or educators.",
         },
@@ -824,7 +850,7 @@ const corePageSpecificSections: Record<string, PageSection[]> = {
     {
       type: "cards",
       eyebrow: "School-ready support",
-      title: "What a school can expect from SKYPA.",
+      title: "What a school can expect from SetuAI.",
       cards: [
         {
           title: "Planning that respects schedules",
@@ -981,7 +1007,7 @@ const corePageSpecificSections: Record<string, PageSection[]> = {
         {
           question: "Can a company sponsor a specific school or cohort?",
           answer:
-            "A sponsor can express that interest, and SKYPA can discuss a responsible path based on school needs, timelines, and local fit.",
+            "A sponsor can express that interest, and SetuAI can discuss a responsible path based on school needs, timelines, and local fit.",
         },
         {
           question: "Is online payment processing active?",
@@ -1008,7 +1034,7 @@ const programBaseSections: PageSection[] = [
     eyebrow: "Program experience",
     title: "What this program includes beyond a one-time presentation.",
     body:
-      "SKYPA programs are designed to be approachable for students and manageable for schools, with clear preparation, delivery, and follow-up.",
+      "SetuAI programs are designed to be approachable for students and manageable for schools, with clear preparation, delivery, and follow-up.",
     cards: [
       {
         title: "Age-aware explanations",
@@ -1040,7 +1066,7 @@ const programBaseSections: PageSection[] = [
       },
       {
         title: "Design",
-        body: "SKYPA recommends a workshop, pilot, assembly, textbook connection, teacher session, or community format.",
+        body: "SetuAI recommends a workshop, pilot, assembly, textbook connection, teacher session, or community format.",
       },
       {
         title: "Delivery",
@@ -1068,7 +1094,7 @@ const programBaseSections: PageSection[] = [
           "Yes. Workshops can introduce concepts that later appear in printed or downloadable materials so students have something to revisit.",
       },
       {
-        question: "What does SKYPA need from a host organization?",
+        question: "What does SetuAI need from a host organization?",
         answer:
           "The most useful details are audience size, age range, schedule, room or technology setup, student needs, and any school policies around AI tools.",
       },
@@ -1077,7 +1103,7 @@ const programBaseSections: PageSection[] = [
   {
     type: "cta",
     title: "Ready to bring this program to students?",
-    body: "Tell SKYPA about your school, organization, grade levels, and timeline. The team will follow up with the best-fit path.",
+    body: "Tell SetuAI about your school, organization, grade levels, and timeline. The team will follow up with the best-fit path.",
     ctas: [
       { label: "Start an inquiry", href: "/contact" },
       { label: "See all programs", href: "/programs", variant: "secondary" },
@@ -1093,7 +1119,7 @@ export const programs: Program[] = [
     summary:
       "A clear, hands-on introduction to how AI works, where students encounter it, and how to use it responsibly.",
     description:
-      "A core SKYPA Foundation program teaching students AI basics, responsible use, prompt skills, and critical thinking.",
+      "A core SetuAI.org program teaching students AI basics, responsible use, prompt skills, and critical thinking.",
     image: "/images/skypa-hero-classroom.png",
     imageAlt: "Students learning with tablets and classroom materials.",
     audience: "Grades 5-10",
@@ -1114,7 +1140,7 @@ export const programs: Program[] = [
     summary:
       "Structured pilots for schools that want AI literacy support without building a full curriculum from scratch.",
     description:
-      "Partner with SKYPA Foundation to run AI literacy pilots, assemblies, textbook distribution, and teacher support in schools.",
+      "Partner with SetuAI.org to run AI literacy pilots, assemblies, textbook distribution, and teacher support in schools.",
     image: "/images/skypa-partnership-workshop.png",
     imageAlt: "Educators and students working together around a classroom activity.",
     audience: "School leaders, PTAs, departments, and enrichment teams",
@@ -1135,7 +1161,7 @@ export const programs: Program[] = [
     summary:
       "Project-based sessions where students use AI tools for brainstorming, storytelling, design, and reflection.",
     description:
-      "AI creativity workshops from SKYPA Foundation help students use AI for projects while preserving their own voice and judgment.",
+      "AI creativity workshops from SetuAI.org help students use AI for projects while preserving their own voice and judgment.",
     audience: "Grades 4-12",
     length: "60-120 minutes",
     outcomes: [
@@ -1152,9 +1178,9 @@ export const programs: Program[] = [
     title: "Textbook Distribution",
     eyebrow: "Current initiative",
     summary:
-      "A distribution program for getting the SKYPA AI textbook into classrooms and student communities.",
+      "A distribution program for getting the SetuAI AI textbook into classrooms and student communities.",
     description:
-      "Support or request SKYPA Foundation's AI textbook distribution initiative for schools and community learning programs.",
+      "Support or request SetuAI.org's AI textbook distribution initiative for schools and community learning programs.",
     image: "/images/skypa-ai-textbook.png",
     imageAlt: "AI literacy textbook materials on a classroom desk.",
     audience: "Schools, libraries, sponsors, and community centers",
@@ -1175,7 +1201,7 @@ export const programs: Program[] = [
     summary:
       "Practical training sessions for teachers who want to understand AI tools, policies, and classroom use cases.",
     description:
-      "Teacher AI readiness sessions from SKYPA Foundation help educators discuss AI literacy, safety, and classroom activities.",
+      "Teacher AI readiness sessions from SetuAI.org help educators discuss AI literacy, safety, and classroom activities.",
     audience: "Teachers, counselors, and enrichment coordinators",
     length: "Half-day session or two-part virtual series",
     outcomes: [
@@ -1194,7 +1220,7 @@ export const programs: Program[] = [
     summary:
       "A focused program on misinformation, bias, privacy, academic integrity, and healthy technology boundaries.",
     description:
-      "AI safety education from SKYPA Foundation teaches students to question outputs, protect privacy, and use AI responsibly.",
+      "AI safety education from SetuAI.org teaches students to question outputs, protect privacy, and use AI responsibly.",
     audience: "Grades 6-12",
     length: "45-75 minutes",
     outcomes: [
@@ -1213,7 +1239,7 @@ export const programs: Program[] = [
     summary:
       "Confidence-building AI learning experiences designed to help girls see themselves as future builders and decision-makers.",
     description:
-      "SKYPA Foundation's Girls in AI Pathways initiative supports inclusive AI literacy, mentorship, and future career imagination.",
+      "SetuAI.org's Girls in AI Pathways initiative supports inclusive AI literacy, mentorship, and future career imagination.",
     audience: "Girls and gender-expansive students in grades 5-12",
     length: "Workshop, club session, or mentorship series",
     outcomes: [
@@ -1232,7 +1258,7 @@ export const programs: Program[] = [
     summary:
       "Pop-up learning sessions hosted with libraries, youth groups, nonprofits, and local partners.",
     description:
-      "Community AI Labs from SKYPA Foundation bring accessible AI literacy beyond the school day through local partnerships.",
+      "Community AI Labs from SetuAI.org bring accessible AI literacy beyond the school day through local partnerships.",
     audience: "Libraries, youth groups, nonprofits, and families",
     length: "Single-day pop-up or recurring club",
     outcomes: [
@@ -1251,7 +1277,7 @@ export const programs: Program[] = [
     summary:
       "A deeper multi-day experience for students to learn AI concepts, build projects, and present what they create.",
     description:
-      "SKYPA Foundation's Summer AI Academy is a multi-day AI literacy and project-building experience for students.",
+      "SetuAI.org's Summer AI Academy is a multi-day AI literacy and project-building experience for students.",
     audience: "Middle and high school students",
     length: "3-5 day academy",
     outcomes: [
@@ -1274,7 +1300,7 @@ export const stories: Story[] = [
       "How a simple classroom activity can help students move from intimidation to curiosity.",
     body: [
       "The strongest AI literacy moments often begin with plain language. Students do not need to start with advanced math to understand that AI systems make predictions from patterns.",
-      "SKYPA sessions are designed to make that first step approachable, then layer in judgment, safety, and creativity.",
+      "SetuAI sessions are designed to make that first step approachable, then layer in judgment, safety, and creativity.",
       "A simple activity might ask students to compare a human answer and an AI-generated answer, identify what sounds confident, and then ask what still needs evidence. That turns a mysterious tool into something they can question.",
       "The goal is not to make every student a machine learning engineer. The goal is to help students build enough vocabulary, confidence, and skepticism to participate in school and life as AI becomes more common.",
     ],
@@ -1290,7 +1316,7 @@ export const stories: Story[] = [
       "Printed materials can make AI literacy easier to revisit, share, and teach across unequal access contexts.",
     body: [
       "Not every student has the same device access, internet consistency, or adult support at home. A printed resource can travel with the student and make learning visible.",
-      "The SKYPA textbook initiative is designed to support both classroom instruction and independent curiosity.",
+      "The SetuAI textbook initiative is designed to support both classroom instruction and independent curiosity.",
       "A physical textbook also helps teachers and families see what students are learning. It can include vocabulary, reflection prompts, safe-use reminders, project ideas, and examples that do not require every student to be online at the same time.",
       "For sponsors, textbook access is one of the most concrete ways to support AI literacy. Funding can translate into classroom sets, student copies, or community distribution through schools and youth-serving organizations.",
     ],
@@ -1305,10 +1331,10 @@ export const stories: Story[] = [
     summary:
       "School partnerships work best when programs respect schedules, policies, families, and teacher realities.",
     body: [
-      "AI education can be exciting, but schools need clarity. SKYPA's partnership approach starts with listening to what the school already needs.",
+      "AI education can be exciting, but schools need clarity. SetuAI's partnership approach starts with listening to what the school already needs.",
       "That makes it easier to choose the right format, from a single workshop to a larger pilot.",
       "A school may need parent communication, teacher readiness, student safety guidance, or a program that fits into an existing enrichment block. Starting with those realities makes the work more usable.",
-      "Trust also comes from being careful about claims. SKYPA should not promise magic outcomes; it should offer thoughtful programs, clear materials, honest feedback loops, and practical next steps.",
+      "Trust also comes from being careful about claims. SetuAI should not promise magic outcomes; it should offer thoughtful programs, clear materials, honest feedback loops, and practical next steps.",
     ],
     image: "/images/skypa-partnership-workshop.png",
     imageAlt: "Teachers and students collaborating in a workshop.",
@@ -1408,7 +1434,7 @@ export const resources: Resource[] = [
     body: [
       "Textbook sponsorship supports printing, distribution, activity design, and feedback collection.",
       "Sponsors can fund a classroom, school cohort, or broader local distribution effort.",
-      "A useful sponsorship brief should explain the audience served, estimated number of students reached, printing or material needs, and how SKYPA will gather feedback.",
+      "A useful sponsorship brief should explain the audience served, estimated number of students reached, printing or material needs, and how SetuAI will gather feedback.",
       "Sponsors may also support teacher guides, student worksheets, family conversation inserts, or community launch events connected to textbook distribution.",
       "Clear sponsorship language helps companies and donors understand exactly how their support turns into student access.",
     ],
@@ -1421,7 +1447,7 @@ export const updates: Update[] = [
     title: "AI Textbook Distribution Roadmap",
     category: "textbook",
     summary:
-      "SKYPA is organizing school and sponsor conversations around the first student-friendly AI textbook distribution push.",
+      "SetuAI is organizing school and sponsor conversations around the first student-friendly AI textbook distribution push.",
     publishedAt: "2026-07-08T12:00:00.000Z",
     body: [
       "The textbook initiative is designed to give students a practical reference they can revisit after a workshop ends.",
@@ -1441,10 +1467,10 @@ export const updates: Update[] = [
       "Schools can now use the website to request workshops, textbook pilots, teacher support, and parent-facing AI literacy sessions.",
     publishedAt: "2026-07-01T12:00:00.000Z",
     body: [
-      "SKYPA is building a partner pipeline for school leaders, PTAs, teachers, and community organizations interested in practical AI literacy.",
+      "SetuAI is building a partner pipeline for school leaders, PTAs, teachers, and community organizations interested in practical AI literacy.",
       "The strongest fit is a school or youth-serving group that wants responsible, age-aware AI education without having to build everything from scratch.",
       "A first conversation can cover grade levels, schedule, existing AI policies, family communication needs, and whether the school wants a one-time workshop or a longer pilot.",
-      "SKYPA can then recommend a format that fits the school: a classroom session, assembly, teacher support session, textbook pilot, or parent-facing introduction.",
+      "SetuAI can then recommend a format that fits the school: a classroom session, assembly, teacher support session, textbook pilot, or parent-facing introduction.",
       "The goal is to make AI literacy easier to start while still respecting student safety, educator workload, and school context.",
     ],
     image: "/images/skypa-partnership-workshop.png",
@@ -1455,14 +1481,14 @@ export const updates: Update[] = [
     title: "Volunteers Needed for AI Literacy Growth",
     category: "program",
     summary:
-      "SKYPA is recruiting support for facilitation, outreach, curriculum review, school coordination, and operations.",
+      "SetuAI is recruiting support for facilitation, outreach, curriculum review, school coordination, and operations.",
     publishedAt: "2026-06-24T12:00:00.000Z",
     body: [
-      "As the foundation grows, volunteers can help turn early momentum into repeatable education programs.",
+      "As SetuAI grows, volunteers can help turn early momentum into repeatable education programs.",
       "Helpful roles include classroom support, curriculum feedback, partner introductions, content operations, and event coordination.",
       "Volunteers do not all need to be technical experts. Strong support can come from educators, writers, organizers, students, designers, mentors, translators, and people with school or community relationships.",
       "The best volunteer match depends on availability, comfort with students, location, and whether someone prefers direct facilitation or behind-the-scenes work.",
-      "A clear volunteer pipeline helps SKYPA grow without making the founder carry every task alone.",
+      "A clear volunteer pipeline helps SetuAI grow without making the founder carry every task alone.",
     ],
     image: "/images/skypa-hero-classroom.png",
     imageAlt: "Students learning AI literacy in a bright classroom.",
@@ -1487,7 +1513,7 @@ const initiativeTopics = [
   ["safe-ai-club-starter", "Safe AI Club Starter", "Student clubs", "A framework for student-led clubs with adult guidance."],
   ["rural-ai-access", "Rural AI Access", "Underserved communities", "Flexible programming for communities with fewer technology resources."],
   ["girls-ai-leadership", "Girls AI Leadership", "Girls in AI", "A confidence-building path for girls exploring AI and technology leadership."],
-  ["ai-textbook-pilot-schools", "AI Textbook Pilot Schools", "Pilot schools", "A pilot path for schools using the SKYPA AI textbook."],
+  ["ai-textbook-pilot-schools", "AI Textbook Pilot Schools", "Pilot schools", "A pilot path for schools using the SetuAI AI textbook."],
 ] as const;
 
 export const initiatives: Initiative[] = initiativeTopics.map(
@@ -1497,15 +1523,15 @@ export const initiatives: Initiative[] = initiativeTopics.map(
     focus,
     eyebrow: "Initiative",
     summary,
-    description: `${summary} Learn how SKYPA Foundation can adapt AI literacy education for ${focus.toLowerCase()}.`,
+    description: `${summary} Learn how SetuAI.org can adapt AI literacy education for ${focus.toLowerCase()}.`,
     cta: { label: "Start a conversation", href: "/contact" },
     sections: [
       {
         type: "text",
-        title: "A focused pathway inside the larger SKYPA model.",
+        title: "A focused pathway inside the larger SetuAI model.",
         body: [
           "Each initiative is a focused way to bring AI literacy to a specific audience or setting. It can start as a small conversation, grow into a workshop or pilot, and eventually connect to resources, textbook distribution, or a repeatable program.",
-          `For ${focus.toLowerCase()}, SKYPA can adapt language, examples, activities, and follow-up materials so the experience feels useful instead of generic.`,
+          `For ${focus.toLowerCase()}, SetuAI can adapt language, examples, activities, and follow-up materials so the experience feels useful instead of generic.`,
         ],
       },
       {
@@ -1553,7 +1579,7 @@ export const initiatives: Initiative[] = initiativeTopics.map(
           {
             title: "Prepare materials",
             body:
-              "SKYPA can align examples, vocabulary, activity prompts, safety guidance, and follow-up resources with the audience.",
+              "SetuAI can align examples, vocabulary, activity prompts, safety guidance, and follow-up resources with the audience.",
           },
           {
             title: "Review and expand",
@@ -1587,8 +1613,8 @@ export const initiatives: Initiative[] = initiativeTopics.map(
       {
         type: "cta",
         title: "Want this initiative in your community?",
-        body: "Share your school, organization, audience, and timeline. SKYPA can recommend the right workshop, pilot, or resource path.",
-        ctas: [{ label: "Contact SKYPA", href: "/contact" }],
+        body: "Share your school, organization, audience, and timeline. SetuAI can recommend the right workshop, pilot, or resource path.",
+        ctas: [{ label: "Contact SetuAI", href: "/contact" }],
       },
     ],
   }),
@@ -1637,9 +1663,10 @@ export const allStaticPaths = [
 ];
 
 export const chatbotKnowledge = [
-  "SKYPA Foundation is an AI literacy nonprofit focused on practical AI education for children.",
-  "The foundation partners with schools to run workshops, pilots, assemblies, textbook distribution, and teacher support.",
-  "SKYPA is developing an AI textbook for local distribution to students through schools and community partners.",
+  "SetuAI.org is an independent joint AI literacy initiative created by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation.",
+  "SetuAI serves schools, education nonprofits, and companies that want to sponsor practical AI education access for students.",
+  "SetuAI partners with schools to run workshops, pilots, assemblies, textbook distribution, and teacher support.",
+  "SetuAI is developing an AI textbook for local distribution to students through schools and community partners.",
   "The website uses forms for school partnerships, volunteers, corporate sponsors, donations or sponsorship interest, and general contact.",
   "The Updates page shares blog posts, events, announcements, textbook milestones, and program updates. Visitors can subscribe to receive email notifications.",
   "Current program areas include AI Literacy Foundations, School Partnership Pilots, AI Creativity Workshops, Textbook Distribution, Teacher Bootcamps, AI Safety, Girls in AI Pathways, Community AI Labs, and Summer AI Academy.",

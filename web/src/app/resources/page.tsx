@@ -23,7 +23,7 @@ export default async function ResourcesPage() {
             Practical AI literacy materials for every audience.
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-[#445f6b]">
-            This library can be fully managed in Sanity as SKYPA publishes guides, worksheets,
+            This library can be fully managed in the admin dashboard as SetuAI publishes guides, worksheets,
             activities, sponsorship briefs, and textbook updates.
           </p>
         </div>
