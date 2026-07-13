@@ -11,8 +11,10 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://cdn.sanity.io https://summitintelligentsystems.com",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${isProduction ? "" : " 'unsafe-eval'"}`,
   "connect-src 'self'",
+  "media-src 'self'",
+  "worker-src 'self' blob:",
   ...(isProduction ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
@@ -20,6 +22,9 @@ const baseSecurityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-DNS-Prefetch-Control", value: "off" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()" },
   ...(isProduction
@@ -34,6 +39,7 @@ const privateAdminHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["localhost", "127.0.0.1"],
   turbopack: {
     root: __dirname,
   },

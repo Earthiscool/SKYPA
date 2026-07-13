@@ -36,49 +36,12 @@ export type Faq = {
 };
 
 export type PageSection =
-  | {
-      type: "text";
-      eyebrow?: string;
-      title: string;
-      body: string[];
-      cta?: Cta;
-    }
-  | {
-      type: "cards";
-      eyebrow?: string;
-      title: string;
-      body?: string;
-      cards: Card[];
-    }
-  | {
-      type: "steps";
-      eyebrow?: string;
-      title: string;
-      body?: string;
-      steps: Step[];
-    }
-  | {
-      type: "image";
-      eyebrow?: string;
-      title: string;
-      body: string;
-      image: string;
-      imageAlt: string;
-      cta?: Cta;
-    }
-  | {
-      type: "faq";
-      eyebrow?: string;
-      title: string;
-      faqs: Faq[];
-    }
-  | {
-      type: "cta";
-      eyebrow?: string;
-      title: string;
-      body: string;
-      ctas: Cta[];
-    };
+  | { type: "text"; eyebrow?: string; title: string; body: string[]; cta?: Cta }
+  | { type: "cards"; eyebrow?: string; title: string; body?: string; cards: Card[] }
+  | { type: "steps"; eyebrow?: string; title: string; body?: string; steps: Step[] }
+  | { type: "image"; eyebrow?: string; title: string; body: string; image: string; imageAlt: string; cta?: Cta }
+  | { type: "faq"; eyebrow?: string; title: string; faqs: Faq[] }
+  | { type: "cta"; eyebrow?: string; title: string; body: string; ctas: Cta[] };
 
 export type SitePage = {
   slug: string;
@@ -138,11 +101,11 @@ export type Initiative = SitePage & {
 };
 
 export const siteConfig = {
-  name: "SetuAI.org",
+  name: "SetuAI",
   shortName: "SetuAI",
-  tagline: "Bridging AI literacy and community access.",
+  tagline: "Practical AI literacy for schools and communities.",
   description:
-    "SetuAI.org is a joint AI literacy initiative created by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation to help schools, education nonprofits, and sponsors bring practical AI learning to students.",
+    "SetuAI is a pre-registration AI literacy initiative convened by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation. It is building practical, responsible AI learning pathways with schools, education nonprofits, and prospective sponsors.",
   url: "https://setuai.org",
   email: "hello@setuai.org",
   image: "/images/skypa-hero-classroom.png",
@@ -153,1472 +116,353 @@ export const foundingPartners = [
     name: "Summit Intelligent Systems",
     href: "https://summitintelligentsystems.com/",
     role: "Technology and implementation partner",
-    body: "Summit brings AI systems, automation, and web engineering experience to help SetuAI turn literacy goals into reliable digital tools and school-ready workflows.",
+    body: "Summit contributes product, systems, and implementation experience to the founding collaboration.",
   },
   {
     name: "Shikivaa Foundation",
     href: "https://www.shikvaafoundation.org/",
     role: "Education and community access partner",
-    body: "Shikivaa contributes an education-first nonprofit lens, helping the initiative stay grounded in access, community trust, and programs that meet learners where they are.",
+    body: "Shikivaa contributes an education-first perspective and community access experience to the founding collaboration.",
   },
   {
     name: "SKYPA Foundation",
-    href: "/partners",
+    href: "/about#founding-partners",
     role: "AI literacy initiative partner",
-    body: "SKYPA contributes the student-centered AI literacy work, textbook initiative, school outreach, and volunteer energy that helped spark SetuAI.",
+    body: "SKYPA contributes the originating AI literacy, textbook, school outreach, and volunteer vision behind SetuAI.",
   },
-];
+] as const;
 
 export const headerNav: LinkItem[] = [
+  { label: "About", href: "/about" },
   {
-    label: "About",
-    href: "/about",
+    label: "For partners",
+    href: "/partners",
     children: [
-      {
-        label: "Mission",
-        href: "/mission",
-        description: "Why AI literacy belongs in every community.",
-      },
-      {
-        label: "Founding Partners",
-        href: "/partners",
-        description: "The collaboration behind SetuAI.org.",
-      },
-      {
-        label: "Impact",
-        href: "/impact",
-        description: "Signals, outcomes, and the roadmap ahead.",
-      },
-      {
-        label: "Team",
-        href: "/team",
-        description: "The people and partners building SetuAI.",
-      },
+      { label: "Schools", href: "/schools", description: "Start a careful discovery conversation." },
+      { label: "Education nonprofits", href: "/partners", description: "Explore a community learning collaboration." },
+      { label: "Sponsors", href: "/contact?interest=sponsor", description: "Discuss future material and pilot support." },
     ],
   },
-  {
-    label: "Programs",
-    href: "/programs",
-    children: [
-      {
-        label: "AI Literacy",
-        href: "/programs/ai-literacy",
-        description: "A practical introduction to AI for students.",
-      },
-      {
-        label: "School Partnerships",
-        href: "/programs/school-partnerships",
-        description: "Bring SetuAI pilots, workshops, and resources to your school.",
-      },
-      {
-        label: "AI Textbook",
-        href: "/textbook",
-        description: "A student-friendly textbook built for access.",
-      },
-    ],
-  },
-  { label: "Partners", href: "/partners" },
-  { label: "Stories", href: "/stories" },
+  { label: "Textbook", href: "/textbook" },
   { label: "Updates", href: "/updates" },
-  { label: "Resources", href: "/resources" },
-  { label: "Get Involved", href: "/get-involved" },
+  { label: "Get involved", href: "/get-involved" },
 ];
 
 export const footerColumns: { title: string; links: LinkItem[] }[] = [
   {
-    title: "Organization",
+    title: "SetuAI",
     links: [
       { label: "About", href: "/about" },
-      { label: "Mission", href: "/mission" },
-      { label: "Impact", href: "/impact" },
-      { label: "Stories", href: "/stories" },
+      { label: "How we measure", href: "/impact" },
+      { label: "Textbook initiative", href: "/textbook" },
       { label: "Updates", href: "/updates" },
     ],
   },
   {
-    title: "Programs",
+    title: "Work with us",
     links: [
-      { label: "AI Literacy", href: "/programs/ai-literacy" },
-      { label: "School Partnerships", href: "/programs/school-partnerships" },
-      { label: "Textbook Initiative", href: "/textbook" },
-      { label: "Teacher Training", href: "/programs/teacher-bootcamps" },
-      { label: "Latest Updates", href: "/updates" },
+      { label: "For schools", href: "/schools" },
+      { label: "For education nonprofits", href: "/partners" },
+      { label: "Sponsor interest", href: "/contact?interest=sponsor" },
+      { label: "Volunteer interest", href: "/contact?interest=volunteer" },
     ],
   },
   {
-    title: "Take Action",
+    title: "Care and trust",
     links: [
-      { label: "Partner with SetuAI", href: "/partners" },
-      { label: "Volunteer", href: "/volunteer" },
-      { label: "Sponsor", href: "/donate" },
-      { label: "Get Updates", href: "/updates" },
+      { label: "Privacy and data use", href: "/privacy" },
+      { label: "Accessibility", href: "/accessibility" },
+      { label: "Safeguarding approach", href: "/safeguarding" },
       { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "For Audiences",
-    links: [
-      { label: "Schools", href: "/schools" },
-      { label: "Students", href: "/students" },
-      { label: "Parents", href: "/parents" },
-      { label: "Corporate Partners", href: "/corporate-partners" },
     ],
   },
 ];
 
 export const impactStats: Stat[] = [
   {
-    value: "1,000+",
-    label: "student seats planned",
-    detail: "Initial outreach target for workshops, classroom pilots, and textbook distribution.",
+    value: "In formation",
+    label: "Organization status",
+    detail: "SetuAI is being prepared as an independent organization; registration, governance, and operating details are still being established.",
   },
   {
-    value: "25+",
-    label: "partner conversations",
-    detail: "A pipeline for schools, education nonprofits, and companies that want to sponsor access.",
+    value: "In development",
+    label: "Textbook and learning materials",
+    detail: "The student-facing AI textbook and supporting materials are being shaped before any public distribution commitment.",
   },
   {
-    value: "6",
-    label: "learning tracks",
-    detail: "From AI basics and prompt skills to ethics, creativity, safety, and future careers.",
+    value: "Partner-led",
+    label: "Early conversations",
+    detail: "The next step is listening to schools, education nonprofits, and prospective sponsors before announcing delivery dates or outcomes.",
   },
   {
-    value: "100%",
-    label: "access-first design",
-    detail: "Built around low-barrier materials, approachable language, and school-ready delivery.",
+    value: "Access-first",
+    label: "Design principle",
+    detail: "Clear language, responsible use, adult support, and practical learning are the standard for everything SetuAI builds.",
   },
 ];
 
 export const homePillars: Card[] = [
   {
-    eyebrow: "Classroom programs",
-    title: "AI literacy that feels understandable",
-    body: "Students learn what AI is, where it appears in daily life, how to question outputs, and how to use tools responsibly.",
-    href: "/programs/ai-literacy",
-    icon: "sparkles",
+    title: "Build understanding before dependence",
+    body: "Young people deserve plain-language ways to understand what AI does, where it appears, and when to question it.",
+    href: "/about",
+    icon: "lightbulb",
   },
   {
-    eyebrow: "School partnerships",
-    title: "A partner schools can actually run",
-    body: "SetuAI supports assemblies, workshops, teacher sessions, and custom pilots that fit school schedules.",
-    href: "/programs/school-partnerships",
+    title: "Design with schools, not around them",
+    body: "Any future program should fit real school schedules, adult supervision, local policy, and family communication.",
+    href: "/schools",
     icon: "school",
   },
   {
-    eyebrow: "Textbook initiative",
-    title: "A practical AI book for local students",
-    body: "SetuAI is developing an accessible AI textbook to distribute through school and community partners.",
+    title: "Make durable materials",
+    body: "The textbook initiative is being developed as a useful, reviewable learning resource rather than a one-time campaign asset.",
     href: "/textbook",
     icon: "book",
-  },
-  {
-    eyebrow: "Community action",
-    title: "Volunteers, sponsors, and mentors",
-    body: "The website turns interest from families, educators, students, and companies into organized next steps.",
-    href: "/get-involved",
-    icon: "heart",
   },
 ];
 
 const corePagesBase: SitePage[] = [
   {
     slug: "about",
-    title: "About SetuAI.org",
-    eyebrow: "Who we are",
-    summary:
-      "SetuAI.org is building practical AI literacy pathways for children, schools, and communities.",
-    description:
-      "Learn about SetuAI.org, a collaborative AI literacy initiative helping students understand, question, and use AI responsibly.",
+    title: "About SetuAI",
+    eyebrow: "Pre-registration initiative",
+    summary: "SetuAI is being organized as an independent AI literacy initiative before formal registration.",
+    description: "Learn about SetuAI, a pre-registration AI literacy initiative being convened by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation.",
     image: "/images/skypa-partnership-workshop.png",
-    imageAlt: "Students, teachers, and volunteers collaborating during an AI literacy workshop.",
-    cta: { label: "Partner with us", href: "/partners" },
-    secondaryCta: { label: "See programs", href: "/programs", variant: "secondary" },
+    imageAlt: "Concept image representing a collaborative AI learning workshop.",
+    cta: { label: "Start a conversation", href: "/contact" },
+    secondaryCta: { label: "Meet the founding partners", href: "/partners", variant: "secondary" },
     sections: [
       {
         type: "text",
-        eyebrow: "Our role",
-        title: "We translate AI into learning children can use.",
+        title: "A bridge into practical AI literacy.",
         body: [
-          "AI is already shaping homework, creativity, search, media, future careers, and community life. SetuAI.org exists so students are not left to figure it out alone.",
-          "The initiative works with schools, education nonprofits, and sponsors to deliver age-aware AI education: clear concepts, hands-on activities, safety habits, and the confidence to ask better questions.",
+          "SetuAI is a new, independent initiative in formation. It was convened by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation around a shared question: how can schools and communities help young people understand AI before it becomes invisible in their daily lives?",
+          "The organization is not yet registered. Its legal structure, governance, tax status, operating geography, and formal program commitments are still being established. This site is designed to make that early work transparent, invite the right conversations, and document progress carefully.",
         ],
       },
       {
         type: "cards",
-        eyebrow: "What makes SetuAI different",
-        title: "Practical, responsible, and built with schools in mind.",
+        title: "What SetuAI is building toward.",
+        body: "The focus is practical learning, not inflated promises. Every future offer should be reviewed, age-appropriate, and clear about its status.",
         cards: [
-          {
-            title: "Student-first language",
-            body: "Lessons avoid jargon and focus on examples children can see in school, home, and online life.",
-            icon: "students",
-          },
-          {
-            title: "Partnership model",
-            body: "Schools, sponsors, volunteers, and community organizations can each plug into a clear role.",
-            icon: "building",
-          },
-          {
-            title: "Resource creation",
-            body: "The textbook initiative turns one-time workshops into repeatable learning students can revisit.",
-            icon: "book",
-          },
+          { title: "AI literacy", body: "Plain-language learning about AI systems, outputs, privacy, bias, verification, and human judgment.", icon: "lightbulb" },
+          { title: "School collaboration", body: "Discovery with educators and youth-serving organizations before naming a program, cohort, or delivery date.", icon: "school" },
+          { title: "Student materials", body: "A developing textbook and supporting resources that can be reviewed, improved, and made useful over time.", icon: "book" },
         ],
       },
-    ],
-  },
-  {
-    slug: "mission",
-    title: "AI Literacy Should Be a Public Good",
-    eyebrow: "Mission",
-    summary:
-      "SetuAI.org helps students build the language, judgment, and confidence to participate in an AI-shaped world.",
-    description:
-      "Explore SetuAI.org's mission to make AI literacy accessible through schools, textbooks, workshops, and community partnerships.",
-    cta: { label: "Join the mission", href: "/get-involved" },
-    sections: [
       {
         type: "text",
-        title: "The mission is simple: make AI understandable before it becomes invisible.",
+        eyebrow: "Founding collaboration",
+        title: "Three partners, one shared starting point.",
         body: [
-          "Children are encountering AI through search, writing tools, recommendation systems, images, chatbots, and learning platforms. Understanding these systems is becoming a basic literacy skill.",
-          "SetuAI.org teaches students how AI works at a high level, how to use it productively, how to recognize limitations, and how to make ethical choices.",
-        ],
-      },
-      {
-        type: "steps",
-        eyebrow: "Our learning promise",
-        title: "Every SetuAI experience should help students do four things.",
-        steps: [
-          {
-            title: "Name what AI is",
-            body: "Students learn simple mental models for data, models, patterns, predictions, and outputs.",
-          },
-          {
-            title: "Use AI thoughtfully",
-            body: "They practice asking better questions, revising prompts, checking outputs, and documenting their process.",
-          },
-          {
-            title: "Spot risks",
-            body: "Students discuss bias, privacy, misinformation, overreliance, and the importance of human judgment.",
-          },
-          {
-            title: "Imagine futures",
-            body: "They connect AI literacy to careers, creativity, service, entrepreneurship, and community problem solving.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "impact",
-    title: "Impact Built One Classroom at a Time",
-    eyebrow: "Impact",
-    summary:
-      "Track SetuAI's education model, partnership pipeline, and measurable outcomes as programs expand.",
-    description:
-      "View SetuAI.org's impact goals, student learning outcomes, and school partnership roadmap.",
-    cta: { label: "Support expansion", href: "/donate" },
-    sections: [
-      {
-        type: "cards",
-        eyebrow: "Measurement",
-        title: "SetuAI measures what schools and families actually care about.",
-        cards: [
-          {
-            title: "Student confidence",
-            body: "Pre- and post-session reflection prompts track whether students can explain AI in their own words.",
-            icon: "sparkles",
-          },
-          {
-            title: "Responsible use",
-            body: "Activities ask students to identify when an output needs fact-checking, attribution, or adult support.",
-            icon: "shield",
-          },
-          {
-            title: "Partner readiness",
-            body: "Schools receive clear materials, facilitation notes, and follow-up options so programs can repeat.",
-            icon: "school",
-          },
-        ],
-      },
-      {
-        type: "cta",
-        title: "Help SetuAI turn early momentum into durable access.",
-        body: "Sponsors and school partners can fund workshops, textbook printing, educator training, and local distribution.",
-        ctas: [
-          { label: "Become a sponsor", href: "/donate" },
-          { label: "Start a school pilot", href: "/schools", variant: "secondary" },
+          "Summit Intelligent Systems contributes technology and implementation experience. Shikivaa Foundation contributes an education-first and community-access perspective. SKYPA Foundation contributes the originating AI literacy, textbook, school outreach, and volunteer vision.",
+          "Founding partners support the initiative; they do not replace the independent organization SetuAI is working to become. Names, roles, governance, and public claims will be updated as they are formally confirmed.",
         ],
       },
     ],
   },
   {
     slug: "textbook",
-    title: "The SetuAI AI Textbook Initiative",
-    eyebrow: "Current initiative",
-    summary:
-      "A student-friendly AI literacy textbook designed for local distribution through schools and community partners.",
-    description:
-      "Learn about SetuAI.org's AI textbook initiative for children, including planned modules, distribution, and sponsorship opportunities.",
+    title: "The SetuAI Textbook Initiative",
+    eyebrow: "In development",
+    summary: "SetuAI is developing a student-friendly AI literacy textbook before setting distribution commitments.",
+    description: "Explore SetuAI's developing AI literacy textbook initiative and the questions that must be resolved before pilot or distribution plans are announced.",
     image: "/images/skypa-ai-textbook.png",
-    imageAlt: "AI literacy workbooks and classroom materials on a student desk.",
-    cta: { label: "Sponsor textbooks", href: "/donate" },
-    secondaryCta: { label: "Request updates", href: "/contact", variant: "secondary" },
+    imageAlt: "Concept image of AI literacy workbook materials.",
+    cta: { label: "Discuss textbook support", href: "/contact?interest=sponsor" },
+    secondaryCta: { label: "See the approach", href: "/about", variant: "secondary" },
     sections: [
       {
         type: "image",
-        eyebrow: "Why a textbook",
-        title: "Workshops spark curiosity. A textbook helps it last.",
-        body: "The textbook gives students and teachers a durable reference for AI basics, safety, prompts, ethics, creative projects, and future careers.",
+        title: "A durable learning resource, built carefully.",
+        body: "The textbook is a development initiative, not a published or distributed product yet. Before a pilot, SetuAI needs a clear manuscript, educator review, age guidance, accessibility review, source and image rights, a correction process, and a transparent plan for feedback.",
         image: "/images/skypa-ai-textbook.png",
-        imageAlt: "Open AI literacy textbook pages with student activity materials.",
-        cta: { label: "Help distribute copies", href: "/donate" },
+        imageAlt: "Concept image of a student-facing AI literacy workbook.",
+        cta: { label: "Ask about the initiative", href: "/contact" },
       },
       {
         type: "cards",
-        title: "Planned textbook modules",
+        title: "Topics under consideration.",
+        body: "These are learning themes in development, not a final table of contents or a promise of delivery.",
         cards: [
-          {
-            title: "What AI is",
-            body: "Friendly explanations of data, patterns, models, and predictions.",
-            icon: "book",
-          },
-          {
-            title: "Prompting and creativity",
-            body: "Exercises for brainstorming, writing, design, and reflection.",
-            icon: "lightbulb",
-          },
-          {
-            title: "Safety and ethics",
-            body: "Bias, privacy, plagiarism, misinformation, and human responsibility.",
-            icon: "shield",
-          },
-          {
-            title: "Projects for impact",
-            body: "Activities that help students imagine AI for community problem solving.",
-            icon: "map",
-          },
+          { title: "How AI works", body: "Simple models for data, patterns, outputs, and the limits of automated systems.", icon: "book" },
+          { title: "Using AI thoughtfully", body: "Prompts, verification, attribution, creativity, and keeping a learner's own thinking visible.", icon: "lightbulb" },
+          { title: "Safety and judgment", body: "Privacy, bias, synthetic media, misinformation, adult support, and knowing when to pause.", icon: "shield" },
+        ],
+      },
+      {
+        type: "steps",
+        title: "What must happen before any public distribution.",
+        steps: [
+          { title: "Editorial scope", body: "Confirm age bands, learning goals, authorship, sources, and the practical format with qualified reviewers." },
+          { title: "Review and testing", body: "Run educator, accessibility, safeguarding, and factual review before describing the materials as school-ready." },
+          { title: "Pilot agreement", body: "Agree on permissions, logistics, supervision, feedback, and the exact role of each participating organization." },
+          { title: "Transparent release", body: "Publish the version, date, review approach, updates, and access terms alongside any released materials." },
         ],
       },
     ],
   },
   {
     slug: "schools",
-    title: "Bring AI Literacy to Your School",
-    eyebrow: "For schools",
-    summary:
-      "SetuAI partners with schools to run workshops, pilots, assemblies, and curriculum-supported AI literacy programs.",
-    description:
-      "School leaders can partner with SetuAI.org for AI literacy workshops, textbook pilots, and teacher support.",
-    cta: { label: "Start a school inquiry", href: "/contact" },
-    sections: [
-      {
-        type: "steps",
-        title: "A simple partnership path",
-        steps: [
-          {
-            title: "Discovery call",
-            body: "Share grade levels, schedule constraints, goals, and current AI policies.",
-          },
-          {
-            title: "Pilot design",
-            body: "Choose a workshop, assembly, textbook pilot, or teacher training session.",
-          },
-          {
-            title: "Delivery",
-            body: "SetuAI prepares student-facing materials and coordinates volunteers where useful.",
-          },
-          {
-            title: "Follow-up",
-            body: "Schools receive survey prompts, next-step resources, and expansion options.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "students",
-    title: "AI Learning for Students",
-    eyebrow: "For students",
-    summary:
-      "Explore AI basics, creativity, safety, and future careers through projects that are approachable and hands-on.",
-    description:
-      "Student-facing AI literacy resources from SetuAI.org for learning, creativity, responsible use, and future readiness.",
-    cta: { label: "Browse resources", href: "/resources" },
-    sections: [
-      {
-        type: "cards",
-        title: "What students learn",
-        cards: [
-          {
-            title: "Ask better questions",
-            body: "Use prompts to explore ideas while staying clear about what AI can and cannot do.",
-            icon: "message",
-          },
-          {
-            title: "Create responsibly",
-            body: "Brainstorm, draft, revise, and cite support without replacing your own thinking.",
-            icon: "lightbulb",
-          },
-          {
-            title: "Check the answer",
-            body: "Practice fact-checking, bias spotting, source tracing, and healthy skepticism.",
-            icon: "shield",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "parents",
-    title: "A Parent Guide to AI Literacy",
-    eyebrow: "For parents",
-    summary:
-      "Straightforward guidance for families navigating AI tools, school expectations, and online safety.",
-    description:
-      "Parent resources from SetuAI.org for supporting children with AI literacy, responsible tool use, and school conversations.",
-    cta: { label: "Ask a question", href: "/contact" },
-    sections: [
-      {
-        type: "faq",
-        title: "Common parent questions",
-        faqs: [
-          {
-            question: "Is AI literacy the same as teaching children to depend on AI?",
-            answer:
-              "No. SetuAI teaches students to understand and question AI, use it with judgment, and keep their own reasoning visible.",
-          },
-          {
-            question: "What ages can participate?",
-            answer:
-              "Programs are adaptable, with different activities for elementary, middle, and high school students.",
-          },
-          {
-            question: "Can parents request a session?",
-            answer:
-              "Yes. Parents can introduce SetuAI to a school, PTA, library, or community group through the contact form.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "corporate-partners",
-    title: "Corporate Partnerships for AI Education",
-    eyebrow: "For companies",
-    summary:
-      "Companies can support textbook distribution, volunteer programs, school pilots, and equitable AI readiness.",
-    description:
-      "Corporate partnership opportunities with SetuAI.org, including sponsorships, volunteer days, school pilots, and textbook funding.",
+    title: "For Schools and Education Partners",
+    eyebrow: "Discovery first",
+    summary: "SetuAI is inviting careful discovery conversations with schools and education nonprofits; no delivery dates are publicly committed.",
+    description: "Start an early conversation with SetuAI about a future AI literacy collaboration for a school or education nonprofit.",
     image: "/images/skypa-partnership-workshop.png",
-    imageAlt: "Corporate volunteers and educators supporting students in a workshop.",
-    cta: { label: "Discuss sponsorship", href: "/contact" },
-    sections: [
-      {
-        type: "cards",
-        title: "Ways companies can help",
-        cards: [
-          {
-            title: "Sponsor a classroom",
-            body: "Fund workshops, printed textbooks, and student project materials.",
-            icon: "heart",
-          },
-          {
-            title: "Volunteer expertise",
-            body: "Support safe, school-approved sessions as mentors and activity helpers.",
-            icon: "users",
-          },
-          {
-            title: "Scale a local pilot",
-            body: "Help SetuAI expand from individual classrooms to district-level programming.",
-            icon: "building",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "volunteer",
-    title: "Volunteer with SetuAI",
-    eyebrow: "Get involved",
-    summary:
-      "Help facilitate workshops, prepare materials, mentor students, translate resources, or support operations.",
-    description:
-      "Volunteer with SetuAI.org to support AI literacy workshops, content creation, school outreach, and operations.",
-    cta: { label: "Apply to volunteer", href: "/contact" },
-    sections: [
-      {
-        type: "cards",
-        title: "Volunteer roles",
-        cards: [
-          {
-            title: "Workshop facilitator",
-            body: "Help students complete activities and feel comfortable asking questions.",
-            icon: "students",
-          },
-          {
-            title: "Curriculum reviewer",
-            body: "Improve lesson clarity, examples, accessibility, and age fit.",
-            icon: "book",
-          },
-          {
-            title: "School outreach",
-            body: "Introduce SetuAI to educators, parent groups, and local organizations.",
-            icon: "school",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "donate",
-    title: "Sponsor AI Literacy Access",
-    eyebrow: "Support",
-    summary:
-      "SetuAI is currently collecting sponsorship and donation interest through forms while operations scale.",
-    description:
-      "Support SetuAI.org through sponsorship interest for AI literacy workshops, textbook distribution, and school partnerships.",
-    cta: { label: "Submit sponsor interest", href: "/contact" },
-    sections: [
-      {
-        type: "cards",
-        title: "What support funds",
-        cards: [
-          {
-            title: "Textbook printing",
-            body: "Printed AI literacy materials for students who benefit from a physical resource.",
-            icon: "book",
-          },
-          {
-            title: "School pilots",
-            body: "Workshop planning, supplies, educator coordination, and student activities.",
-            icon: "school",
-          },
-          {
-            title: "Program growth",
-            body: "Content systems, volunteer training, evaluation, and partner outreach.",
-            icon: "sparkles",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "team",
-    title: "The Team Growing SetuAI",
-    eyebrow: "People",
-    summary:
-      "SetuAI is partner-led and expanding through volunteers, educators, mentors, and founding organizations.",
-    description:
-      "Meet the growing team and volunteer network behind SetuAI.org's AI literacy programs.",
-    cta: { label: "Join the team", href: "/volunteer" },
+    imageAlt: "Concept image representing educators and students collaborating.",
+    cta: { label: "Start a school conversation", href: "/contact?interest=school" },
+    secondaryCta: { label: "Read the safeguarding approach", href: "/safeguarding", variant: "secondary" },
     sections: [
       {
         type: "text",
-        title: "A growing initiative needs builders.",
+        title: "A useful first conversation starts with context.",
         body: [
-          "SetuAI is expanding from early AI literacy initiatives into an independent collaborative platform with programs, resources, partnerships, and a textbook initiative.",
-          "As the initiative grows, the website and custom admin dashboard are designed so new team members can update content, publish stories, and manage outreach without touching code.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "faq",
-    title: "Frequently Asked Questions",
-    eyebrow: "FAQ",
-    summary:
-      "Answers for schools, families, sponsors, volunteers, and students interested in SetuAI.org.",
-    description:
-      "Frequently asked questions about SetuAI.org, AI literacy programs, textbook distribution, school partnerships, and volunteering.",
-    cta: { label: "Contact SetuAI", href: "/contact" },
-    sections: [
-      {
-        type: "faq",
-        title: "Program questions",
-        faqs: [
-          {
-            question: "Can a school request a custom program?",
-            answer:
-              "Yes. SetuAI can adapt workshop length, grade range, activities, and follow-up based on school needs.",
-          },
-          {
-            question: "Is the AI textbook available yet?",
-            answer:
-              "It is currently an active initiative. The site is built to share updates, recruit sponsors, and coordinate distribution interest.",
-          },
-          {
-            question: "Does SetuAI collect donations on the site?",
-            answer:
-              "The current version uses forms for sponsor and donor interest. Payment processing can be added later.",
-          },
-        ],
-      },
-    ],
-  },
-];
-
-function sharedAudienceSections(page: SitePage): PageSection[] {
-  return [
-    {
-      type: "cards",
-      eyebrow: "Audience guide",
-      title: `How different visitors can use ${page.title}.`,
-      body:
-        "SetuAI pages are written for school leaders, families, students, sponsors, and volunteers. Each audience can find a practical next step without needing technical background.",
-      cards: [
-        {
-          title: "For schools and educators",
-          body:
-            "Use the page to understand the program fit, gather grade-level details, and decide whether a workshop, assembly, pilot, or textbook pathway makes sense.",
-          href: "/schools",
-          icon: "school",
-        },
-        {
-          title: "For families and students",
-          body:
-            "Look for plain-language explanations, safety habits, and ways students can build confidence without feeling overwhelmed by new technology.",
-          href: "/parents",
-          icon: "students",
-        },
-        {
-          title: "For sponsors and volunteers",
-          body:
-            "Use the content to see what kind of support is needed, what a local partnership could fund, and how your time or resources can translate into access.",
-          href: "/get-involved",
-          icon: "heart",
-        },
-      ],
-    },
-    {
-      type: "steps",
-      eyebrow: "Clear next steps",
-      title: "Move from interest to a useful conversation.",
-      body:
-        "The goal is to make outreach easy even if you are not sure which program or role fits yet.",
-      steps: [
-        {
-          title: "Name the audience",
-          body:
-            "Share whether you are thinking about elementary students, middle schoolers, high school students, families, teachers, or a community group.",
-        },
-        {
-          title: "Share the setting",
-          body:
-            "Include school type, grade levels, location, timing, existing AI policies, and whether the need is a one-time session or a longer pilot.",
-        },
-        {
-          title: "Choose the support path",
-          body:
-            "SetuAI can recommend workshops, textbook distribution, teacher support, parent nights, volunteer roles, or sponsorship options based on your goals.",
-        },
-        {
-          title: "Plan a small start",
-          body:
-            "A good first step can be a discovery call, a single workshop, a classroom pilot, a sponsor-funded textbook batch, or a community information session.",
-        },
-      ],
-    },
-    {
-      type: "faq",
-      eyebrow: "Accessibility",
-      title: "Common questions before reaching out.",
-      faqs: [
-        {
-          question: "Do visitors need technical AI experience to understand the site?",
-          answer:
-            "No. SetuAI uses plain language and practical examples so educators, parents, students, sponsors, and volunteers can understand the work without technical training.",
-        },
-        {
-          question: "Can SetuAI adapt content for different ages?",
-          answer:
-            "Yes. The same core ideas can be adapted for younger students, middle school students, high school students, families, or educators.",
-        },
-        {
-          question: "What should someone include in a first message?",
-          answer:
-            "The most useful details are audience, grade level, organization name, timeline, location, goals, and whether you are interested in learning, hosting, volunteering, or sponsoring.",
-        },
-      ],
-    },
-  ];
-}
-
-const corePageSpecificSections: Record<string, PageSection[]> = {
-  schools: [
-    {
-      type: "cards",
-      eyebrow: "School-ready support",
-      title: "What a school can expect from SetuAI.",
-      cards: [
-        {
-          title: "Planning that respects schedules",
-          body: "Programs can be shaped around assemblies, enrichment blocks, class visits, advisory periods, clubs, or pilot cohorts.",
-          icon: "school",
-        },
-        {
-          title: "Materials students can revisit",
-          body: "Workshops can connect to handouts, reflection prompts, activities, or the textbook initiative so learning does not end when the session ends.",
-          icon: "book",
-        },
-        {
-          title: "Responsible AI habits",
-          body: "Students practice checking outputs, protecting privacy, naming sources, and keeping their own thinking visible.",
-          icon: "shield",
-        },
-      ],
-    },
-  ],
-  students: [
-    {
-      type: "steps",
-      eyebrow: "Student path",
-      title: "A friendly way for students to build AI confidence.",
-      steps: [
-        {
-          title: "Understand the basics",
-          body: "Start with simple explanations of data, patterns, models, prompts, and why AI can be useful but imperfect.",
-        },
-        {
-          title: "Practice with purpose",
-          body: "Use AI to brainstorm, outline, compare ideas, and reflect while keeping your own voice and judgment at the center.",
-        },
-        {
-          title: "Check before trusting",
-          body: "Look for mistakes, bias, missing context, privacy risks, and places where a human source or teacher guidance matters.",
-        },
-        {
-          title: "Create something useful",
-          body: "Turn learning into a small project, presentation, story, community idea, or classroom discussion.",
-        },
-      ],
-    },
-  ],
-  parents: [
-    {
-      type: "cards",
-      eyebrow: "Family support",
-      title: "What parents can talk about at home.",
-      cards: [
-        {
-          title: "Ask what the tool did",
-          body: "Invite children to explain whether AI helped brainstorm, draft, organize, summarize, or check an idea.",
-          icon: "message",
-        },
-        {
-          title: "Ask what stayed human",
-          body: "The important learning question is what choices, reasoning, sources, and revisions came from the student.",
-          icon: "students",
-        },
-        {
-          title: "Set safe boundaries",
-          body: "Discuss privacy, school rules, source checking, and when a trusted adult should be involved.",
-          icon: "shield",
-        },
-      ],
-    },
-  ],
-  textbook: [
-    {
-      type: "steps",
-      eyebrow: "Textbook pathway",
-      title: "How the textbook initiative moves from idea to access.",
-      steps: [
-        {
-          title: "Design student-friendly modules",
-          body: "Content is organized around AI basics, prompting, safety, ethics, creativity, careers, and practical projects.",
-        },
-        {
-          title: "Pilot with educators",
-          body: "Feedback from school partners helps refine clarity, reading level, activity flow, and classroom usefulness.",
-        },
-        {
-          title: "Fund printing and distribution",
-          body: "Sponsors can support batches of books, classroom sets, or community distribution through schools and partner organizations.",
-        },
-        {
-          title: "Collect learning feedback",
-          body: "Student and educator feedback can guide future editions and related workshop materials.",
-        },
-      ],
-    },
-  ],
-  "corporate-partners": [
-    {
-      type: "steps",
-      eyebrow: "Partnership model",
-      title: "How companies can support responsibly.",
-      steps: [
-        {
-          title: "Choose the access goal",
-          body: "A company can fund a classroom, sponsor textbook copies, support a pilot cohort, or help bring AI literacy to a community setting.",
-        },
-        {
-          title: "Define volunteer boundaries",
-          body: "Volunteer involvement should be school-approved, student-safe, age-aware, and focused on mentorship or facilitation support.",
-        },
-        {
-          title: "Support implementation",
-          body: "Useful support can include materials, printing, educator coordination, workshop preparation, and follow-up resources.",
-        },
-        {
-          title: "Share outcomes carefully",
-          body: "Partnership stories should highlight student access and learning without overstating results or inventing impact claims.",
-        },
-      ],
-    },
-  ],
-  volunteer: [
-    {
-      type: "faq",
-      eyebrow: "Volunteer fit",
-      title: "Questions volunteers often ask.",
-      faqs: [
-        {
-          question: "Do volunteers need to be AI experts?",
-          answer:
-            "No. Some roles need technical comfort, but many helpful roles involve facilitation, editing, outreach, event support, translation, operations, or mentoring.",
-        },
-        {
-          question: "Can students volunteer?",
-          answer:
-            "Student volunteers can often help with outreach, peer learning, content review, and events when roles are age-appropriate and supervised.",
-        },
-        {
-          question: "What makes a strong volunteer application?",
-          answer:
-            "Share your skills, availability, location, school/community connections, languages, and whether you prefer direct student support or behind-the-scenes work.",
-        },
-      ],
-    },
-  ],
-  donate: [
-    {
-      type: "faq",
-      eyebrow: "Sponsor clarity",
-      title: "What supporters should know.",
-      faqs: [
-        {
-          question: "Can support be directed toward textbooks?",
-          answer:
-            "Yes. The textbook initiative is one of the clearest places for sponsors to fund tangible student access.",
-        },
-        {
-          question: "Can a company sponsor a specific school or cohort?",
-          answer:
-            "A sponsor can express that interest, and SetuAI can discuss a responsible path based on school needs, timelines, and local fit.",
-        },
-        {
-          question: "Is online payment processing active?",
-          answer:
-            "The current site collects sponsor and donor interest through forms. Payment processing can be added once operations and compliance needs are finalized.",
-        },
-      ],
-    },
-  ],
-};
-
-export const corePages: SitePage[] = corePagesBase.map((page) => ({
-  ...page,
-  sections: [
-    ...page.sections,
-    ...(corePageSpecificSections[page.slug] || []),
-    ...sharedAudienceSections(page),
-  ],
-}));
-
-const programBaseSections: PageSection[] = [
-  {
-    type: "cards",
-    eyebrow: "Program experience",
-    title: "What this program includes beyond a one-time presentation.",
-    body:
-      "SetuAI programs are designed to be approachable for students and manageable for schools, with clear preparation, delivery, and follow-up.",
-    cards: [
-      {
-        title: "Age-aware explanations",
-        body: "Concepts are translated into classroom language using examples students can recognize from school, media, creativity, and daily life.",
-        icon: "students",
-      },
-      {
-        title: "Hands-on practice",
-        body: "Sessions can include prompts, group activities, reflection questions, safety scenarios, and short projects rather than passive lectures.",
-        icon: "lightbulb",
-      },
-      {
-        title: "School follow-through",
-        body: "Educators can receive discussion prompts, activity ideas, and next-step options so the learning can continue after delivery.",
-        icon: "school",
-      },
-    ],
-  },
-  {
-    type: "steps",
-    eyebrow: "Delivery plan",
-    title: "How a program moves from request to classroom.",
-    body:
-      "The process is intentionally simple so a school, sponsor, or community group can start small and expand later.",
-    steps: [
-      {
-        title: "Discovery",
-        body: "Share audience, grade levels, timing, location, current AI questions, and the kind of support you want.",
-      },
-      {
-        title: "Design",
-        body: "SetuAI recommends a workshop, pilot, assembly, textbook connection, teacher session, or community format.",
-      },
-      {
-        title: "Delivery",
-        body: "Students engage with practical AI concepts, responsible use, guided activities, and opportunities to ask questions.",
-      },
-      {
-        title: "Follow-up",
-        body: "The partner can receive reflection prompts, resource links, survey ideas, and possible next steps for expansion.",
-      },
-    ],
-  },
-  {
-    type: "faq",
-    eyebrow: "Program questions",
-    title: "What partners usually want to know first.",
-    faqs: [
-      {
-        question: "Can a program be customized for different grade levels?",
-        answer:
-          "Yes. A younger group may focus on basic concepts and safe examples, while older students can go deeper into prompting, bias, careers, projects, and ethics.",
-      },
-      {
-        question: "Can this connect to the textbook initiative?",
-        answer:
-          "Yes. Workshops can introduce concepts that later appear in printed or downloadable materials so students have something to revisit.",
-      },
-      {
-        question: "What does SetuAI need from a host organization?",
-        answer:
-          "The most useful details are audience size, age range, schedule, room or technology setup, student needs, and any school policies around AI tools.",
-      },
-    ],
-  },
-  {
-    type: "cta",
-    title: "Ready to bring this program to students?",
-    body: "Tell SetuAI about your school, organization, grade levels, and timeline. The team will follow up with the best-fit path.",
-    ctas: [
-      { label: "Start an inquiry", href: "/contact" },
-      { label: "See all programs", href: "/programs", variant: "secondary" },
-    ],
-  },
-];
-
-export const programs: Program[] = [
-  {
-    slug: "ai-literacy",
-    title: "AI Literacy Foundations",
-    eyebrow: "Core program",
-    summary:
-      "A clear, hands-on introduction to how AI works, where students encounter it, and how to use it responsibly.",
-    description:
-      "A core SetuAI.org program teaching students AI basics, responsible use, prompt skills, and critical thinking.",
-    image: "/images/skypa-hero-classroom.png",
-    imageAlt: "Students learning with tablets and classroom materials.",
-    audience: "Grades 5-10",
-    length: "45-90 minute workshop or multi-session pilot",
-    outcomes: [
-      "Explain AI in age-appropriate language",
-      "Identify common AI tools and limitations",
-      "Practice responsible prompting and output checking",
-    ],
-    modules: ["What AI is", "Prompt practice", "Bias and privacy", "Creative project"],
-    cta: { label: "Request this program", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "school-partnerships",
-    title: "School Partnership Pilots",
-    eyebrow: "Partnership program",
-    summary:
-      "Structured pilots for schools that want AI literacy support without building a full curriculum from scratch.",
-    description:
-      "Partner with SetuAI.org to run AI literacy pilots, assemblies, textbook distribution, and teacher support in schools.",
-    image: "/images/skypa-partnership-workshop.png",
-    imageAlt: "Educators and students working together around a classroom activity.",
-    audience: "School leaders, PTAs, departments, and enrichment teams",
-    length: "Pilot blocks from 2 weeks to 1 semester",
-    outcomes: [
-      "Launch a school-ready AI literacy experience",
-      "Gather student and educator feedback",
-      "Create a repeatable plan for future sessions",
-    ],
-    modules: ["Needs assessment", "Pilot design", "Student sessions", "Outcome review"],
-    cta: { label: "Plan a pilot", href: "/schools" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "workshops",
-    title: "AI Creativity Workshops",
-    eyebrow: "Hands-on learning",
-    summary:
-      "Project-based sessions where students use AI tools for brainstorming, storytelling, design, and reflection.",
-    description:
-      "AI creativity workshops from SetuAI.org help students use AI for projects while preserving their own voice and judgment.",
-    audience: "Grades 4-12",
-    length: "60-120 minutes",
-    outcomes: [
-      "Use AI for brainstorming without copying",
-      "Compare drafts and improve ideas",
-      "Reflect on originality, attribution, and process",
-    ],
-    modules: ["Brainstorming", "Prompt iteration", "Revision", "Reflection"],
-    cta: { label: "Request a workshop", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "textbook-distribution",
-    title: "Textbook Distribution",
-    eyebrow: "Current initiative",
-    summary:
-      "A distribution program for getting the SetuAI AI textbook into classrooms and student communities.",
-    description:
-      "Support or request SetuAI.org's AI textbook distribution initiative for schools and community learning programs.",
-    image: "/images/skypa-ai-textbook.png",
-    imageAlt: "AI literacy textbook materials on a classroom desk.",
-    audience: "Schools, libraries, sponsors, and community centers",
-    length: "Distribution plus optional orientation session",
-    outcomes: [
-      "Place student-friendly AI materials in local hands",
-      "Support teachers with accessible lesson prompts",
-      "Create a foundation for repeatable AI literacy learning",
-    ],
-    modules: ["Print sponsorship", "School coordination", "Student distribution", "Feedback collection"],
-    cta: { label: "Sponsor copies", href: "/donate" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "teacher-bootcamps",
-    title: "Teacher AI Readiness Bootcamps",
-    eyebrow: "Educator support",
-    summary:
-      "Practical training sessions for teachers who want to understand AI tools, policies, and classroom use cases.",
-    description:
-      "Teacher AI readiness sessions from SetuAI.org help educators discuss AI literacy, safety, and classroom activities.",
-    audience: "Teachers, counselors, and enrichment coordinators",
-    length: "Half-day session or two-part virtual series",
-    outcomes: [
-      "Understand AI basics and classroom risks",
-      "Use sample activities safely",
-      "Discuss policy and parent communication",
-    ],
-    modules: ["AI basics", "Classroom scenarios", "Policy discussion", "Activity toolkit"],
-    cta: { label: "Train educators", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "ai-safety",
-    title: "AI Safety and Digital Judgment",
-    eyebrow: "Responsible use",
-    summary:
-      "A focused program on misinformation, bias, privacy, academic integrity, and healthy technology boundaries.",
-    description:
-      "AI safety education from SetuAI.org teaches students to question outputs, protect privacy, and use AI responsibly.",
-    audience: "Grades 6-12",
-    length: "45-75 minutes",
-    outcomes: [
-      "Identify high-risk AI use cases",
-      "Practice fact-checking and source awareness",
-      "Discuss privacy and personal data",
-    ],
-    modules: ["Misinformation", "Bias", "Privacy", "Academic integrity"],
-    cta: { label: "Bring safety training", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "girls-in-ai",
-    title: "Girls in AI Pathways",
-    eyebrow: "Equity initiative",
-    summary:
-      "Confidence-building AI learning experiences designed to help girls see themselves as future builders and decision-makers.",
-    description:
-      "SetuAI.org's Girls in AI Pathways initiative supports inclusive AI literacy, mentorship, and future career imagination.",
-    audience: "Girls and gender-expansive students in grades 5-12",
-    length: "Workshop, club session, or mentorship series",
-    outcomes: [
-      "Increase confidence in technical conversations",
-      "Highlight diverse AI role models",
-      "Build a small creative or community project",
-    ],
-    modules: ["Role models", "AI basics", "Project lab", "Career mapping"],
-    cta: { label: "Support this pathway", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "community-ai-labs",
-    title: "Community AI Labs",
-    eyebrow: "Community program",
-    summary:
-      "Pop-up learning sessions hosted with libraries, youth groups, nonprofits, and local partners.",
-    description:
-      "Community AI Labs from SetuAI.org bring accessible AI literacy beyond the school day through local partnerships.",
-    audience: "Libraries, youth groups, nonprofits, and families",
-    length: "Single-day pop-up or recurring club",
-    outcomes: [
-      "Reach students outside traditional classroom settings",
-      "Connect families to practical AI guidance",
-      "Build community interest in responsible technology",
-    ],
-    modules: ["Family intro", "Student lab", "Safety discussion", "Project showcase"],
-    cta: { label: "Host a lab", href: "/contact" },
-    sections: programBaseSections,
-  },
-  {
-    slug: "summer-ai-academy",
-    title: "Summer AI Academy",
-    eyebrow: "Seasonal program",
-    summary:
-      "A deeper multi-day experience for students to learn AI concepts, build projects, and present what they create.",
-    description:
-      "SetuAI.org's Summer AI Academy is a multi-day AI literacy and project-building experience for students.",
-    audience: "Middle and high school students",
-    length: "3-5 day academy",
-    outcomes: [
-      "Build an AI-assisted project",
-      "Practice ethical design decisions",
-      "Present work to peers and community members",
-    ],
-    modules: ["Foundations", "Design sprint", "Build sessions", "Showcase"],
-    cta: { label: "Explore summer options", href: "/contact" },
-    sections: programBaseSections,
-  },
-];
-
-export const stories: Story[] = [
-  {
-    slug: "making-ai-feel-less-mysterious",
-    title: "Making AI Feel Less Mysterious",
-    eyebrow: "Student learning",
-    summary:
-      "How a simple classroom activity can help students move from intimidation to curiosity.",
-    body: [
-      "The strongest AI literacy moments often begin with plain language. Students do not need to start with advanced math to understand that AI systems make predictions from patterns.",
-      "SetuAI sessions are designed to make that first step approachable, then layer in judgment, safety, and creativity.",
-      "A simple activity might ask students to compare a human answer and an AI-generated answer, identify what sounds confident, and then ask what still needs evidence. That turns a mysterious tool into something they can question.",
-      "The goal is not to make every student a machine learning engineer. The goal is to help students build enough vocabulary, confidence, and skepticism to participate in school and life as AI becomes more common.",
-    ],
-    image: "/images/skypa-hero-classroom.png",
-    imageAlt: "Students gathered around a classroom table.",
-    tags: ["AI basics", "Workshops"],
-  },
-  {
-    slug: "why-textbooks-still-matter",
-    title: "Why Textbooks Still Matter in AI Education",
-    eyebrow: "Textbook initiative",
-    summary:
-      "Printed materials can make AI literacy easier to revisit, share, and teach across unequal access contexts.",
-    body: [
-      "Not every student has the same device access, internet consistency, or adult support at home. A printed resource can travel with the student and make learning visible.",
-      "The SetuAI textbook initiative is designed to support both classroom instruction and independent curiosity.",
-      "A physical textbook also helps teachers and families see what students are learning. It can include vocabulary, reflection prompts, safe-use reminders, project ideas, and examples that do not require every student to be online at the same time.",
-      "For sponsors, textbook access is one of the most concrete ways to support AI literacy. Funding can translate into classroom sets, student copies, or community distribution through schools and youth-serving organizations.",
-    ],
-    image: "/images/skypa-ai-textbook.png",
-    imageAlt: "Open AI textbook pages and student supplies.",
-    tags: ["Textbook", "Access"],
-  },
-  {
-    slug: "building-trust-with-schools",
-    title: "Building Trust with Schools",
-    eyebrow: "Partnerships",
-    summary:
-      "School partnerships work best when programs respect schedules, policies, families, and teacher realities.",
-    body: [
-      "AI education can be exciting, but schools need clarity. SetuAI's partnership approach starts with listening to what the school already needs.",
-      "That makes it easier to choose the right format, from a single workshop to a larger pilot.",
-      "A school may need parent communication, teacher readiness, student safety guidance, or a program that fits into an existing enrichment block. Starting with those realities makes the work more usable.",
-      "Trust also comes from being careful about claims. SetuAI should not promise magic outcomes; it should offer thoughtful programs, clear materials, honest feedback loops, and practical next steps.",
-    ],
-    image: "/images/skypa-partnership-workshop.png",
-    imageAlt: "Teachers and students collaborating in a workshop.",
-    tags: ["Schools", "Partnerships"],
-  },
-];
-
-export const resources: Resource[] = [
-  {
-    slug: "ai-literacy-glossary",
-    title: "AI Literacy Glossary for Students",
-    type: "Guide",
-    summary:
-      "Plain-language definitions for model, data, prompt, bias, hallucination, privacy, and more.",
-    audience: "Students and families",
-    minutes: "8 min",
-    body: [
-      "Use this glossary as a starter reference when introducing AI vocabulary to students.",
-      "Each term should be paired with a classroom example so students can connect the idea to daily life.",
-      "Useful terms include model, data, prompt, output, bias, hallucination, privacy, source, attribution, synthetic media, and human judgment.",
-      "For younger students, definitions should stay concrete. For older students, each term can include a question: What could go wrong? What should I verify? What decision still belongs to me?",
-      "Teachers and families can use the glossary as a shared language tool before discussing rules, homework expectations, or creative projects.",
-    ],
-  },
-  {
-    slug: "school-ai-readiness-checklist",
-    title: "School AI Readiness Checklist",
-    type: "Checklist",
-    summary:
-      "A planning checklist for school leaders considering AI literacy programming.",
-    audience: "School leaders",
-    minutes: "10 min",
-    body: [
-      "Before launching a program, identify grade levels, current policies, family communication needs, and teacher support.",
-      "The checklist helps schools choose a pilot size that is useful without being overwhelming.",
-      "A strong readiness conversation includes classroom goals, device access, supervision needs, acceptable tool use, privacy expectations, and how students will document their own thinking.",
-      "Schools should also decide what success looks like. That may include student confidence, safer use habits, teacher comfort, parent understanding, or a repeatable plan for future sessions.",
-      "Starting small is often wise. A single workshop or short pilot can reveal what students already know and what educators need before a broader rollout.",
-    ],
-  },
-  {
-    slug: "responsible-prompting-student-sheet",
-    title: "Responsible Prompting Student Sheet",
-    type: "Worksheet",
-    summary:
-      "A student-facing activity sheet for asking clearer prompts and checking AI outputs.",
-    audience: "Students",
-    minutes: "15 min",
-    body: [
-      "Good prompts include context, task, audience, and constraints.",
-      "Students should always ask: What should I verify? What should remain my own thinking?",
-      "A responsible prompting sheet can ask students to write their original idea first, then describe how AI helped, what changed, and what they checked afterward.",
-      "Students should practice comparing outputs, asking follow-up questions, spotting generic answers, and improving prompts without copying blindly.",
-      "The sheet should make process visible. That helps teachers see learning, not just a final product.",
-    ],
-  },
-  {
-    slug: "parent-conversation-guide",
-    title: "Parent Conversation Guide",
-    type: "Guide",
-    summary:
-      "Questions families can use to discuss AI use, homework, creativity, and safety.",
-    audience: "Parents",
-    minutes: "7 min",
-    body: [
-      "Families can ask children to explain what an AI tool helped with and what choices the student made independently.",
-      "The goal is not fear. The goal is visible judgment.",
-      "A useful conversation starts with curiosity: What did you ask? Why did you ask it that way? What did the tool get wrong? What did you change?",
-      "Parents can also set simple boundaries around personal information, school rules, citations, images, and when a trusted adult should be involved.",
-      "The best family guidance treats AI as something to understand together, not something to ignore until a problem appears.",
-    ],
-  },
-  {
-    slug: "ai-ethics-classroom-debate",
-    title: "AI Ethics Classroom Debate",
-    type: "Activity",
-    summary:
-      "A structured debate activity about bias, privacy, fairness, and accountability.",
-    audience: "Teachers",
-    minutes: "30 min",
-    body: [
-      "Students learn ethics by practicing tradeoff thinking, not memorizing abstract rules.",
-      "This activity gives each group a role and asks them to defend a decision.",
-      "Example roles might include a student, teacher, parent, school leader, tool designer, and community member. Each role notices different risks and benefits.",
-      "Students can debate fairness, privacy, accuracy, access, and accountability using realistic classroom scenarios.",
-      "The activity should end with reflection: What decision would you make, what evidence would you need, and who should be included in the conversation?",
-    ],
-  },
-  {
-    slug: "textbook-sponsorship-brief",
-    title: "Textbook Sponsorship Brief",
-    type: "Brief",
-    summary:
-      "A short overview for sponsors interested in funding printed AI literacy materials.",
-    audience: "Sponsors",
-    minutes: "5 min",
-    body: [
-      "Textbook sponsorship supports printing, distribution, activity design, and feedback collection.",
-      "Sponsors can fund a classroom, school cohort, or broader local distribution effort.",
-      "A useful sponsorship brief should explain the audience served, estimated number of students reached, printing or material needs, and how SetuAI will gather feedback.",
-      "Sponsors may also support teacher guides, student worksheets, family conversation inserts, or community launch events connected to textbook distribution.",
-      "Clear sponsorship language helps companies and donors understand exactly how their support turns into student access.",
-    ],
-  },
-];
-
-export const updates: Update[] = [
-  {
-    slug: "ai-textbook-distribution-roadmap",
-    title: "AI Textbook Distribution Roadmap",
-    category: "textbook",
-    summary:
-      "SetuAI is organizing school and sponsor conversations around the first student-friendly AI textbook distribution push.",
-    publishedAt: "2026-07-08T12:00:00.000Z",
-    body: [
-      "The textbook initiative is designed to give students a practical reference they can revisit after a workshop ends.",
-      "The next operating priority is coordinating interested schools, sponsors, and volunteers so printing and distribution can happen with clear local demand.",
-      "The roadmap includes refining student-facing modules, gathering educator feedback, preparing sponsor briefs, and identifying the first distribution partners.",
-      "Schools and community partners can help by sharing grade levels, expected student counts, preferred timelines, and whether they need a workshop alongside the books.",
-      "Sponsors can help turn the roadmap into physical access by funding classroom sets, pilot cohorts, or wider community distribution.",
-    ],
-    image: "/images/skypa-ai-textbook.png",
-    imageAlt: "AI literacy textbook materials prepared for classroom distribution.",
-  },
-  {
-    slug: "school-partnerships-now-open",
-    title: "School Partnership Conversations Are Open",
-    category: "announcement",
-    summary:
-      "Schools can now use the website to request workshops, textbook pilots, teacher support, and parent-facing AI literacy sessions.",
-    publishedAt: "2026-07-01T12:00:00.000Z",
-    body: [
-      "SetuAI is building a partner pipeline for school leaders, PTAs, teachers, and community organizations interested in practical AI literacy.",
-      "The strongest fit is a school or youth-serving group that wants responsible, age-aware AI education without having to build everything from scratch.",
-      "A first conversation can cover grade levels, schedule, existing AI policies, family communication needs, and whether the school wants a one-time workshop or a longer pilot.",
-      "SetuAI can then recommend a format that fits the school: a classroom session, assembly, teacher support session, textbook pilot, or parent-facing introduction.",
-      "The goal is to make AI literacy easier to start while still respecting student safety, educator workload, and school context.",
-    ],
-    image: "/images/skypa-partnership-workshop.png",
-    imageAlt: "Students and educators collaborating during an AI literacy workshop.",
-  },
-  {
-    slug: "volunteers-needed-for-ai-literacy-growth",
-    title: "Volunteers Needed for AI Literacy Growth",
-    category: "program",
-    summary:
-      "SetuAI is recruiting support for facilitation, outreach, curriculum review, school coordination, and operations.",
-    publishedAt: "2026-06-24T12:00:00.000Z",
-    body: [
-      "As SetuAI grows, volunteers can help turn early momentum into repeatable education programs.",
-      "Helpful roles include classroom support, curriculum feedback, partner introductions, content operations, and event coordination.",
-      "Volunteers do not all need to be technical experts. Strong support can come from educators, writers, organizers, students, designers, mentors, translators, and people with school or community relationships.",
-      "The best volunteer match depends on availability, comfort with students, location, and whether someone prefers direct facilitation or behind-the-scenes work.",
-      "A clear volunteer pipeline helps SetuAI grow without making the founder carry every task alone.",
-    ],
-    image: "/images/skypa-hero-classroom.png",
-    imageAlt: "Students learning AI literacy in a bright classroom.",
-  },
-];
-
-const initiativeTopics = [
-  ["elementary-ai-basics", "Elementary AI Basics", "Elementary schools", "Age-aware AI introductions for younger students."],
-  ["middle-school-ai-readiness", "Middle School AI Readiness", "Middle schools", "Hands-on activities for the grades where AI curiosity accelerates."],
-  ["high-school-ai-careers", "High School AI Careers", "High schools", "Career and project pathways for older students."],
-  ["library-ai-labs", "Library AI Labs", "Libraries", "Community sessions for students and families beyond the school day."],
-  ["pta-ai-night", "PTA AI Night", "Parent groups", "A family-friendly introduction to AI, safety, and school expectations."],
-  ["ai-and-homework", "AI and Homework", "Students and families", "Guidance on using AI support without hiding the learning process."],
-  ["ai-and-creativity", "AI and Creativity", "Students", "Creative exercises that keep the student voice at the center."],
-  ["ai-and-media-literacy", "AI and Media Literacy", "Schools", "Misinformation, synthetic media, source checking, and skepticism."],
-  ["ai-career-exploration", "AI Career Exploration", "Students", "Activities connecting AI literacy to future roles and skills."],
-  ["community-sponsor-program", "Community Sponsor Program", "Sponsors", "A repeatable sponsorship path for local AI literacy access."],
-  ["volunteer-facilitator-training", "Volunteer Facilitator Training", "Volunteers", "Training helpers to support students safely and consistently."],
-  ["student-ai-showcase", "Student AI Showcase", "Schools", "A public-facing celebration of responsible AI-assisted student projects."],
-  ["teacher-resource-hub", "Teacher Resource Hub", "Educators", "Support materials for teachers introducing AI concepts."],
-  ["ai-literacy-for-nonprofits", "AI Literacy for Nonprofits", "Community organizations", "Partner sessions for youth-serving nonprofits."],
-  ["safe-ai-club-starter", "Safe AI Club Starter", "Student clubs", "A framework for student-led clubs with adult guidance."],
-  ["rural-ai-access", "Rural AI Access", "Underserved communities", "Flexible programming for communities with fewer technology resources."],
-  ["girls-ai-leadership", "Girls AI Leadership", "Girls in AI", "A confidence-building path for girls exploring AI and technology leadership."],
-  ["ai-textbook-pilot-schools", "AI Textbook Pilot Schools", "Pilot schools", "A pilot path for schools using the SetuAI AI textbook."],
-] as const;
-
-export const initiatives: Initiative[] = initiativeTopics.map(
-  ([slug, title, focus, summary]) => ({
-    slug,
-    title,
-    focus,
-    eyebrow: "Initiative",
-    summary,
-    description: `${summary} Learn how SetuAI.org can adapt AI literacy education for ${focus.toLowerCase()}.`,
-    cta: { label: "Start a conversation", href: "/contact" },
-    sections: [
-      {
-        type: "text",
-        title: "A focused pathway inside the larger SetuAI model.",
-        body: [
-          "Each initiative is a focused way to bring AI literacy to a specific audience or setting. It can start as a small conversation, grow into a workshop or pilot, and eventually connect to resources, textbook distribution, or a repeatable program.",
-          `For ${focus.toLowerCase()}, SetuAI can adapt language, examples, activities, and follow-up materials so the experience feels useful instead of generic.`,
-        ],
-      },
-      {
-        type: "cards",
-        eyebrow: "Initiative fit",
-        title: "Who this pathway is designed to help.",
-        body:
-          "The details can change by partner, but each initiative should make the audience, delivery format, and support needs easy to understand.",
-        cards: [
-          {
-            title: `Best fit for ${focus.toLowerCase()}`,
-            body:
-              "This pathway is useful when a school, family group, sponsor, or community organization wants AI literacy support for a clearly defined audience.",
-            icon: "students",
-          },
-          {
-            title: "Flexible delivery",
-            body:
-              "The format can be a short workshop, school pilot, parent night, student club session, textbook connection, or community learning event.",
-            icon: "school",
-          },
-          {
-            title: "Practical outcomes",
-            body:
-              "Participants should leave with clearer language, safer habits, useful questions, and a better understanding of how AI affects learning and daily life.",
-            icon: "check",
-          },
+          "SetuAI is not publishing a catalogue of confirmed workshops yet. The first step is learning from educators and youth-serving organizations about grade levels, local policy, family communication, device access, timing, supervision, and the questions students already have.",
+          "That discovery work helps determine whether an AI literacy collaboration is appropriate, what safeguards it would require, and whether the material should be adapted or paused.",
         ],
       },
       {
         type: "steps",
-        eyebrow: "How it can launch",
-        title: "A simple path from idea to local action.",
+        title: "A responsible pathway from interest to a possible pilot.",
         steps: [
-          {
-            title: "Clarify the need",
-            body:
-              "Identify who the initiative should serve, what questions they have about AI, and what a useful first session would accomplish.",
-          },
-          {
-            title: "Choose the format",
-            body:
-              "Pick a realistic starting point: a classroom visit, assembly, club session, educator conversation, family night, or sponsor-supported pilot.",
-          },
-          {
-            title: "Prepare materials",
-            body:
-              "SetuAI can align examples, vocabulary, activity prompts, safety guidance, and follow-up resources with the audience.",
-          },
-          {
-            title: "Review and expand",
-            body:
-              "After the first session, feedback can shape future workshops, textbook materials, volunteer roles, and sponsor needs.",
-          },
-        ],
-      },
-      {
-        type: "faq",
-        eyebrow: "Planning questions",
-        title: "Questions to answer before starting.",
-        faqs: [
-          {
-            question: "How much time does this initiative need?",
-            answer:
-              "It can begin with a single conversation or workshop. A longer pilot can be planned once audience, schedule, and partner capacity are clear.",
-          },
-          {
-            question: "Does every participant need a device?",
-            answer:
-              "No. Many AI literacy activities can use discussion, printed examples, group prompts, reflection questions, and teacher-led demonstrations.",
-          },
-          {
-            question: "Can sponsors support this initiative?",
-            answer:
-              "Yes. Sponsors can help fund materials, textbook distribution, workshop preparation, educator support, or access for a specific community.",
-          },
+          { title: "Share the setting", body: "Tell us who you serve, what your students need, and the constraints educators need us to respect." },
+          { title: "Review fit and safeguards", body: "Clarify adult supervision, privacy, consent, accessibility, school policy, and the type of support that might be appropriate." },
+          { title: "Define a small next step", body: "If there is a fit, agree on a documented pilot scope rather than implying a finished program exists." },
+          { title: "Learn before expanding", body: "Use feedback and documented outcomes to decide whether a future collaboration should continue, change, or stop." },
         ],
       },
       {
         type: "cta",
-        title: "Want this initiative in your community?",
-        body: "Share your school, organization, audience, and timeline. SetuAI can recommend the right workshop, pilot, or resource path.",
+        title: "Bring the realities of your setting.",
+        body: "Include age group, location, educational context, timeline, existing AI guidance, accessibility needs, and the kind of conversation you hope to have. SetuAI will not promise a format before that context is understood.",
+        ctas: [{ label: "Contact SetuAI", href: "/contact?interest=school" }],
+      },
+    ],
+  },
+  {
+    slug: "impact",
+    title: "How SetuAI Will Measure Responsibly",
+    eyebrow: "Measurement in design",
+    summary: "SetuAI has no verified impact figures to report yet. It is building a transparent measurement approach before public outcomes are claimed.",
+    description: "Read how SetuAI plans to document future AI literacy work responsibly before publishing participant, partner, or learning impact claims.",
+    cta: { label: "Share a measurement perspective", href: "/contact" },
+    sections: [
+      {
+        type: "text",
+        title: "No impact numbers before there is evidence.",
+        body: [
+          "SetuAI will not treat projected seats, informal conversations, or proposed learning tracks as completed impact. The site currently reports no verified learner, school, distribution, fundraising, or program outcomes.",
+          "Before publishing metrics, the organization needs a consistent definition, collection method, review owner, reporting date, and clear distinction between activity, output, feedback, and outcome.",
+        ],
+      },
+      {
+        type: "cards",
+        title: "A future public report should make four things visible.",
+        cards: [
+          { title: "What happened", body: "The date, setting, activity, partner role, and participant count, with the source of the record.", icon: "school" },
+          { title: "What was learned", body: "Feedback and evidence presented with limitations, not converted into broad claims without support.", icon: "lightbulb" },
+          { title: "What changed", body: "The edits made after review, including material corrections, access improvements, and safeguards.", icon: "check" },
+          { title: "What remains unknown", body: "Open questions and missing evidence stated plainly so visitors can judge the work fairly.", icon: "message" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "privacy",
+    title: "Privacy and Data Use",
+    eyebrow: "Working notice",
+    summary: "This working privacy notice explains how the pre-registration site handles messages and update subscriptions while the legal entity is being established.",
+    description: "Read SetuAI's working privacy and data-use notice for site inquiries, image uploads, and update subscriptions.",
+    sections: [
+      {
+        type: "text",
+        title: "What this site collects.",
+        body: [
+          "When a visitor sends an inquiry, the site collects the information entered in the form, including name, email address, organization, selected interest, and message. When a visitor subscribes to updates, the site collects the name and email address provided for that purpose.",
+          "The site does not ask for payment details, student records, health information, or sensitive personal information. Do not submit those details through public forms.",
+          "This is a working operational notice for an organization in formation. It must be reviewed and replaced by the eventual legal operator with jurisdiction-appropriate details before formal public operations begin.",
+        ],
+      },
+      {
+        type: "cards",
+        title: "How information is used.",
+        cards: [
+          { title: "Respond to the message", body: "Inquiry details are used to understand and reply to the requested conversation." },
+          { title: "Send requested updates", body: "Update subscriptions are separate from inquiries and should only be used for the updates a visitor explicitly requested." },
+          { title: "Protect the service", body: "Limited technical information may be used for fraud prevention, rate limiting, and maintaining the site." },
+        ],
+      },
+      {
+        type: "cta",
+        title: "Questions or deletion requests.",
+        body: "Until a formal privacy contact is named, use the public contact form and choose a general question. Do not include sensitive information in the request.",
         ctas: [{ label: "Contact SetuAI", href: "/contact" }],
       },
     ],
-  }),
-);
+  },
+  {
+    slug: "accessibility",
+    title: "Accessibility Commitment",
+    eyebrow: "Working commitment",
+    summary: "SetuAI is building its public materials and website around clear language, keyboard access, reduced motion, and an open feedback route.",
+    description: "Read SetuAI's working accessibility commitment and report a barrier on the pre-registration website.",
+    sections: [
+      {
+        type: "text",
+        title: "Accessibility is part of the learning design.",
+        body: [
+          "SetuAI aims to make its website, materials, and future learning experiences usable by people with different access needs. Current site work includes semantic structure, visible keyboard focus, responsive layouts, text alternatives for images, and reduced-motion support.",
+          "Accessibility is ongoing work, not a completed claim. Report a barrier, missing alternative format, or unclear page through the contact form so it can be reviewed and tracked.",
+        ],
+      },
+      {
+        type: "cta",
+        title: "Report an access barrier.",
+        body: "Tell us which page or material you used, what happened, your browser or device if relevant, and a safe way to follow up. Do not share sensitive personal information.",
+        ctas: [{ label: "Report a barrier", href: "/contact" }],
+      },
+    ],
+  },
+  {
+    slug: "safeguarding",
+    title: "Safeguarding Approach",
+    eyebrow: "Before any student-facing delivery",
+    summary: "SetuAI will not begin student-facing activities without partner-specific safeguarding, supervision, privacy, and escalation arrangements.",
+    description: "Read SetuAI's working safeguarding approach for any future AI literacy activity involving young people.",
+    sections: [
+      {
+        type: "text",
+        title: "No public program delivery before safeguards are agreed.",
+        body: [
+          "SetuAI is not currently advertising a confirmed student-facing program schedule. Before any activity involving young people, the eventual operating organization and host partner must agree on appropriate adult supervision, screening requirements, consent, photography rules, data handling, accessibility, tool access, incident reporting, and escalation contacts.",
+          "A website statement cannot replace a host school's or youth-serving organization's safeguarding policy. SetuAI will work within the applicable partner requirements and pause activity where the necessary protections are not in place.",
+        ],
+      },
+      {
+        type: "cards",
+        title: "Minimum conditions for a future activity.",
+        cards: [
+          { title: "Named adults and escalation", body: "Clear accountable contacts, supervision expectations, and a documented route for raising concerns." },
+          { title: "Privacy-aware tools", body: "Approved tools, appropriate account handling, and no request for unnecessary student personal data." },
+          { title: "Age-appropriate learning", body: "Materials, examples, permissions, and activities reviewed for the intended group and setting." },
+          { title: "Partner agreement", body: "A written shared understanding of roles, limits, feedback, and what happens if a concern is raised." },
+        ],
+      },
+    ],
+  },
+];
+
+export const corePages: SitePage[] = corePagesBase;
+
+// There are no confirmed public programs, stories, resources, or initiatives at launch.
+// The custom CMS can create and publish them once they have factual content and approval.
+export const programs: Program[] = [];
+export const stories: Story[] = [];
+export const resources: Resource[] = [];
+export const updates: Update[] = [];
+export const initiatives: Initiative[] = [];
 
 export function getCorePage(slug: string) {
   return corePages.find((page) => page.slug === slug);
@@ -1648,27 +492,17 @@ export const allStaticPaths = [
   "/",
   ...corePages.map((page) => `/${page.slug}`),
   "/programs",
-  ...programs.map((program) => `/programs/${program.slug}`),
-  "/stories",
-  ...stories.map((story) => `/stories/${story.slug}`),
   "/updates",
-  ...updates.map((update) => `/updates/${update.slug}`),
-  "/resources",
-  ...resources.map((resource) => `/resources/${resource.slug}`),
-  "/initiatives",
-  ...initiatives.map((initiative) => `/initiatives/${initiative.slug}`),
   "/partners",
   "/get-involved",
   "/contact",
 ];
 
 export const chatbotKnowledge = [
-  "SetuAI.org is an independent joint AI literacy initiative created by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation.",
-  "SetuAI serves schools, education nonprofits, and companies that want to sponsor practical AI education access for students.",
-  "SetuAI partners with schools to run workshops, pilots, assemblies, textbook distribution, and teacher support.",
-  "SetuAI is developing an AI textbook for local distribution to students through schools and community partners.",
-  "The website uses forms for school partnerships, volunteers, corporate sponsors, donations or sponsorship interest, and general contact.",
-  "The Updates page shares blog posts, events, announcements, textbook milestones, and program updates. Visitors can subscribe to receive email notifications.",
-  "Current program areas include AI Literacy Foundations, School Partnership Pilots, AI Creativity Workshops, Textbook Distribution, Teacher Bootcamps, AI Safety, Girls in AI Pathways, Community AI Labs, and Summer AI Academy.",
-  "Do not invent confirmed partner names, school names, donation tax details, or impact numbers beyond what the website states.",
+  "SetuAI is a pre-registration AI literacy initiative being convened by Summit Intelligent Systems, Shikivaa Foundation, and SKYPA Foundation.",
+  "SetuAI is not yet a registered organization and does not claim verified program outcomes, confirmed school partnerships, or a public distribution schedule.",
+  "The initiative is developing practical AI literacy materials, including a student-facing textbook concept, before any public pilot or distribution commitment.",
+  "Schools, education nonprofits, and prospective sponsors can use the contact form to begin a discovery conversation. The form is not a booking or donation flow.",
+  "Visitors can subscribe to updates only if they want emailed progress notices. Inquiries should not automatically subscribe someone to updates.",
+  "Do not invent confirmed partner names, school names, program dates, student counts, tax status, legal status, or impact numbers.",
 ];

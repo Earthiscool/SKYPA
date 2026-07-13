@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { Plus, Save, Trash2 } from "lucide-react";
-import type { EditableCard, EditableImage, EditableSiteContent } from "@/content/editable-site";
+import type { EditableCard, EditableFoundingPartner, EditableImage, EditableSiteContent } from "@/content/editable-site";
 import type { Cta, LinkItem, PageSection } from "@/content/site";
 import type { CmsPage, CmsPost, CmsProgram, CmsSettings, GalleryAlbum } from "@/lib/cms";
 
@@ -271,6 +271,38 @@ function LinkListEditor({ links, onChange, label }: { links: LinkItem[]; onChang
   );
 }
 
+function FoundingPartnerListEditor({
+  partners,
+  onChange,
+}: {
+  partners: EditableFoundingPartner[];
+  onChange: (partners: EditableFoundingPartner[]) => void;
+}) {
+  function updatePartner(index: number, next: EditableFoundingPartner) {
+    onChange(partners.map((partner, partnerIndex) => (partnerIndex === index ? next : partner)));
+  }
+
+  return (
+    <div className="grid gap-3">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-sm font-black text-[#2a1b22]">Founding partners</h3>
+        <SmallButton label="Add partner" onClick={() => onChange([...partners, { name: "New partner", href: "/", role: "Founding partner", body: "Describe this partner's confirmed role." }])} />
+      </div>
+      {partners.map((partner, index) => (
+        <div key={`${partner.name}-${index}`} className="grid gap-4 rounded-md border border-[#efe5e8] bg-[#fbf8f6] p-4">
+          <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
+            <TextField label="Partner name" value={partner.name} onChange={(name) => updatePartner(index, { ...partner, name })} />
+            <TextField label="Partner link" value={partner.href} onChange={(href) => updatePartner(index, { ...partner, href })} />
+            <SmallButton label="Remove" destructive onClick={() => onChange(partners.filter((_, partnerIndex) => partnerIndex !== index))} />
+          </div>
+          <TextField label="Confirmed role" value={partner.role} onChange={(role) => updatePartner(index, { ...partner, role })} />
+          <TextAreaField label="Public description" value={partner.body} onChange={(body) => updatePartner(index, { ...partner, body })} rows={3} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function CardListEditor({ cards, onChange, label }: { cards: EditableCard[]; onChange: (cards: EditableCard[]) => void; label: string }) {
   function updateCard(index: number, next: EditableCard) {
     onChange(cards.map((card, itemIndex) => (itemIndex === index ? next : card)));
@@ -322,13 +354,13 @@ function StatsEditor({ stats, onChange }: { stats: EditableSiteContent["home"]["
   return (
     <div className="grid gap-3">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="text-sm font-black text-[#2a1b22]">Impact stats</h3>
-        <SmallButton label="Add stat" onClick={() => onChange([...stats, { value: "0", label: "new stat", detail: "Explain what this number means." }])} />
+        <h3 className="text-sm font-black text-[#2a1b22]">Public status signals</h3>
+        <SmallButton label="Add signal" onClick={() => onChange([...stats, { value: "In development", label: "new status", detail: "State what is known and how it was verified." }])} />
       </div>
       {stats.map((stat, index) => (
         <div key={`stat-${index}`} className="grid gap-4 rounded-md border border-[#efe5e8] bg-[#fbf8f6] p-4">
           <div className="grid gap-4 md:grid-cols-[0.6fr_1fr_auto] md:items-end">
-            <TextField label="Value" value={stat.value} onChange={(value) => onChange(stats.map((item, itemIndex) => (itemIndex === index ? { ...item, value } : item)))} />
+          <TextField label="Status or value" value={stat.value} onChange={(value) => onChange(stats.map((item, itemIndex) => (itemIndex === index ? { ...item, value } : item)))} help="Use a number only when it is verified and dated." />
             <TextField label="Label" value={stat.label} onChange={(labelValue) => onChange(stats.map((item, itemIndex) => (itemIndex === index ? { ...item, label: labelValue } : item)))} />
             <SmallButton label="Remove" destructive onClick={() => onChange(stats.filter((_, itemIndex) => itemIndex !== index))} />
           </div>
@@ -586,8 +618,8 @@ function SiteContentPreview({ content }: { content: EditableSiteContent }) {
     <aside className="rounded-md border border-[#e4d9dc] bg-white p-3 shadow-sm xl:sticky xl:top-24">
       <div className="flex items-center justify-between gap-3 px-1 pb-3">
         <div>
-          <p className="text-sm font-black text-[#2a1b22]">Live preview</p>
-          <p className="mt-1 text-xs font-semibold text-[#7b6a70]">Updates as you type.</p>
+          <p className="text-sm font-black text-[#2a1b22]">Working preview</p>
+          <p className="mt-1 text-xs font-semibold text-[#7b6a70]">Updates as you type before you save.</p>
         </div>
         <span className="rounded-full bg-[#e8f7f5] px-3 py-1 text-xs font-black text-[#14545c]">Homepage</span>
       </div>
@@ -602,7 +634,7 @@ function SiteContentPreview({ content }: { content: EditableSiteContent }) {
             />
             <div className="min-w-0">
               <p className="truncate text-sm font-black text-[#17343b]">{content.global.shortName || content.global.siteName}</p>
-              <p className="truncate text-[0.65rem] font-black tracking-[0.14em] text-[#53727a]">FOUNDATION</p>
+              <p className="truncate text-[0.65rem] font-black tracking-[0.14em] text-[#53727a]">INITIATIVE</p>
             </div>
           </div>
           <div className="hidden items-center gap-3 text-[0.65rem] font-black text-[#52666b] sm:flex">
@@ -616,7 +648,7 @@ function SiteContentPreview({ content }: { content: EditableSiteContent }) {
 
         <section className="relative min-h-[21rem] overflow-hidden bg-[#12343c] p-5 text-white">
           <div className="absolute inset-0 bg-cover bg-center opacity-[0.55]" style={imageBackground(home.hero.image.src)} />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,52,60,0.96),rgba(18,52,60,0.7),rgba(18,52,60,0.18))]" />
+          <div className="absolute inset-0 bg-[#12343c]/78" />
           <div className="relative max-w-[23rem] pt-8">
             <p className="text-[0.65rem] font-black text-[#f6cf63]">{home.hero.kicker}</p>
             <h3 className="mt-3 text-3xl font-black leading-none tracking-[-0.02em]">{home.hero.title}</h3>
@@ -794,8 +826,8 @@ function PageEditorPreview({
     <aside className="rounded-md border border-[#e4d9dc] bg-white p-3 shadow-sm xl:sticky xl:top-24">
       <div className="flex items-center justify-between gap-3 px-1 pb-3">
         <div>
-          <p className="text-sm font-black text-[#2a1b22]">Live preview</p>
-          <p className="mt-1 text-xs font-semibold text-[#7b6a70]">Updates as you type.</p>
+          <p className="text-sm font-black text-[#2a1b22]">Working preview</p>
+          <p className="mt-1 text-xs font-semibold text-[#7b6a70]">Updates as you type before you save.</p>
         </div>
         <span className="rounded-full bg-[#fff0f4] px-3 py-1 text-xs font-black text-[#9f0038]">{page.status}</span>
       </div>
@@ -803,7 +835,7 @@ function PageEditorPreview({
       <div className="max-h-[calc(100dvh-10rem)] overflow-auto rounded-md border border-[#e4d9dc] bg-[#f8fbfa]">
         <section className="relative min-h-[19rem] overflow-hidden bg-[#14333b] p-5 text-white">
           <div className="absolute inset-0 bg-cover bg-center opacity-[0.42]" style={imageBackground(page.image)} />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,51,59,0.96),rgba(20,51,59,0.7),rgba(20,51,59,0.22))]" />
+          <div className="absolute inset-0 bg-[#14333b]/78" />
           <div className="relative pt-8">
             <p className="text-[0.65rem] font-black text-[#f6cf63]">{page.eyebrow}</p>
             <h3 className="mt-3 text-3xl font-black leading-none tracking-[-0.02em]">{page.title}</h3>
@@ -900,6 +932,7 @@ export function SiteContentForm({ content: initialContent }: { content: Editable
         <ImageEditor image={content.global.logo} onChange={(logo) => updateGlobal({ logo })} label="Logo" />
         <CtaEditor cta={content.global.navCta} onChange={(navCta) => updateGlobal({ navCta })} label="Header CTA" />
         <LinkListEditor links={content.global.navigation} onChange={(navigation) => updateGlobal({ navigation })} label="Main navigation" />
+        <FoundingPartnerListEditor partners={content.global.foundingPartners} onChange={(foundingPartners) => updateGlobal({ foundingPartners })} />
         <div className="grid gap-4 md:grid-cols-2">
           <TextField label="Service area footer line" value={content.global.serviceArea} onChange={(serviceArea) => updateGlobal({ serviceArea })} />
           <TextField label="Copyright line" value={content.global.copyrightLine} onChange={(copyrightLine) => updateGlobal({ copyrightLine })} />
@@ -1068,6 +1101,10 @@ export function SiteContentForm({ content: initialContent }: { content: Editable
 export function PostForm({ post }: { post?: CmsPost | null }) {
   const router = useRouter();
   const [state, setState] = useState<SaveState>("idle");
+  const [image, setImage] = useState<EditableImage>({
+    src: post?.image || "/images/skypa-hero-classroom.png",
+    alt: post?.imageAlt || post?.title || "SetuAI update image",
+  });
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -1081,8 +1118,8 @@ export function PostForm({ post }: { post?: CmsPost | null }) {
       status: form.get("status"),
       summary: form.get("summary"),
       body: splitParagraphs(form.get("body")),
-      image: form.get("image"),
-      imageAlt: form.get("imageAlt"),
+      image: image.src,
+      imageAlt: image.alt,
       publishedAt: form.get("publishedAt"),
     };
     const response = await fetch(post ? `/api/admin/posts/${post.id}` : "/api/admin/posts", {
@@ -1132,10 +1169,6 @@ export function PostForm({ post }: { post?: CmsPost | null }) {
           Publish date
           <input name="publishedAt" type="datetime-local" defaultValue={post?.publishedAt?.slice(0, 16)} className={fieldClass()} />
         </label>
-        <label className={labelClass()}>
-          Image path or URL
-          <input name="image" defaultValue={post?.image || "/images/skypa-hero-classroom.png"} className={fieldClass()} />
-        </label>
       </div>
       <label className={labelClass()}>
         Summary
@@ -1145,10 +1178,7 @@ export function PostForm({ post }: { post?: CmsPost | null }) {
         Body paragraphs
         <textarea name="body" rows={10} defaultValue={post?.body?.join("\n\n")} className={`${fieldClass()} py-3`} />
       </label>
-      <label className={labelClass()}>
-        Image alt text
-        <input name="imageAlt" defaultValue={post?.imageAlt} className={fieldClass()} />
-      </label>
+      <ImageEditor image={image} onChange={setImage} label="Update image" />
       <div className="flex items-center gap-3">
         <SubmitButton state={state} />
         {state === "error" ? <p className="text-sm font-bold text-[#9f1239]">Save failed.</p> : null}
@@ -1157,22 +1187,34 @@ export function PostForm({ post }: { post?: CmsPost | null }) {
   );
 }
 
-export function PageForm({ page }: { page: CmsPage }) {
+export function PageForm({ page }: { page?: CmsPage | null }) {
   const router = useRouter();
   const [state, setState] = useState<SaveState>("idle");
+  const isNew = !page;
+  const initialPage: CmsPage = page || {
+    id: "",
+    title: "",
+    slug: "",
+    eyebrow: "",
+    summary: "",
+    description: "",
+    sections: [],
+    status: "draft",
+    updatedAt: "",
+  };
   const [draftPage, setDraftPage] = useState<PageDraft>({
-    eyebrow: page.eyebrow || "",
-    title: page.title || "",
-    slug: page.slug || "",
-    image: page.image || "",
-    imageAlt: page.imageAlt || "",
-    summary: page.summary || "",
-    description: page.description || "",
-    status: page.status,
+    eyebrow: initialPage.eyebrow || "",
+    title: initialPage.title || "",
+    slug: initialPage.slug || "",
+    image: initialPage.image || "",
+    imageAlt: initialPage.imageAlt || "",
+    summary: initialPage.summary || "",
+    description: initialPage.description || "",
+    status: initialPage.status,
   });
-  const [sections, setSections] = useState<PageSection[]>(page.sections || []);
-  const [cta, setCta] = useState<Cta | undefined>(page.cta);
-  const [secondaryCta, setSecondaryCta] = useState<Cta | undefined>(page.secondaryCta);
+  const [sections, setSections] = useState<PageSection[]>(initialPage.sections || []);
+  const [cta, setCta] = useState<Cta | undefined>(initialPage.cta);
+  const [secondaryCta, setSecondaryCta] = useState<Cta | undefined>(initialPage.secondaryCta);
 
   function updateDraftPage<T extends keyof PageDraft>(key: T, value: PageDraft[T]) {
     setDraftPage((current) => ({ ...current, [key]: value }));
@@ -1181,11 +1223,11 @@ export function PageForm({ page }: { page: CmsPage }) {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setState("saving");
-    const response = await fetch(`/api/admin/pages/${page.id}`, {
-      method: "PATCH",
+    const response = await fetch(isNew ? "/api/admin/pages" : `/api/admin/pages/${initialPage.id}`, {
+      method: isNew ? "POST" : "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: page.id,
+        id: initialPage.id || undefined,
         slug: draftPage.slug,
         eyebrow: draftPage.eyebrow,
         title: draftPage.title,
@@ -1231,15 +1273,15 @@ export function PageForm({ page }: { page: CmsPage }) {
           URL slug
           <input name="slug" required value={draftPage.slug} onChange={(event) => updateDraftPage("slug", event.target.value)} className={fieldClass()} />
         </label>
-        <label className={labelClass()}>
-          Hero image path or URL
-          <input name="image" value={draftPage.image} onChange={(event) => updateDraftPage("image", event.target.value)} className={fieldClass()} />
-        </label>
-        <label className={labelClass()}>
-          Hero image alt text
-          <input name="imageAlt" value={draftPage.imageAlt} onChange={(event) => updateDraftPage("imageAlt", event.target.value)} className={fieldClass()} />
-        </label>
       </div>
+      <ImageEditor
+        image={{ src: draftPage.image, alt: draftPage.imageAlt }}
+        onChange={(image) => {
+          updateDraftPage("image", image.src);
+          updateDraftPage("imageAlt", image.alt);
+        }}
+        label="Hero image"
+      />
       <label className={labelClass()}>
         Short summary
         <textarea name="summary" rows={4} required value={draftPage.summary} onChange={(event) => updateDraftPage("summary", event.target.value)} className={`${fieldClass()} py-3`} />
@@ -1271,23 +1313,52 @@ export function PageForm({ page }: { page: CmsPage }) {
   );
 }
 
-export function ProgramForm({ program }: { program: CmsProgram }) {
+export function ProgramForm({ program }: { program?: CmsProgram | null }) {
   const router = useRouter();
   const [state, setState] = useState<SaveState>("idle");
+  const isNew = !program;
+  const initialProgram: CmsProgram = program || {
+    id: "",
+    title: "",
+    slug: "",
+    eyebrow: "Program in development",
+    summary: "",
+    description: "",
+    audience: "",
+    length: "",
+    outcomes: [],
+    modules: [],
+    sections: [],
+    status: "draft",
+    updatedAt: "",
+  };
+  const [image, setImage] = useState<EditableImage>({
+    src: initialProgram.image || "",
+    alt: initialProgram.imageAlt || initialProgram.title || "Program image",
+  });
+  const [sections, setSections] = useState<PageSection[]>(initialProgram.sections || []);
+  const [cta, setCta] = useState<Cta | undefined>(initialProgram.cta);
+  const [secondaryCta, setSecondaryCta] = useState<Cta | undefined>(initialProgram.secondaryCta);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setState("saving");
     const form = new FormData(event.currentTarget);
-    const response = await fetch(`/api/admin/programs/${program.id}`, {
-      method: "PATCH",
+    const response = await fetch(isNew ? "/api/admin/programs" : `/api/admin/programs/${initialProgram.id}`, {
+      method: isNew ? "POST" : "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: program.id,
+        id: initialProgram.id || undefined,
         slug: form.get("slug"),
         title: form.get("title"),
+        eyebrow: form.get("eyebrow"),
         summary: form.get("summary"),
         description: form.get("description"),
+        image: image.src,
+        imageAlt: image.alt,
+        cta,
+        secondaryCta,
+        sections,
         audience: form.get("audience"),
         length: form.get("length"),
         outcomes: splitLines(form.get("outcomes")),
@@ -1310,46 +1381,59 @@ export function ProgramForm({ program }: { program: CmsProgram }) {
       <div className="grid gap-4 md:grid-cols-2">
         <label className={labelClass()}>
           Program title
-          <input name="title" required defaultValue={program.title} className={fieldClass()} />
+          <input name="title" required defaultValue={initialProgram.title} className={fieldClass()} />
         </label>
         <label className={labelClass()}>
           URL slug
-          <input name="slug" required defaultValue={program.slug} className={fieldClass()} />
+          <input name="slug" required defaultValue={initialProgram.slug} className={fieldClass()} />
+        </label>
+        <label className={labelClass()}>
+          Small label
+          <input name="eyebrow" defaultValue={initialProgram.eyebrow} className={fieldClass()} />
         </label>
         <label className={labelClass()}>
           Audience
-          <input name="audience" defaultValue={program.audience} className={fieldClass()} />
+          <input name="audience" defaultValue={initialProgram.audience} className={fieldClass()} />
         </label>
         <label className={labelClass()}>
           Length or format
-          <input name="length" defaultValue={program.length} className={fieldClass()} />
+          <input name="length" defaultValue={initialProgram.length} className={fieldClass()} />
         </label>
       </div>
       <label className={labelClass()}>
         Summary
-        <textarea name="summary" rows={4} required defaultValue={program.summary} className={`${fieldClass()} py-3`} />
+        <textarea name="summary" rows={4} required defaultValue={initialProgram.summary} className={`${fieldClass()} py-3`} />
       </label>
       <label className={labelClass()}>
         Description
-        <textarea name="description" rows={4} required defaultValue={program.description} className={`${fieldClass()} py-3`} />
+        <textarea name="description" rows={4} required defaultValue={initialProgram.description} className={`${fieldClass()} py-3`} />
       </label>
       <div className="grid gap-4 md:grid-cols-2">
         <label className={labelClass()}>
           Outcomes, one per line
-          <textarea name="outcomes" rows={6} defaultValue={program.outcomes.join("\n")} className={`${fieldClass()} py-3`} />
+          <textarea name="outcomes" rows={6} defaultValue={initialProgram.outcomes.join("\n")} className={`${fieldClass()} py-3`} />
         </label>
         <label className={labelClass()}>
           Modules, one per line
-          <textarea name="modules" rows={6} defaultValue={program.modules.join("\n")} className={`${fieldClass()} py-3`} />
+          <textarea name="modules" rows={6} defaultValue={initialProgram.modules.join("\n")} className={`${fieldClass()} py-3`} />
         </label>
       </div>
       <label className={labelClass()}>
         Status
-        <select name="status" defaultValue={program.status} className={fieldClass()}>
+        <select name="status" defaultValue={initialProgram.status} className={fieldClass()}>
           <option value="published">Published</option>
           <option value="draft">Draft</option>
         </select>
       </label>
+      <ImageEditor image={image} onChange={setImage} label="Program image" />
+      <div className="grid gap-5 rounded-md border border-[#e4d9dc] bg-[#fbf8f6] p-4">
+        <h2 className="text-lg font-black text-[#2a1b22]">Program buttons</h2>
+        <OptionalCtaEditor cta={cta} onChange={setCta} label="Primary CTA" />
+        <OptionalCtaEditor cta={secondaryCta} onChange={setSecondaryCta} label="Secondary CTA" />
+      </div>
+      <div className="grid gap-5 rounded-md border border-[#e4d9dc] bg-[#fbf8f6] p-4">
+        <PageSectionsEditor sections={sections} onChange={setSections} />
+      </div>
       <SubmitButton state={state} />
       {state === "error" ? <p className="text-sm font-bold text-[#9f1239]">Save failed.</p> : null}
     </form>
@@ -1359,6 +1443,11 @@ export function ProgramForm({ program }: { program: CmsProgram }) {
 export function GalleryAlbumForm({ album }: { album?: GalleryAlbum | null }) {
   const router = useRouter();
   const [state, setState] = useState<SaveState>("idle");
+  const [coverImage, setCoverImage] = useState<EditableImage>({
+    src: album?.coverImage || "",
+    alt: album?.title || "Gallery cover image",
+  });
+  const [images, setImages] = useState<string[]>(album?.images || []);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -1371,8 +1460,8 @@ export function GalleryAlbumForm({ album }: { album?: GalleryAlbum | null }) {
         id: album?.id,
         title: form.get("title"),
         description: form.get("description"),
-        coverImage: form.get("coverImage"),
-        images: splitLines(form.get("images")),
+        coverImage: coverImage.src,
+        images,
         status: form.get("status"),
       }),
     });
@@ -1405,13 +1494,19 @@ export function GalleryAlbumForm({ album }: { album?: GalleryAlbum | null }) {
         Description
         <textarea name="description" rows={4} defaultValue={album?.description} className={`${fieldClass()} py-3`} />
       </label>
-      <label className={labelClass()}>
-        Cover image path or URL
-        <input name="coverImage" defaultValue={album?.coverImage} className={fieldClass()} />
-      </label>
+      <ImageEditor image={coverImage} onChange={setCoverImage} label="Cover image" />
+      <ImageEditor
+        image={{ src: "", alt: "" }}
+        onChange={(image) => {
+          if (image.src.startsWith("/api/media/")) {
+            setImages((current) => (current.includes(image.src) ? current : [...current, image.src]));
+          }
+        }}
+        label="Add gallery image"
+      />
       <label className={labelClass()}>
         Gallery image paths or URLs, one per line
-        <textarea name="images" rows={8} defaultValue={album?.images.join("\n")} className={`${fieldClass()} py-3`} />
+        <textarea name="images" rows={8} value={images.join("\n")} onChange={(event) => setImages(splitLines(event.target.value))} className={`${fieldClass()} py-3`} />
       </label>
       <SubmitButton state={state} />
       {state === "error" ? <p className="text-sm font-bold text-[#9f1239]">Save failed.</p> : null}

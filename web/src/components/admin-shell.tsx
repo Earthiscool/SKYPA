@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   BookOpen,
@@ -10,7 +9,6 @@ import {
   LogOut,
   PenLine,
   School,
-  Settings,
   SlidersHorizontal,
 } from "lucide-react";
 import { logoutAdminAction } from "@/app/admin/auth-actions";
@@ -29,28 +27,19 @@ const navItems = [
   { label: "Site Content", href: "/admin/site-content", key: "site-content", icon: SlidersHorizontal },
   { label: "Updates", href: "/admin/posts", key: "posts", icon: FileText },
   { label: "Pages", href: "/admin/pages", key: "pages", icon: BookOpen },
-  { label: "Programs", href: "/admin/programs", key: "programs", icon: School },
+  { label: "Learning Pathways", href: "/admin/programs", key: "programs", icon: School },
   { label: "Gallery", href: "/admin/gallery", key: "gallery", icon: ImageIcon },
   { label: "Submissions", href: "/admin/submissions", key: "submissions", icon: Inbox },
-  { label: "Site Settings", href: "/admin/site-settings", key: "site-settings", icon: Settings },
   { label: "Security", href: "/admin/security", key: "security", icon: LockKeyhole },
 ];
 
 export function AdminShell({ active, title, description, actions, children }: AdminShellProps) {
   return (
     <div className="min-h-screen bg-[#fbf8f6] text-[#2a1b22]">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-white/10 bg-[#4a0018] text-white lg:flex lg:flex-col">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-white/10 bg-[#102c34] text-white lg:flex lg:flex-col">
         <div className="border-b border-white/10 px-5 py-6">
           <Link href="/admin" className="flex items-center gap-3">
-            <span className="grid h-12 w-12 place-items-center rounded-md border border-white/20 bg-white shadow-sm shadow-black/15">
-              <Image
-                src="/images/skypa-logo.png"
-                alt=""
-                width={42}
-                height={40}
-                className="h-10 w-auto object-contain"
-              />
-            </span>
+            <span className="grid h-12 w-12 place-items-center border border-white/30 text-xl font-medium text-[#f6cf63]">S</span>
             <span>
               <span className="block text-base font-black leading-tight">{siteConfig.shortName}</span>
               <span className="block text-xs font-bold uppercase tracking-[0.18em] text-white/65">
@@ -67,7 +56,7 @@ export function AdminShell({ active, title, description, actions, children }: Ad
               key={item.key}
               className={`mb-1 flex min-h-11 items-center gap-3 rounded-md px-4 text-sm font-bold transition ${
                 active === item.key
-                  ? "bg-white/16 text-white ring-2 ring-[#2da8ff]"
+                  ? "bg-white/16 text-white ring-2 ring-[#ec604b]"
                   : "text-white/72 hover:bg-white/10 hover:text-white"
               }`}
             >
@@ -113,8 +102,8 @@ export function AdminShell({ active, title, description, actions, children }: Ad
                 key={item.key}
                 className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-md px-3 text-sm font-bold ${
                   active === item.key
-                    ? "bg-[#4a0018] text-white"
-                    : "border border-[#e4d9dc] bg-white text-[#4a0018]"
+                    ? "bg-[#102c34] text-white"
+                    : "border border-[#e4d9dc] bg-white text-[#102c34]"
                 }`}
               >
                 <item.icon aria-hidden="true" size={16} />

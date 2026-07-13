@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
 import { getAdminAuthStatus, requireAdminPage } from "@/lib/admin-auth";
 import { getAdminAuditEvents, verifyAdminAuditChain } from "@/lib/admin-store";
@@ -41,13 +42,22 @@ export default async function AdminSecurityPage() {
           </div>
         </section>
         <section className="rounded-md border border-[#e4d9dc] bg-white p-6">
+          <h2 className="text-2xl font-black text-[#2a1b22]">Recovery Export</h2>
+          <p className="mt-2 text-sm leading-6 text-[#7b6a70]">Download a protected JSON export of the current website content, submissions, subscribers, and settings. Store it in an approved private location; it may contain personal information.</p>
+          <Link href="/api/admin/export" className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#2a1b22] px-4 py-3 text-sm font-black text-white hover:bg-[#4a0018]">Download protected export</Link>
+        </section>
+        <section className="rounded-md border border-[#e4d9dc] bg-white p-6">
           <h2 className="text-2xl font-black text-[#2a1b22]">Service Environment</h2>
           <div className="mt-5">
             <EnvRow label="Vercel AI Gateway key" configured={Boolean(process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_AI_GATEWAY_API_KEY)} />
             <EnvRow label="Upstash Redis REST URL" configured={Boolean(process.env.UPSTASH_REDIS_REST_URL)} />
             <EnvRow label="Upstash Redis REST token" configured={Boolean(process.env.UPSTASH_REDIS_REST_TOKEN)} />
             <EnvRow label="Resend API key" configured={Boolean(process.env.RESEND_API_KEY)} />
-            <EnvRow label="Sanity write token" configured={Boolean(process.env.SANITY_API_WRITE_TOKEN)} />
+            <EnvRow label="Verified updates sender" configured={Boolean(process.env.UPDATES_FROM_EMAIL)} />
+            <EnvRow label="Inquiry notification recipient" configured={Boolean(process.env.INQUIRY_NOTIFY_TO)} />
+            <EnvRow label="Inquiry notification sender" configured={Boolean(process.env.INQUIRY_FROM_EMAIL)} />
+            <EnvRow label="Update webhook secret" configured={Boolean(process.env.UPDATES_WEBHOOK_SECRET)} />
+            <EnvRow label="Sanity public delivery enabled" configured={process.env.SANITY_CONTENT_ENABLED === "true"} />
           </div>
         </section>
         <section className="rounded-md border border-[#e4d9dc] bg-white p-6">

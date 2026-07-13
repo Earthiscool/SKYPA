@@ -16,7 +16,7 @@ export default async function AdminProgramsPage() {
   const programs = await getPrograms();
 
   return (
-    <AdminShell active="programs" title="Programs" description="Keep program pages accurate for schools, sponsors, and volunteers.">
+    <AdminShell active="programs" title="Learning Pathways" description="Keep public pathway pages accurate, reviewable, and clear about their status." actions={<Link href="/admin/programs/new" className="rounded-md bg-[#9f0038] px-4 py-3 text-sm font-black text-white hover:bg-[#7e002c]">New pathway</Link>}>
       <div className="grid gap-4 lg:grid-cols-2">
         {programs.map((program) => (
           <Link key={program.id} href={`/admin/programs/${program.id}/edit`} className="rounded-md border border-[#e4d9dc] bg-white p-5 hover:bg-[#f7eef1]">

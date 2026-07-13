@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Update } from "@/content/site";
 import { siteConfig } from "@/content/site";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -33,9 +34,9 @@ export function createMetadata({
       images: [
         {
           url: imageUrl,
-          width: 1792,
-          height: 1024,
-          alt: `${siteConfig.name} students learning AI literacy`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} AI literacy initiative`,
         },
       ],
     },
@@ -51,14 +52,11 @@ export function createMetadata({
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "NGO",
+    "@type": "Organization",
     name: siteConfig.name,
     url: absoluteUrl("/"),
     description: siteConfig.description,
-    email: siteConfig.email,
-    logo: absoluteUrl("/globe.svg"),
     sameAs: [],
-    areaServed: "United States",
     knowsAbout: [
       "AI literacy",
       "Artificial intelligence education",
@@ -75,11 +73,21 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: siteConfig.name,
     url: absoluteUrl("/"),
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${absoluteUrl("/resources")}?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+  };
+}
+
+export function articleJsonLd(update: Pick<Update, "title" | "summary" | "slug" | "publishedAt" | "image">) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: update.title,
+    description: update.summary,
+    datePublished: update.publishedAt,
+    dateModified: update.publishedAt,
+    mainEntityOfPage: absoluteUrl(`/updates/${update.slug}`),
+    image: update.image ? [absoluteUrl(update.image)] : undefined,
+    author: { "@type": "Organization", name: siteConfig.name },
+    publisher: { "@type": "Organization", name: siteConfig.name },
   };
 }
 

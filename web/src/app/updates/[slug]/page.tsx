@@ -2,22 +2,17 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { UpdatesSignup } from "@/components/updates-signup";
-import { getUpdate, updates } from "@/content/site";
 import { getPost } from "@/lib/cms";
-import { breadcrumbJsonLd, createMetadata } from "@/lib/seo";
-import { loadUpdate } from "@/sanity/loaders";
+import { articleJsonLd, breadcrumbJsonLd, createMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return updates.map((update) => ({ slug: update.slug }));
-}
-
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const update = (await getPost(slug)) || (await loadUpdate(slug)) || getUpdate(slug);
+  const candidate = await getPost(slug);
+  const update = candidate?.status === "published" ? candidate : null;
 
   if (!update) return {};
 
@@ -39,7 +34,8 @@ function formatDate(value: string) {
 
 export default async function UpdatePage({ params }: Props) {
   const { slug } = await params;
-  const update = (await getPost(slug)) || (await loadUpdate(slug)) || getUpdate(slug);
+  const candidate = await getPost(slug);
+  const update = candidate?.status === "published" ? candidate : null;
 
   if (!update) notFound();
 
@@ -52,6 +48,7 @@ export default async function UpdatePage({ params }: Props) {
           { name: update.title, href: `/updates/${update.slug}` },
         ])}
       />
+      <JsonLd data={articleJsonLd(update)} />
       <article>
         <section className="bg-[var(--color-surface)]">
           <div className="mx-auto max-w-5xl px-4 py-16 md:px-8 lg:py-24">

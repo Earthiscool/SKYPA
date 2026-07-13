@@ -20,8 +20,8 @@ export function LanguageToggle({ className }: { className?: string }) {
           type="button"
           onClick={() => setLocale(option)}
           className={cx(
-            "focus-ring min-h-10 flex-1 whitespace-nowrap px-3 text-xs font-semibold leading-none transition-colors",
-            option === "hi" ? "min-w-[4.25rem] tracking-normal" : "min-w-12 uppercase tracking-[0.12em]",
+            "focus-ring min-h-10 flex-1 whitespace-nowrap px-2.5 text-center text-xs font-semibold leading-[1.15] transition-colors",
+            option === "hi" ? "min-w-[4.9rem] tracking-normal" : "min-w-12 uppercase tracking-[0.12em]",
             locale === option
               ? "bg-[var(--color-deep)] text-white"
               : "text-[var(--color-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-ink)]",

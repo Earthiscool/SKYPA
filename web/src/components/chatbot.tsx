@@ -12,10 +12,10 @@ type ChatMessage = {
 
 function initialAssistantMessage(locale: Locale) {
   if (locale === "hi") {
-    return "नमस्ते, मैं SetuAI assistant हूं। स्कूल पार्टनरशिप, AI पाठ्यपुस्तक, स्वयंसेवा, स्पॉन्सरशिप या कार्यक्रमों के बारे में पूछें।";
+    return "नमस्ते, मैं SetuAI assistant हूं। आप पहल की स्थिति, स्कूल बातचीत, पाठ्यपुस्तक, स्वयंसेवा या भविष्य के समर्थन के बारे में पूछ सकते हैं।";
   }
 
-  return "Hi, I am the SetuAI assistant. Ask about school partnerships, the AI textbook, volunteering, sponsorship, or programs.";
+  return "Hi, I am the SetuAI assistant. Ask about SetuAI's formation, school conversations, the textbook initiative, volunteering, or future support.";
 }
 
 export function Chatbot() {
@@ -144,7 +144,7 @@ export function Chatbot() {
                 autoComplete="off"
                 spellCheck={true}
                 className="focus-ring resize-none border border-[var(--color-line)] bg-[var(--background)] px-3 py-2 text-sm font-normal text-[var(--color-ink)] placeholder:text-[rgb(28_25_23/0.48)]"
-                placeholder={t("Ask about programs…")}
+                placeholder={t("Ask about SetuAI…")}
               />
               <button
                 type="submit"

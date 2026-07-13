@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import type { EditableVisualSettings } from "@/content/editable-site";
+import { KnowledgeVisualFallback } from "@/components/knowledge-visual-fallback";
 
 type AiLearningLatticeProps = {
   label: string;
@@ -11,8 +12,20 @@ type AiLearningLatticeProps = {
 
 export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+    const updateViewport = () => setIsDesktop(media.matches);
+    updateViewport();
+    media.addEventListener("change", updateViewport);
+
+    return () => media.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const currentHost = hostRef.current;
     if (!currentHost) return;
     const hostElement: HTMLDivElement = currentHost;
@@ -22,10 +35,19 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     camera.position.set(0, 0.2, 7.5);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    let renderer: THREE.WebGLRenderer;
+
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    } catch {
+      hostElement.dataset.webgl = "unavailable";
+      return;
+    }
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearAlpha(0);
     hostElement.appendChild(renderer.domElement);
+    hostElement.dataset.webgl = "ready";
 
     const group = new THREE.Group();
     scene.add(group);
@@ -89,8 +111,8 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
     ring.rotation.x = Math.PI / 2.7;
     group.add(ring);
 
-    let frame = 0;
     let raf = 0;
+    let visible = true;
     const pointer = { x: 0, y: 0, burst: 0 };
 
     function resize() {
@@ -103,9 +125,13 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
       renderer.render(scene, camera);
     }
 
-    function animate() {
-      frame += 1;
-      const t = frame / 60;
+    function animate(time: number) {
+      if (!visible || document.hidden) {
+        raf = 0;
+        return;
+      }
+
+      const t = time / 1000;
       pointer.burst *= 0.9;
       group.rotation.y = t * 0.2 + pointer.x * 0.35;
       group.rotation.x = Math.sin(t * 0.34) * 0.08 + pointer.y * 0.18;
@@ -118,6 +144,12 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
       bookGroup.rotation.y = Math.sin(t * 0.5) * 0.18;
       renderer.render(scene, camera);
       raf = window.requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+      if (!reduceMotion && visible && !document.hidden && !raf) {
+        raf = window.requestAnimationFrame(animate);
+      }
     }
 
     function onPointerMove(event: PointerEvent) {
@@ -136,7 +168,18 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(hostElement);
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        visible = Boolean(entry?.isIntersecting);
+        if (visible) startAnimation();
+      },
+      { threshold: 0.05 },
+    );
+    visibilityObserver.observe(hostElement);
+    const onDocumentVisibility = () => startAnimation();
+    document.addEventListener("visibilitychange", onDocumentVisibility);
     hostElement.addEventListener("pointermove", onPointerMove);
     hostElement.addEventListener("pointerleave", onPointerLeave);
     hostElement.addEventListener("pointerdown", onPointerDown);
@@ -144,16 +187,19 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
       group.rotation.set(-0.08, 0.28, 0);
       renderer.render(scene, camera);
     } else {
-      animate();
+      startAnimation();
     }
 
     return () => {
-      window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+      document.removeEventListener("visibilitychange", onDocumentVisibility);
       hostElement.removeEventListener("pointermove", onPointerMove);
       hostElement.removeEventListener("pointerleave", onPointerLeave);
       hostElement.removeEventListener("pointerdown", onPointerDown);
       if (raf) window.cancelAnimationFrame(raf);
-      hostElement.removeChild(renderer.domElement);
+      delete hostElement.dataset.webgl;
+      if (hostElement.contains(renderer.domElement)) hostElement.removeChild(renderer.domElement);
       scene.traverse((object) => {
         if ("geometry" in object && object.geometry instanceof THREE.BufferGeometry) object.geometry.dispose();
         if ("material" in object) {
@@ -164,7 +210,7 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
       });
       renderer.dispose();
     };
-  }, [density]);
+  }, [density, isDesktop]);
 
   return (
     <div
@@ -172,6 +218,8 @@ export function AiLearningLattice({ label, density }: AiLearningLatticeProps) {
       className="ai-lattice-canvas"
       aria-label={label}
       role="img"
-    />
+    >
+      <KnowledgeVisualFallback variant="lattice" />
+    </div>
   );
 }

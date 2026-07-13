@@ -105,7 +105,7 @@ export function PageSections({ sections }: { sections: PageSection[] }) {
                 </div>
                 <div className="flex flex-col justify-center">
                   {section.eyebrow ? (
-                    <p className="section-kicker text-[var(--color-coral)]">
+                    <p className="section-kicker section-kicker-accent">
                       {section.eyebrow}
                     </p>
                   ) : null}

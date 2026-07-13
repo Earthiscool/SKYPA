@@ -20,7 +20,7 @@ import { JsonLd } from "@/components/json-ld";
 import { LocalizedText } from "@/components/localized-text";
 import { MissionHeartbeat } from "@/components/mission-heartbeat";
 import type { EditableCard } from "@/content/editable-site";
-import { foundingPartners, siteConfig } from "@/content/site";
+import { siteConfig } from "@/content/site";
 import { getSiteContent } from "@/lib/cms";
 import { createMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/utils";
@@ -37,137 +37,137 @@ const iconMap: Record<string, LucideIcon> = {
 
 const hiHome = {
   hero: {
-    kicker: "जिम्मेदार AI तक पहुंच का पुल",
-    title: "SetuAI.org",
-    body: "Summit Intelligent Systems, Shikivaa Foundation और SKYPA Foundation द्वारा बनाई गई एक नई स्वतंत्र AI साक्षरता पहल, जो स्कूलों और समुदायों तक व्यावहारिक AI शिक्षा पहुंचाती है।",
+    kicker: "निर्माणाधीन पहल",
+    title: "SetuAI",
+    body: "SetuAI एक पंजीकरण-पूर्व AI साक्षरता पहल है, जिसे Summit Intelligent Systems, Shikivaa Foundation और SKYPA Foundation मिलकर आकार दे रहे हैं। हम स्कूलों और समुदायों के साथ व्यावहारिक, जिम्मेदार AI सीखने की बुनियाद तैयार कर रहे हैं।",
   },
   intro: {
     kicker: "यह काम क्यों जरूरी है",
-    title: "AI अब बचपन का हिस्सा बन रहा है। SetuAI छात्रों को भरोसेमंद रास्ता देता है।",
+    title: "AI बचपन का हिस्सा बन रहा है। युवाओं को इसे समझने का भरोसेमंद रास्ता मिलना चाहिए।",
     featuredStatement:
-      "SetuAI, AI को एक उलझे हुए buzzword से बदलकर ऐसी चीज बनाता है जिसे छात्र समझ सकें, सवाल कर सकें और जिम्मेदारी से इस्तेमाल कर सकें।",
+      "SetuAI का उद्देश्य AI को एक उलझे हुए buzzword से ऐसी चीज में बदलना है जिसे छात्र समझ सकें, उस पर सवाल कर सकें और समझदारी से इस्तेमाल कर सकें।",
     body: [
-      "SetuAI.org अपनी अलग पहचान वाली सहयोगी पहल है: Summit Intelligent Systems तकनीक और कार्यान्वयन लाता है, Shikivaa Foundation शिक्षा और सामुदायिक पहुंच लाता है, और SKYPA Foundation छात्र-केंद्रित AI साक्षरता कार्यक्रम लाता है।",
-      "काम जानबूझकर व्यावहारिक रखा गया है: वर्कशॉप, शिक्षक सहायता, बढ़ती हुई पाठ्यपुस्तक, और स्कूलों, शिक्षा गैर-लाभकारी संस्थाओं व कंपनियों के साथ साझेदारी जो पहुंच को स्पॉन्सर करना चाहती हैं।",
+      "SetuAI अपनी पहचान निर्माणाधीन एक सहयोगी पहल है। Summit Intelligent Systems तकनीक और कार्यान्वयन का अनुभव लाता है, Shikivaa Foundation शिक्षा और सामुदायिक पहुंच का दृष्टिकोण लाता है, और SKYPA Foundation मूल AI साक्षरता और पाठ्यपुस्तक की सोच लेकर आता है।",
+      "अगला काम सोच-समझकर होगा: स्कूलों और शिक्षा गैर-लाभकारी संस्थाओं की बात सुनना, समीक्षा योग्य सामग्री बनाना, सुरक्षा उपाय तय करना और तभी किसी डिलीवरी योजना या परिणाम को सार्वजनिक रूप से बताना।",
     ],
   },
   stats: [
     {
-      label: "योजनाबद्ध छात्र सीटें",
-      detail: "वर्कशॉप, कक्षा पायलट और पाठ्यपुस्तक वितरण के लिए शुरुआती आउटरीच लक्ष्य।",
+      label: "संगठन की स्थिति",
+      detail: "SetuAI को एक स्वतंत्र संगठन के रूप में तैयार किया जा रहा है; पंजीकरण, शासन और संचालन की जानकारी अभी तय की जा रही है।",
     },
     {
-      label: "पार्टनर बातचीत",
-      detail: "स्कूलों, शिक्षा गैर-लाभकारी संस्थाओं और पहुंच स्पॉन्सर करने वाली कंपनियों के लिए पाइपलाइन।",
+      label: "पाठ्यपुस्तक और सीखने की सामग्री",
+      detail: "छात्र-केंद्रित AI पाठ्यपुस्तक और सहायक सामग्री किसी भी सार्वजनिक वितरण वचन से पहले विकसित की जा रही हैं।",
     },
     {
-      label: "सीखने के ट्रैक",
-      detail: "AI basics और prompt skills से लेकर ethics, creativity, safety और future careers तक।",
+      label: "शुरुआती बातचीत",
+      detail: "अगला कदम स्कूलों, शिक्षा गैर-लाभकारी संस्थाओं और संभावित सहयोगियों को सुनना है, फिर ही तारीखों या परिणामों की घोषणा होगी।",
     },
     {
-      label: "पहुंच पर केंद्रित",
-      detail: "हर कार्यक्रम साफ भाषा, स्कूल-तैयार सामग्री और जिम्मेदार इस्तेमाल पर केंद्रित है।",
+      label: "डिजाइन सिद्धांत",
+      detail: "साफ भाषा, जिम्मेदार उपयोग, वयस्क सहयोग और व्यावहारिक सीखना SetuAI के हर काम की कसौटी हैं।",
     },
   ],
   founding: {
     kicker: "संस्थापक सहयोग",
-    title: "तीन संगठन, एक साफ मिशन: AI literacy को पहुंच योग्य बनाना।",
-    body: "SetuAI.org एक स्वतंत्र पहल है, लेकिन इसकी ताकत उन संस्थापक पार्टनरों से आती है जो शिक्षा, तकनीक और समुदाय को एक साथ लाते हैं।",
+    title: "तीन संस्थापक साझेदार, एक सोच-समझकर किया गया आरंभ।",
+    body: "SetuAI को एक स्वतंत्र पहल के रूप में संगठित किया जा रहा है। इसके संस्थापक साझेदार शिक्षा, तकनीक और समुदाय तक पहुंच के दृष्टिकोण को शुरुआती काम में साथ लाते हैं।",
     partners: [
       {
         role: "तकनीक और कार्यान्वयन पार्टनर",
-        body: "Summit AI systems, automation और web engineering अनुभव लाता है ताकि literacy goals भरोसेमंद digital tools और school-ready workflows में बदल सकें।",
+        body: "Summit संस्थापक सहयोग में उत्पाद, प्रणालियों और कार्यान्वयन का अनुभव देता है।",
       },
       {
         role: "शिक्षा और सामुदायिक पहुंच पार्टनर",
-        body: "Shikivaa शिक्षा-first nonprofit दृष्टिकोण लाता है, जिससे पहल access, trust और learner-centered programs में grounded रहती है।",
+        body: "Shikivaa शिक्षा-केंद्रित दृष्टिकोण और सामुदायिक पहुंच का अनुभव देता है।",
       },
       {
         role: "AI literacy initiative partner",
-        body: "SKYPA student-centered AI literacy, textbook initiative, school outreach और volunteer energy लाता है जिसने SetuAI की शुरुआत को गति दी।",
+        body: "SKYPA मूल AI साक्षरता, पाठ्यपुस्तक, स्कूल पहुंच और स्वयंसेवी सोच लेकर आता है जिससे SetuAI की शुरुआत हुई।",
       },
     ],
   },
   learning: {
-    title: "कक्षाओं के लिए बना learning model, hype cycles के लिए नहीं।",
-    body: "हर SetuAI कार्यक्रम barrier कम करने के लिए बनाया गया है: साफ भाषा, adult-supported practice और ऐसी सामग्री जिसे स्कूल या youth-serving nonprofit सच में इस्तेमाल कर सके।",
+    title: "सीखने का ऐसा तरीका जो कक्षाओं के लिए हो, प्रचार के लिए नहीं।",
+    body: "विकासाधीन तरीका साफ भाषा, वयस्कों के सहयोग से अभ्यास और ऐसी सामग्री पर आधारित है जिसे शिक्षक समीक्षा कर सकें, इससे पहले कि उसे स्कूल के लिए तैयार कहा जाए।",
     cards: [
       {
-        title: "अपने आसपास के systems समझना",
-        body: "छात्र prompts, training data, outputs, bias, privacy और human judgment के सरल mental models सीखते हैं।",
+        title: "अपने आसपास की प्रणालियों को समझना",
+        body: "भविष्य की सामग्री prompts, training data, outputs, bias, privacy और मानवीय निर्णय के सरल मॉडल बताएगी।",
       },
       {
-        title: "जिम्मेदार tools के साथ अभ्यास",
-        body: "वर्कशॉप AI को supervised activities में बदलते हैं: answers compare करना, sources cite करना, prompts revise करना और reflect करना।",
+        title: "जिम्मेदार टूल्स के साथ अभ्यास",
+        body: "किसी भी भविष्य की गतिविधि में जाँच, स्रोत का उल्लेख, सोच-विचार और वयस्कों के सहयोग से अभ्यास को स्पष्ट रखना होगा।",
       },
       {
-        title: "सीख को घर तक ले जाना",
-        body: "Textbook pages और classroom-ready materials छात्रों को session के बाद भी revisit करने के लिए durable resource देते हैं।",
+        title: "सीख को आगे ले जाना",
+        body: "पाठ्यपुस्तक पहल को ऐसे टिकाऊ संसाधन के रूप में विकसित किया जा रहा है जिसे छात्र और शिक्षक समय के साथ दोबारा देख और बेहतर बना सकें।",
       },
     ],
   },
   heartbeat: {
-    kicker: "जीवित मिशन",
-    title: "यह काम AI से बड़ा है। यह access, judgment और confidence के बारे में है।",
-    body: "SetuAI का दिल केवल AI नहीं है। यह छात्रों को बेहतर सवाल पूछना सिखाने, शिक्षकों को practical support देने और communities को access-first choices देने के बारे में है।",
+    kicker: "काम के पीछे का सिद्धांत",
+    title: "मकसद ज्यादा AI नहीं है। मकसद बेहतर निर्णय, साझा पहुंच और साफ विकल्प हैं।",
+    body: "SetuAI एक सरल विश्वास के साथ बनाया जा रहा है: AI साक्षरता छात्रों को बेहतर सवाल पूछने में, वयस्कों को जिम्मेदार मार्गदर्शन देने में और समुदायों को भरोसे के योग्य चीज पहचानने में मदद करे।",
     pulses: [
-      "Automation से पहले human judgment",
-      "Technical jargon से पहले clear language",
-      "Private advantage से पहले community access",
+      "ऑटोमेशन से पहले मानवीय निर्णय",
+      "तकनीकी भाषा से पहले साफ भाषा",
+      "निजी लाभ से पहले सामुदायिक पहुंच",
     ],
   },
   textbook: {
-    kicker: "पाठ्यपुस्तक पहल",
-    title: "एक ऐसी पाठ्यपुस्तक जिसे छात्र पकड़ सकें, दोबारा पढ़ सकें और साझा कर सकें।",
-    body: "SetuAI बच्चों के लिए AI literacy textbook बना रहा है, जिसे स्कूलों, local partners और education nonprofits के माध्यम से बांटा जा सके। Sponsors printed access को संभव बना सकते हैं।",
-    calloutLabel: "वर्तमान पहल",
-    calloutTitle: "ऐसी textbook access जिसे छात्र अपने पास रख सकें।",
+    kicker: "विकासाधीन पाठ्यपुस्तक पहल",
+    title: "एक ऐसी पाठ्यपुस्तक जिसे छात्र पकड़ सकें, दोबारा देख सकें और उस पर सवाल कर सकें।",
+    body: "SetuAI छात्र-केंद्रित AI साक्षरता पाठ्यपुस्तक विकसित कर रहा है। यह अभी प्रकाशित, पायलट या वितरण के लिए तय नहीं है। प्राथमिकता इसे पहले सटीक, आयु-उपयुक्त, सुलभ और समीक्षा योग्य बनाना है।",
+    calloutLabel: "विकास की स्थिति",
+    calloutTitle: "समीक्षा और पायलट योजना से पहले वितरण का कोई दावा नहीं।",
     bullets: [
-      "छात्रों की भाषा में AI basics",
-      "Prompt practice और creative projects",
-      "Safety, bias, privacy और human judgment",
+      "सादी भाषा में AI की मूल बातें",
+      "सोच-समझकर prompts और सत्यापन",
+      "सुरक्षा, bias, privacy और मानवीय निर्णय",
     ],
   },
   audience: {
-    title: "हर तरह के पार्टनर के लिए साफ अगला कदम।",
-    body: "SetuAI एक outreach engine भी है और education program भी। स्कूल, education nonprofits, sponsors, volunteers और families तुरंत समझ सकें कि वे कहां फिट होते हैं।",
+    title: "हर प्रकार के साझेदार के लिए अगला सरल, कम दबाव वाला कदम।",
+    body: "SetuAI अभी खोज और बातचीत के चरण में है। स्कूल, शिक्षा गैर-लाभकारी संस्थाएं, संभावित सहयोगी, स्वयंसेवक और परिवार अपनी बात साझा कर सकते हैं, बिना किसी अपुष्ट कार्यक्रम का वादा पाए।",
     cards: [
       {
         title: "स्कूल",
-        body: "SetuAI को assemblies, classroom workshops, textbook pilots और teacher support sessions में लाएं।",
+        body: "भविष्य की AI साक्षरता बातचीत के लिए अपना शैक्षिक संदर्भ, प्रश्न और सीमाएं साझा करें।",
       },
       {
         title: "शिक्षा गैर-लाभकारी संस्थाएं",
-        body: "Community programs, resource distribution, parent sessions और youth learning events पर collaboration करें।",
+        body: "जानें कि स्थानीय ज्ञान और सामुदायिक पहुंच एक जिम्मेदार भविष्य के सहयोग को कैसे आकार दे सकती है।",
       },
       {
         title: "कंपनियां",
-        body: "Textbook access sponsor करें, school cohort fund करें या skilled volunteers को clear education goal के साथ organize करें।",
+        body: "इस साइट पर दान, कर-रसीद या कार्यक्रम-डिलीवरी का वादा किए बिना संभावित समर्थन पर बात करें।",
       },
       {
         title: "स्वयंसेवक",
-        body: "Facilitation, curriculum feedback, outreach, logistics और student-friendly materials में मदद करें।",
+        body: "समीक्षा, पहुंच, संचालन या स्वीकृत सहयोग जैसे भविष्य के उचित रूप से जांचे गए कार्यों में रुचि दर्ज करें।",
       },
       {
         title: "परिवार",
-        body: "समझें कि छात्र क्या सीख रहे हैं और घर पर safety, creativity और AI के बारे में कैसे बात करें।",
+        body: "वे प्रश्न साझा करें जिनका उत्तर SetuAI को सुलभ सीखने की सामग्री विकसित करते समय देना चाहिए।",
       },
     ],
   },
   process: {
-    kicker: "स्कूल पार्टनरशिप मार्ग",
-    title: "पहली बातचीत से classroom delivery तक।",
-    body: "प्रक्रिया जानबूझकर सरल है ताकि schools, nonprofits और sponsors interest से pilot तक बिना confusion के पहुंच सकें।",
+    kicker: "जिम्मेदार साझेदारी का रास्ता",
+    title: "पहली बातचीत से एक संभावित, सुरक्षित पायलट तक।",
+    body: "प्रक्रिया जानबूझकर सावधान है। किसी जानकारी को भेजना बातचीत खोलता है; यह कार्यशाला, साझेदारी या छात्र-केंद्रित गतिविधि की पुष्टि नहीं है।",
     steps: [
-      "School leaders के साथ discovery call",
-      "Workshop या textbook pilot design",
-      "Guided activities के साथ student session",
-      "Reflection, resources और next steps",
+      "परिस्थिति और इच्छित दर्शकों को समझना",
+      "सुरक्षा उपायों, क्षमता और सामग्री की तैयारी की समीक्षा करना",
+      "यदि उचित हो तो एक छोटा, दर्ज किया गया अगला कदम तय करना",
+      "सीखना, समीक्षा करना और नतीजे को ईमानदारी से बताना",
     ],
   },
   closingCta: {
-    title: "ज्यादा छात्रों को भ्रम नहीं, आत्मविश्वास के साथ AI से मिलाएं।",
-    body: "School partnership शुरू करें, textbook access sponsor करें या अगले SetuAI initiative में volunteer support लाएं।",
+    title: "एक भरोसेमंद AI साक्षरता पहल बनाने में मदद करें।",
+    body: "स्कूल या समुदाय का दृष्टिकोण, भावी सहयोग या समीक्षा का अनुभव साझा करें। SetuAI सुनना चाहता है, फिर ऐसा काम डिजाइन करना चाहता है जो दावों से पहले भरोसा कमाए।",
   },
 };
 
@@ -195,7 +195,7 @@ export default async function Home() {
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "EducationalOrganization",
+          "@type": "Organization",
           name: global.siteName || siteConfig.name,
           url: absoluteUrl("/"),
           description: global.description,
@@ -211,16 +211,15 @@ export default async function Home() {
           sizes="100vw"
           className="kinetic-image object-cover object-center opacity-70"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(28_25_23/0.96)_0%,rgb(28_25_23/0.78)_48%,rgb(28_25_23/0.18)_100%)]" />
+        <div className="absolute inset-0 bg-[#142d33]/76" />
         {visuals.hero3dEnabled ? (
           <div className="absolute inset-y-8 right-0 hidden w-[48vw] lg:block">
             <AiLearningLattice label={visuals.hero3dLabel} density={visuals.visualDensity} />
           </div>
         ) : null}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,var(--background))]" />
         <div className="relative mx-auto grid min-h-[min(820px,calc(88dvh-76px))] w-full max-w-6xl grid-cols-12 items-center px-4 py-16 md:px-8">
           <div className={["col-span-12 max-w-[60ch] motion-reveal lg:col-span-7", visuals.motionEnabled ? "motion-rise" : ""].join(" ")} data-animate>
-            <p className="section-kicker text-[var(--color-coral)]">
+            <p className="section-kicker section-kicker-accent">
               <LocalizedText en={home.hero.kicker} hi={hiHome.hero.kicker} />
             </p>
             <h1 className="balance mt-6 max-w-4xl text-[clamp(3.25rem,8vw,5.8rem)] font-light leading-none tracking-tight">
@@ -294,21 +293,21 @@ export default async function Home() {
               </p>
               <h2 className="balance mt-5 text-4xl font-light leading-tight tracking-tight text-[var(--color-ink)] sm:text-5xl">
                 <LocalizedText
-                  en="Three organizations, one clear mission: make AI literacy reachable."
+                  en="Three founding partners, one deliberate starting point."
                   hi={hiHome.founding.title}
                 />
               </h2>
             </div>
             <p className="pretty text-lg leading-8 text-[var(--color-muted)]">
               <LocalizedText
-                en="SetuAI.org is an independent initiative, but its strength comes from founding partners that bring education, technology, and community access into the same room."
+                en="SetuAI is being organized as an independent initiative. Its founding partners bring education, technology, and community access perspectives into the same early work."
                 hi={hiHome.founding.body}
               />
             </p>
           </div>
 
           <div className="mt-12 grid gap-px bg-[var(--color-line)] lg:grid-cols-3">
-            {foundingPartners.map((partner, index) => {
+            {global.foundingPartners.map((partner, index) => {
               const external = partner.href.startsWith("http");
               const contentNode = (
                 <>
@@ -370,10 +369,10 @@ export default async function Home() {
           className="kinetic-image object-cover object-center opacity-[0.34] saturate-90"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(28_25_23/0.97),rgb(28_25_23/0.88)_46%,rgb(28_25_23/0.58))]" />
+        <div className="absolute inset-0 bg-[#1c2526]/82" />
         <div className="section-shell relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className={["motion-reveal", visuals.motionEnabled ? "motion-rise" : ""].join(" ")} data-animate>
-            <p className="section-kicker text-[var(--color-coral)]">
+                    <p className="section-kicker section-kicker-accent">
               <LocalizedText en={home.heartbeat.kicker} hi={hiHome.heartbeat.kicker} />
             </p>
             <h2 className="balance mt-5 text-4xl font-light leading-tight tracking-tight sm:text-5xl">
@@ -469,7 +468,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="motion-reveal flex flex-col justify-center" data-animate>
-            <p className="section-kicker text-[var(--color-coral)]">
+            <p className="section-kicker section-kicker-accent">
               <LocalizedText en={home.textbook.kicker} hi={hiHome.textbook.kicker} />
             </p>
             <h2 className="balance mt-5 text-4xl font-light leading-tight tracking-tight sm:text-5xl">

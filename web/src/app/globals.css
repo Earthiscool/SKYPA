@@ -95,6 +95,10 @@ summary::-webkit-details-marker {
   text-transform: uppercase;
 }
 
+.section-kicker-accent {
+  color: var(--color-coral);
+}
+
 .balance {
   text-wrap: balance;
 }
@@ -204,31 +208,204 @@ summary::-webkit-details-marker {
 }
 
 .ai-lattice-canvas {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   min-height: 26rem;
   opacity: 0.95;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 22px 46px oklch(0.15 0.03 220 / 0.28));
 }
 
 .ai-lattice-canvas canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  z-index: 2;
 }
 
 .mission-heartbeat-canvas {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   min-height: 24rem;
   aspect-ratio: 1 / 0.78;
-  filter: drop-shadow(0 28px 60px oklch(0.12 0.035 220 / 0.34));
 }
 
 .mission-heartbeat-canvas canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  z-index: 2;
+}
+
+.knowledge-visual-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 56rem;
+  transition: opacity 240ms ease;
+}
+
+.ai-lattice-canvas[data-webgl="ready"] .knowledge-visual-fallback,
+.mission-heartbeat-canvas[data-webgl="ready"] .knowledge-visual-fallback {
+  opacity: 0;
+}
+
+.knowledge-visual-axis {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 78%;
+  height: 1px;
+  transform-origin: center;
+  background: oklch(0.79 0.13 190 / 0.6);
+}
+
+.knowledge-visual-axis--one {
+  transform: translate(-50%, -50%) rotate(18deg);
+}
+
+.knowledge-visual-axis--two {
+  transform: translate(-50%, -50%) rotate(-42deg);
+  background: oklch(0.88 0.13 89 / 0.58);
+}
+
+.knowledge-visual-axis--three {
+  width: 55%;
+  transform: translate(-50%, -50%) rotate(89deg);
+  background: oklch(0.85 0.04 220 / 0.55);
+}
+
+.knowledge-visual-axis--four {
+  width: 48%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  background: oklch(0.68 0.16 30 / 0.62);
+}
+
+.knowledge-visual-core {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  width: clamp(7.25rem, 22vw, 13.5rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotateX(56deg) rotateZ(30deg);
+  transform-style: preserve-3d;
+  animation: knowledge-core-breathe 3.8s ease-in-out infinite;
+}
+
+.knowledge-visual-core__facet {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  border: 1px solid oklch(0.91 0.13 82 / 0.95);
+}
+
+.knowledge-visual-core__facet--left {
+  background: oklch(0.63 0.16 28 / 0.88);
+  transform: translateZ(0.25rem);
+}
+
+.knowledge-visual-core__facet--right {
+  background: oklch(0.51 0.11 213 / 0.92);
+  transform: translate3d(1.1rem, -0.9rem, -0.18rem);
+}
+
+.knowledge-visual-core__facet--base {
+  background: oklch(0.75 0.12 182 / 0.84);
+  transform: translate3d(-0.95rem, 1rem, -0.42rem);
+}
+
+.knowledge-visual-book {
+  position: absolute;
+  left: 50%;
+  top: 67%;
+  width: clamp(9rem, 27vw, 16rem);
+  height: clamp(4.25rem, 12vw, 7rem);
+  transform: translate(-50%, -50%) rotateX(64deg) rotateZ(-8deg);
+  transform-style: preserve-3d;
+}
+
+.knowledge-visual-book__page {
+  position: absolute;
+  top: 0;
+  width: 52%;
+  height: 100%;
+  border: 1px solid oklch(0.89 0.03 220 / 0.9);
+  background: oklch(0.95 0.03 92 / 0.84);
+}
+
+.knowledge-visual-book__page--left {
+  left: 0;
+  transform: skewY(-7deg) rotateY(-9deg);
+}
+
+.knowledge-visual-book__page--right {
+  right: 0;
+  transform: skewY(7deg) rotateY(9deg);
+  background: oklch(0.74 0.1 187 / 0.68);
+}
+
+.knowledge-visual-network {
+  position: absolute;
+  inset: 0;
+  animation: knowledge-network-drift 9s linear infinite;
+}
+
+.knowledge-visual-node {
+  position: absolute;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1px solid oklch(0.9 0.13 85 / 0.95);
+  background: oklch(0.63 0.15 191 / 0.74);
+  transform: rotate(45deg);
+}
+
+.knowledge-visual-node--node-a { left: 14%; top: 24%; }
+.knowledge-visual-node--node-b { left: 24%; top: 65%; background: oklch(0.67 0.16 30 / 0.76); }
+.knowledge-visual-node--node-c { left: 38%; top: 12%; }
+.knowledge-visual-node--node-d { right: 17%; top: 23%; background: oklch(0.67 0.16 30 / 0.76); }
+.knowledge-visual-node--node-e { right: 22%; top: 68%; }
+.knowledge-visual-node--node-f { right: 37%; bottom: 13%; background: oklch(0.86 0.13 87 / 0.78); }
+.knowledge-visual-node--node-g { left: 39%; bottom: 17%; }
+
+.knowledge-visual-fallback--heartbeat .knowledge-visual-core {
+  top: 45%;
+  width: clamp(9rem, 28vw, 17rem);
+  animation-duration: 2.7s;
+}
+
+.knowledge-visual-fallback--heartbeat .knowledge-visual-book {
+  top: 73%;
+}
+
+.knowledge-visual-fallback--heartbeat .knowledge-visual-axis--one,
+.knowledge-visual-fallback--heartbeat .knowledge-visual-axis--two {
+  width: 94%;
+}
+
+@keyframes knowledge-core-breathe {
+  0%, 100% { transform: translate(-50%, -50%) rotateX(56deg) rotateZ(30deg) scale(0.96); }
+  48% { transform: translate(-50%, -50%) rotateX(56deg) rotateZ(30deg) scale(1.05); }
+  62% { transform: translate(-50%, -50%) rotateX(56deg) rotateZ(30deg) scale(0.99); }
+}
+
+@keyframes knowledge-network-drift {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(3deg) scale(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-visual-core,
+  .knowledge-visual-network {
+    animation: none;
+  }
 }
 
 .mission-pulse-line {

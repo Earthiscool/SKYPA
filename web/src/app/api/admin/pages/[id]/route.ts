@@ -20,6 +20,7 @@ export async function PATCH(request: Request, context: Context) {
   if (!existing) return NextResponse.json({ error: "Page not found" }, { status: 404 });
 
   const page = await savePage({ ...existing, ...body, id: existing.id });
+  revalidatePath("/", "layout");
   revalidatePath(`/${existing.slug}`);
   revalidatePath(`/${page.slug}`);
   revalidatePath("/admin/pages");

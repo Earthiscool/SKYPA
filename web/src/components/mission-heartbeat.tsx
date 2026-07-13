@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import type { EditableSiteContent } from "@/content/editable-site";
+import { KnowledgeVisualFallback } from "@/components/knowledge-visual-fallback";
 
 type MissionHeartbeatProps = {
   label: string;
@@ -39,16 +40,24 @@ export function MissionHeartbeat({ label, density = "active", enabled = true }: 
     const mountElement: HTMLDivElement = mount;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
-      preserveDrawingBuffer: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance",
+      });
+    } catch {
+      mountElement.dataset.webgl = "unavailable";
+      return;
+    }
+
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.domElement.setAttribute("aria-hidden", "true");
     mountElement.appendChild(renderer.domElement);
+    mountElement.dataset.webgl = "ready";
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
@@ -175,6 +184,7 @@ export function MissionHeartbeat({ label, density = "active", enabled = true }: 
     resizeObserver.observe(mountElement);
 
     let frame = 0;
+    let visible = true;
     const beatStrength = density === "immersive" ? 0.12 : density === "active" ? 0.085 : 0.055;
     const pointer = { x: 0, y: 0, burst: 0 };
 
@@ -198,6 +208,11 @@ export function MissionHeartbeat({ label, density = "active", enabled = true }: 
     mountElement.addEventListener("pointerdown", onPointerDown);
 
     function render(time = 0) {
+      if (document.hidden || !visible) {
+        frame = 0;
+        return;
+      }
+
       const seconds = time * 0.001;
       pointer.burst *= 0.9;
       const beat = 1 + Math.pow(Math.max(0, Math.sin(seconds * 3.18)), 5) * beatStrength + pointer.burst * 0.075;
@@ -216,19 +231,40 @@ export function MissionHeartbeat({ label, density = "active", enabled = true }: 
 
       renderer.render(scene, camera);
 
-      if (enabled && !reducedMotion) {
+      if (enabled && !reducedMotion && visible && !document.hidden) {
         frame = window.requestAnimationFrame(render);
       }
     }
 
-    render();
+    function startAnimation() {
+      if (!reducedMotion && enabled && visible && !document.hidden && !frame) {
+        frame = window.requestAnimationFrame(render);
+      }
+    }
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        visible = Boolean(entry?.isIntersecting);
+        if (visible) startAnimation();
+      },
+      { threshold: 0.05 },
+    );
+    visibilityObserver.observe(mountElement);
+    const onDocumentVisibility = () => startAnimation();
+    document.addEventListener("visibilitychange", onDocumentVisibility);
+
+    if (reducedMotion || !enabled) render();
+    else startAnimation();
 
     return () => {
       window.cancelAnimationFrame(frame);
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+      document.removeEventListener("visibilitychange", onDocumentVisibility);
       mountElement.removeEventListener("pointermove", onPointerMove);
       mountElement.removeEventListener("pointerleave", onPointerLeave);
       mountElement.removeEventListener("pointerdown", onPointerDown);
+      delete mountElement.dataset.webgl;
       disposeScene(scene);
       pageMaterial.dispose();
       renderer.dispose();
@@ -242,6 +278,8 @@ export function MissionHeartbeat({ label, density = "active", enabled = true }: 
       role="img"
       aria-label={label}
       className="mission-heartbeat-canvas min-h-[22rem] w-full max-w-full min-w-0 sm:aspect-[1/0.78] sm:min-h-96"
-    />
+    >
+      <KnowledgeVisualFallback variant="heartbeat" />
+    </div>
   );
 }

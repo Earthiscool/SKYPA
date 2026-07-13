@@ -17,7 +17,7 @@ export default async function AdminGalleryPage() {
   const albums = await getGalleryAlbums();
 
   return (
-    <AdminShell active="gallery" title="Gallery" description="Manage photo albums for workshops, events, and partnerships." actions={<Link href="/admin/gallery/new" className="rounded-md bg-[#9f0038] px-4 py-3 text-sm font-black text-white hover:bg-[#7e002c]">New album</Link>}>
+    <AdminShell active="gallery" title="Gallery" description="Manage approved images and albums with accurate alternative text and permissions." actions={<Link href="/admin/gallery/new" className="rounded-md bg-[#9f0038] px-4 py-3 text-sm font-black text-white hover:bg-[#7e002c]">New album</Link>}>
       {albums.length ? (
         <div className="grid gap-4 lg:grid-cols-3">
           {albums.map((album) => (

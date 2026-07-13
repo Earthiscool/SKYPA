@@ -1,8 +1,9 @@
-# Generated Website Images
+# Website Images
 
-These images are generated original assets for the SKYPA Foundation site.
+This directory contains editorial images for the SetuAI pre-registration site.
 
-- `skypa-hero-classroom.png`: homepage hero classroom scene.
-- `skypa-ai-textbook.png`: textbook initiative feature image.
-- `skypa-partnership-workshop.png`: partnership and workshop feature image.
-- `skypa-logo.png`: provided SKYPA Foundation logo used in the header, footer, and admin shell.
+- `skypa-hero-classroom.png`: classroom concept imagery. It is not evidence of a SetuAI programme or partnership.
+- `skypa-ai-textbook.png`: textbook concept imagery. It is not evidence that the textbook has been published or distributed.
+- `skypa-partnership-workshop.png`: collaboration concept imagery. It is not evidence of a confirmed SetuAI partnership.
+- `skypa-logo.png`: archived SKYPA Foundation partner logo. It must not be presented as the SetuAI logo.
+- `skypa-higgsfield-heart.png`: archived SKYPA-branded concept image. It is retained for source history and must not be used as SetuAI brand artwork.

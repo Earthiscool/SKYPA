@@ -6,7 +6,6 @@ import { PageSections } from "@/components/page-sections";
 import { getProgram, programs } from "@/content/site";
 import { getProgramEntry } from "@/lib/cms";
 import { breadcrumbJsonLd, createMetadata } from "@/lib/seo";
-import { loadProgram } from "@/sanity/loaders";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -18,9 +17,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const baseProgram = (await loadProgram(slug)) || getProgram(slug);
   const cmsProgram = await getProgramEntry(slug);
-  const program = baseProgram && cmsProgram?.status === "published" ? { ...baseProgram, ...cmsProgram } : baseProgram;
+  const program = cmsProgram?.status === "published" ? cmsProgram : getProgram(slug);
 
   if (!program) return {};
 
@@ -34,9 +32,8 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ProgramPage({ params }: Props) {
   const { slug } = await params;
-  const baseProgram = (await loadProgram(slug)) || getProgram(slug);
   const cmsProgram = await getProgramEntry(slug);
-  const program = baseProgram && cmsProgram?.status === "published" ? { ...baseProgram, ...cmsProgram } : baseProgram;
+  const program = cmsProgram?.status === "published" ? cmsProgram : getProgram(slug);
 
   if (!program) notFound();
 

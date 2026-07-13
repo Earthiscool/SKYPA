@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Dashboard",
-  description: "SetuAI.org structured admin dashboard for content, updates, submissions, and settings.",
+  description: "SetuAI structured admin dashboard for reviewed content, updates, and submissions.",
   path: "/admin",
 });
 

@@ -1,5 +1,6 @@
+import { createHash, randomUUID } from "crypto";
 import { Redis } from "@upstash/redis";
-import { fallbackSiteContent, type EditableSiteContent } from "@/content/editable-site";
+import { fallbackSiteContent, siteContentSchemaVersion, type EditableSiteContent } from "@/content/editable-site";
 import { corePages, programs, siteConfig, updates, type PageSection, type Program, type SitePage, type Update } from "@/content/site";
 
 export type CmsStatus = "draft" | "published";
@@ -18,7 +19,7 @@ export type CmsPage = SitePage & {
   updatedAt: string;
 };
 
-export type CmsProgram = Pick<Program, "slug" | "title" | "summary" | "description" | "audience" | "length" | "outcomes" | "modules"> & {
+export type CmsProgram = Program & {
   id: string;
   status: CmsStatus;
   updatedAt: string;
@@ -54,6 +55,11 @@ export type CmsSubmission = {
   message: string;
   createdAt: string;
   read: boolean;
+  status: "new" | "in-progress" | "closed";
+  privacyAcknowledged: boolean;
+  updatesOptIn: boolean;
+  assignedTo?: string;
+  notes?: string;
 };
 
 export type CmsSubscriber = {
@@ -62,6 +68,10 @@ export type CmsSubscriber = {
   name: string;
   source: string;
   active: boolean;
+  confirmedAt?: string;
+  consentAt?: string;
+  confirmationTokenHash?: string;
+  unsubscribeTokenHash: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -133,6 +143,10 @@ function now() {
   return new Date().toISOString();
 }
 
+function tokenHash(value: string) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
 function idFromSlug(prefix: string, slug: string) {
   return `${prefix}-${slug}`;
 }
@@ -167,15 +181,8 @@ function fallbackPages(): CmsPage[] {
 
 function fallbackPrograms(): CmsProgram[] {
   return programs.map((program) => ({
+    ...program,
     id: idFromSlug("program", program.slug),
-    slug: program.slug,
-    title: program.title,
-    summary: program.summary,
-    description: program.description,
-    audience: program.audience,
-    length: program.length,
-    outcomes: program.outcomes,
-    modules: program.modules,
     status: "published",
     updatedAt: now(),
   }));
@@ -185,8 +192,8 @@ export const fallbackSettings: CmsSettings = {
   siteName: siteConfig.name,
   tagline: siteConfig.tagline,
   contactEmail: siteConfig.email,
-  announcement: "AI literacy programs, textbook partnerships, and volunteer opportunities are open.",
-  primaryCtaLabel: "Start a partnership",
+  announcement: "SetuAI is in formation. School, education nonprofit, and sponsor conversations are welcome.",
+  primaryCtaLabel: "Start a conversation",
   primaryCtaHref: "/contact",
   updatedAt: now(),
 };
@@ -231,9 +238,9 @@ export async function savePost(input: Partial<CmsPost>) {
     publishedAt: input.publishedAt || now(),
     body: Array.isArray(input.body) ? input.body : [],
     image: input.image || "/images/skypa-hero-classroom.png",
-    imageAlt: input.imageAlt || input.title || "SetuAI.org update",
+    imageAlt: input.imageAlt || input.title || "SetuAI update",
     status: input.status || "draft",
-    author: input.author || "SetuAI.org",
+    author: input.author || "SetuAI",
     updatedAt: now(),
     notificationStatus: input.notificationStatus || "not-sent",
   };
@@ -265,7 +272,7 @@ export async function savePage(input: Partial<CmsPage>) {
     id,
     slug,
     title: input.title || "Untitled page",
-    eyebrow: input.eyebrow || existing?.eyebrow || "SetuAI.org",
+    eyebrow: input.eyebrow || existing?.eyebrow || "SetuAI",
     summary: input.summary || "",
     description: input.description || input.summary || "",
     image: input.image || existing?.image,
@@ -273,7 +280,7 @@ export async function savePage(input: Partial<CmsPage>) {
     cta: input.cta || existing?.cta,
     secondaryCta: input.secondaryCta || existing?.secondaryCta,
     sections: Array.isArray(input.sections) ? (input.sections as PageSection[]) : existing?.sections || [],
-    status: input.status || "published",
+    status: input.status || "draft",
     updatedAt: now(),
   };
   await writeCollection(keys.pages, [page, ...pages.filter((item) => item.id !== id)]);
@@ -297,13 +304,19 @@ export async function saveProgram(input: Partial<CmsProgram>) {
     id,
     slug,
     title: input.title || "Untitled program",
+    eyebrow: input.eyebrow || "Program in development",
     summary: input.summary || "",
     description: input.description || input.summary || "",
+    image: input.image,
+    imageAlt: input.imageAlt,
+    cta: input.cta,
+    secondaryCta: input.secondaryCta,
+    sections: Array.isArray(input.sections) ? (input.sections as PageSection[]) : [],
     audience: input.audience || "",
     length: input.length || "",
     outcomes: input.outcomes || [],
     modules: input.modules || [],
-    status: input.status || "published",
+    status: input.status || "draft",
     updatedAt: now(),
   };
   await writeCollection(keys.programs, [entry, ...entries.filter((item) => item.id !== id)]);
@@ -359,6 +372,7 @@ function mergeSiteContent(input: Partial<EditableSiteContent> | null): EditableS
   const home = (migratedInput?.home || {}) as Partial<EditableSiteContent["home"]>;
 
   return {
+    contentVersion: siteContentSchemaVersion,
     global: {
       ...fallbackSiteContent.global,
       ...migratedInput?.global,
@@ -373,6 +387,7 @@ function mergeSiteContent(input: Partial<EditableSiteContent> | null): EditableS
       navigation: migratedInput?.global?.navigation || fallbackSiteContent.global.navigation,
       footerColumns: migratedInput?.global?.footerColumns || fallbackSiteContent.global.footerColumns,
       footerUtilityLinks: migratedInput?.global?.footerUtilityLinks || fallbackSiteContent.global.footerUtilityLinks,
+      foundingPartners: migratedInput?.global?.foundingPartners || fallbackSiteContent.global.foundingPartners,
     },
     seo: {
       ...fallbackSiteContent.seo,
@@ -468,32 +483,25 @@ function mergeSiteContent(input: Partial<EditableSiteContent> | null): EditableS
 function migrateLegacySiteContent(input: Partial<EditableSiteContent> | null) {
   if (!input) return input;
 
-  const editableText = JSON.stringify({
-    global: input.global,
-    seo: input.seo,
-    home: input.home,
-  });
-
-  if (!editableText.includes("SKYPA") && !editableText.includes("skypafoundation.org")) {
+  if (input.contentVersion === siteContentSchemaVersion) {
     return input;
   }
 
-  return {
-    ...input,
-    global: fallbackSiteContent.global,
-    seo: fallbackSiteContent.seo,
-    home: fallbackSiteContent.home,
-  };
+  // The former launch content contained unverified projected claims. Until an
+  // editor intentionally saves the new pre-registration model, render the
+  // honest baseline rather than revive those old claims from Redis.
+  return fallbackSiteContent;
 }
 
 
 export async function getSiteContent() {
-  return mergeSiteContent(await readValue<EditableSiteContent>(keys.siteContent));
+  return replaceLegacySetuAiArtwork(mergeSiteContent(await readValue<EditableSiteContent>(keys.siteContent)));
 }
 
 export async function saveSiteContent(input: Partial<EditableSiteContent>) {
   const existing = await getSiteContent();
   const siteContent: EditableSiteContent = {
+    contentVersion: siteContentSchemaVersion,
     global: {
       ...existing.global,
       ...input.global,
@@ -512,8 +520,27 @@ export async function saveSiteContent(input: Partial<EditableSiteContent>) {
     },
     updatedAt: now(),
   };
-  await writeValue(keys.siteContent, siteContent);
-  return siteContent;
+  const normalizedSiteContent = replaceLegacySetuAiArtwork(siteContent);
+  await writeValue(keys.siteContent, normalizedSiteContent);
+  return normalizedSiteContent;
+}
+
+function replaceLegacySetuAiArtwork(content: EditableSiteContent): EditableSiteContent {
+  if (content.home.heartbeat.image.src !== "/images/skypa-higgsfield-heart.png") return content;
+
+  return {
+    ...content,
+    home: {
+      ...content.home,
+      heartbeat: {
+        ...content.home.heartbeat,
+        image: {
+          src: "/images/skypa-partnership-workshop.png",
+          alt: "Concept image of educators and students collaborating around learning materials.",
+        },
+      },
+    },
+  };
 }
 
 export async function saveMediaUpload(input: Omit<CmsMediaUpload, "createdAt">) {
@@ -553,11 +580,29 @@ export async function markSubmissionRead(id: string) {
   );
 }
 
+export async function updateSubmission(id: string, input: Partial<Pick<CmsSubmission, "status" | "assignedTo" | "notes" | "read">>) {
+  const submissions = await getSubmissions();
+  const existing = submissions.find((submission) => submission.id === id);
+  if (!existing) return null;
+
+  const next = { ...existing, ...input };
+  await writeCollection(
+    keys.submissions,
+    submissions.map((submission) => (submission.id === id ? next : submission)),
+  );
+  return next;
+}
+
 export async function getSubscribers() {
   return readCollection<CmsSubscriber>(keys.subscribers, []);
 }
 
-export async function saveSubscriber(input: Omit<CmsSubscriber, "id" | "createdAt" | "updatedAt" | "active"> & { active?: boolean }) {
+export async function saveSubscriber(
+  input: Omit<CmsSubscriber, "id" | "createdAt" | "updatedAt" | "active" | "unsubscribeTokenHash"> & {
+    active?: boolean;
+    unsubscribeTokenHash?: string;
+  },
+) {
   const subscribers = await getSubscribers();
   const normalizedEmail = input.email.trim().toLowerCase();
   const existing = subscribers.find((subscriber) => subscriber.email === normalizedEmail);
@@ -567,11 +612,86 @@ export async function saveSubscriber(input: Omit<CmsSubscriber, "id" | "createdA
     name: input.name || existing?.name || "",
     source: input.source || existing?.source || "updates-page",
     active: input.active ?? true,
+    confirmedAt: input.confirmedAt ?? existing?.confirmedAt,
+    consentAt: input.consentAt ?? existing?.consentAt,
+    confirmationTokenHash: input.confirmationTokenHash ?? existing?.confirmationTokenHash,
+    unsubscribeTokenHash: input.unsubscribeTokenHash || existing?.unsubscribeTokenHash || tokenHash(randomUUID()),
     createdAt: existing?.createdAt || now(),
     updatedAt: now(),
   };
   await writeCollection(keys.subscribers, [subscriber, ...subscribers.filter((item) => item.id !== subscriber.id)]);
   return subscriber;
+}
+
+export async function createPendingSubscriber(input: { email: string; name?: string; source: string }) {
+  const subscribers = await getSubscribers();
+  const email = input.email.trim().toLowerCase();
+  const existing = subscribers.find((subscriber) => subscriber.email === email);
+
+  if (existing?.active && existing.confirmedAt) {
+    return { subscriber: existing, confirmationToken: null, unsubscribeToken: null, alreadyConfirmed: true };
+  }
+
+  const confirmationToken = randomUUID();
+  const unsubscribeToken = randomUUID();
+  const subscriber: CmsSubscriber = {
+    id: existing?.id || randomUUID(),
+    email,
+    name: input.name || existing?.name || "",
+    source: input.source || existing?.source || "updates-page",
+    active: false,
+    consentAt: now(),
+    confirmationTokenHash: tokenHash(confirmationToken),
+    unsubscribeTokenHash: existing?.unsubscribeTokenHash || tokenHash(unsubscribeToken),
+    createdAt: existing?.createdAt || now(),
+    updatedAt: now(),
+  };
+
+  await writeCollection(keys.subscribers, [subscriber, ...subscribers.filter((item) => item.id !== subscriber.id)]);
+  return { subscriber, confirmationToken, unsubscribeToken, alreadyConfirmed: false };
+}
+
+export async function confirmSubscriber(token: string) {
+  const subscribers = await getSubscribers();
+  const tokenDigest = tokenHash(token);
+  const existing = subscribers.find((subscriber) => subscriber.confirmationTokenHash === tokenDigest);
+  if (!existing) return null;
+
+  const subscriber: CmsSubscriber = {
+    ...existing,
+    active: true,
+    confirmedAt: now(),
+    confirmationTokenHash: undefined,
+    updatedAt: now(),
+  };
+  await writeCollection(keys.subscribers, [subscriber, ...subscribers.filter((item) => item.id !== subscriber.id)]);
+  return subscriber;
+}
+
+export async function unsubscribeSubscriber(token: string) {
+  const subscribers = await getSubscribers();
+  const tokenDigest = tokenHash(token);
+  const existing = subscribers.find((subscriber) => subscriber.unsubscribeTokenHash === tokenDigest);
+  if (!existing) return null;
+
+  const subscriber: CmsSubscriber = { ...existing, active: false, updatedAt: now() };
+  await writeCollection(keys.subscribers, [subscriber, ...subscribers.filter((item) => item.id !== subscriber.id)]);
+  return subscriber;
+}
+
+export async function createUnsubscribeToken(subscriberId: string) {
+  const subscribers = await getSubscribers();
+  const existing = subscribers.find((subscriber) => subscriber.id === subscriberId);
+  if (!existing) return null;
+
+  const token = randomUUID();
+  const subscriber: CmsSubscriber = {
+    ...existing,
+    unsubscribeTokenHash: tokenHash(token),
+    updatedAt: now(),
+  };
+  await writeCollection(keys.subscribers, [subscriber, ...subscribers.filter((item) => item.id !== subscriber.id)]);
+  return token;
 }
 
 export async function getDashboardSummary() {

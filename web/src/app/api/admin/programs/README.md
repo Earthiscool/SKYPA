@@ -1,3 +1,4 @@
 # Admin Programs API
 
-Program content is edited through item routes because programs are seeded from the public content model.
+Learning pathway content is created and edited through protected admin routes.
+New entries start as drafts and should be published only after review.

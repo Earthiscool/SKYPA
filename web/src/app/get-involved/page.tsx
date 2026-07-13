@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "Get Involved",
   description:
-    "Get involved with SetuAI.org as a school partner, volunteer, sponsor, corporate partner, or community host.",
+    "Get involved with SetuAI as a prospective school partner, volunteer, sponsor, corporate partner, or community collaborator.",
   path: "/get-involved",
 });
 
@@ -14,26 +14,26 @@ export default function GetInvolvedPage() {
   const paths = [
     {
       title: "School partner",
-      body: "Bring AI literacy workshops, teacher support, or textbook pilots to students.",
-      href: "/schools",
+      body: "Share your school's context and questions for a possible future AI literacy collaboration.",
+      href: "/contact?interest=school",
       icon: GraduationCap,
     },
     {
       title: "Volunteer",
-      body: "Support workshops, curriculum review, student activities, and outreach.",
-      href: "/volunteer",
+      body: "Register interest in future reviewed roles such as curriculum feedback, operations, or outreach.",
+      href: "/contact?interest=volunteer",
       icon: HandHeart,
     },
     {
       title: "Sponsor",
-      body: "Fund textbook distribution, school pilots, workshop materials, or growth operations.",
-      href: "/donate",
+      body: "Discuss prospective support without a donation, tax receipt, or delivery promise from this site.",
+      href: "/contact?interest=sponsor",
       icon: HeartHandshake,
     },
     {
       title: "Corporate partner",
-      body: "Create a company-backed pathway for equitable AI education.",
-      href: "/corporate-partners",
+      body: "Explore whether your company can support future access, review, or operational capacity responsibly.",
+      href: "/contact?interest=sponsor",
       icon: Building2,
     },
   ];
@@ -42,13 +42,12 @@ export default function GetInvolvedPage() {
     <>
       <section className="bg-[var(--color-deep)] text-white">
         <div className="section-shell py-16 lg:py-24">
-          <p className="section-kicker text-[var(--color-coral)]">Get involved</p>
+          <p className="section-kicker section-kicker-accent">Get involved</p>
           <h1 className="balance mt-5 max-w-4xl text-[clamp(3rem,7vw,5.5rem)] font-light leading-none tracking-tight">
-            Help students meet AI with confidence.
+            Help build AI literacy worth trusting.
           </h1>
           <p className="pretty mt-5 max-w-3xl text-lg leading-8 text-white/76">
-            SetuAI needs schools, sponsors, volunteers, educators, families, and community partners
-            to build an access-first AI literacy movement.
+            SetuAI is in formation and is listening first. Schools, prospective sponsors, educators, families, volunteers, and community partners can help shape a careful, access-first initiative before public delivery is announced.
           </p>
         </div>
       </section>
@@ -74,27 +73,25 @@ export default function GetInvolvedPage() {
         <div className="section-shell">
           <div className="max-w-3xl">
             <h2 className="balance text-4xl font-light leading-tight tracking-tight text-[var(--color-ink)]">
-              Different people can contribute in different ways.
+              Different people can shape the work in different ways.
             </h2>
             <p className="pretty mt-4 text-lg leading-8 text-[var(--color-muted)]">
-              SetuAI needs both visible and behind-the-scenes support. A useful contribution can be
-              a school introduction, a workshop role, curriculum feedback, sponsorship, logistics
-              help, design support, or simply helping the right educator hear about the work.
+              Useful early contributions include a school introduction, curriculum or accessibility feedback, sponsorship perspective, safeguarding expertise, operations help, design support, or simply helping the right educator join the conversation. Participation is not an appointment or commitment.
             </p>
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
               {
                 title: "People who know schools",
-                body: "Introduce SetuAI to teachers, principals, counselors, PTAs, enrichment coordinators, or youth-serving organizations.",
+                body: "Introduce SetuAI to educators, school leaders, PTAs, or youth-serving organizations that can share real context.",
               },
               {
                 title: "People who like teaching",
-                body: "Help students work through activities, ask better questions, and feel comfortable discussing responsible AI use.",
+                body: "Offer curriculum, accessibility, safeguarding, facilitation, or communications perspective before any student-facing role is designed.",
               },
               {
                 title: "People who can fund access",
-                body: "Sponsor textbook printing, classroom materials, workshop logistics, student cohorts, or community distribution.",
+                body: "Help define what responsible future material, review, pilot, or capacity support would require. No donation is processed here.",
               },
             ].map((item) => (
               <article key={item.title} className="soft-card p-6">

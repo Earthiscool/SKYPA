@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { MailPlus } from "lucide-react";
 
 export function UpdatesSignup() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("loading");
+    setMessage("");
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -20,15 +23,19 @@ export function UpdatesSignup() {
         body: JSON.stringify({
           name: formData.get("name"),
           email: formData.get("email"),
+          privacyAcknowledged: formData.get("privacyAcknowledged"),
         }),
       });
 
-      if (!response.ok) throw new Error("Subscribe failed");
+      const result = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(result?.error || "Subscribe failed");
 
       form.reset();
       setStatus("success");
-    } catch {
+      setMessage(result?.confirmed ? "You are already confirmed for updates." : result?.confirmationSent ? "Check your email to confirm the subscription." : "Your request is saved. Email confirmation is not configured yet, so you are not subscribed." );
+    } catch (error) {
       setStatus("error");
+      setMessage(error instanceof Error ? error.message : "The signup did not go through. Please try again.");
     }
   }
 
@@ -65,6 +72,10 @@ export function UpdatesSignup() {
           />
         </label>
       </div>
+      <label className="flex items-start gap-3 text-sm leading-6 text-[var(--color-muted)]">
+        <input required type="checkbox" name="privacyAcknowledged" className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-coral)]" />
+        <span>I agree that SetuAI may use this information to send the updates I requested, as described in the <Link href="/privacy" className="font-medium text-[var(--color-ink)] underline underline-offset-4">privacy notice</Link>.</span>
+      </label>
       <button
         type="submit"
         disabled={status === "loading"}
@@ -75,12 +86,12 @@ export function UpdatesSignup() {
       </button>
       {status === "success" ? (
         <p className="border border-[var(--color-coral)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-medium text-[var(--color-deep)]" role="status" aria-live="polite">
-          You are on the updates list.
+          {message}
         </p>
       ) : null}
       {status === "error" ? (
         <p className="border border-[var(--color-coral)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-medium text-[var(--color-deep)]" role="alert">
-          The signup did not go through. Please try again.
+          {message || "The signup did not go through. Please try again."}
         </p>
       ) : null}
     </form>

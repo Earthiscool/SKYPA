@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useState } from "react";
 import { ButtonLink } from "@/components/button-link";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useLanguage } from "@/components/language-provider";
@@ -12,6 +13,7 @@ import { translatePhrase } from "@/lib/i18n";
 export function SiteHeader({ content }: { content: EditableSiteContent }) {
   const { global } = content;
   const { locale } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = (value: string) => translatePhrase(value, locale);
 
   return (
@@ -91,16 +93,24 @@ export function SiteHeader({ content }: { content: EditableSiteContent }) {
           <ButtonLink label={global.navCta.label} href={global.navCta.href} variant={global.navCta.variant} />
         </div>
 
-        <details className="group relative lg:hidden">
-          <summary className="focus-ring flex h-11 w-11 cursor-pointer list-none items-center justify-center border border-[var(--color-line)] text-[var(--color-ink)] marker:hidden">
-            <Menu aria-hidden="true" size={22} />
-            <span className="sr-only">{t("Open menu")}</span>
-          </summary>
-          <div className="absolute right-0 top-14 w-[min(92vw,360px)] border border-[var(--color-line)] bg-[var(--background)] p-3">
+        <div className="relative lg:hidden">
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="focus-ring flex h-11 w-11 items-center justify-center border border-[var(--color-line)] text-[var(--color-ink)]"
+            aria-expanded={menuOpen}
+            aria-controls="site-mobile-menu"
+            aria-label={menuOpen ? t("Close menu") : t("Open menu")}
+          >
+            {menuOpen ? <X aria-hidden="true" size={22} /> : <Menu aria-hidden="true" size={22} />}
+          </button>
+          {menuOpen ? (
+          <nav id="site-mobile-menu" className="absolute right-0 top-14 w-[min(92vw,360px)] border border-[var(--color-line)] bg-[var(--background)] p-3" aria-label={t("Main navigation")}>
             {global.navigation.map((item) => (
               <div key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={() => setMenuOpen(false)}
                   className="focus-ring block px-3 py-3 text-sm font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-tint)]"
                 >
                   {t(item.label)}
@@ -111,6 +121,7 @@ export function SiteHeader({ content }: { content: EditableSiteContent }) {
                       <Link
                         href={child.href}
                         key={child.href}
+                        onClick={() => setMenuOpen(false)}
                         className="focus-ring block px-3 py-2 text-sm font-medium text-[var(--color-muted)] hover:bg-[var(--color-surface-tint)]"
                       >
                         {t(child.label)}
@@ -124,22 +135,10 @@ export function SiteHeader({ content }: { content: EditableSiteContent }) {
               <LanguageToggle className="w-full" />
               <ButtonLink label={global.navCta.label} href={global.navCta.href} variant={global.navCta.variant} className="w-full" />
             </div>
-          </div>
-        </details>
-      </div>
-      <nav className="hidden border-t border-[var(--color-line)] bg-[var(--background)] md:block lg:hidden" aria-label={t("Main navigation")}>
-        <div className="mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto px-4 py-2 md:px-8">
-          {global.navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="focus-ring shrink-0 px-3 py-2 text-sm font-medium text-[var(--color-ink)] hover:bg-[var(--color-surface-tint)]"
-          >
-              {t(item.label)}
-            </Link>
-          ))}
+          </nav>
+          ) : null}
         </div>
-      </nav>
+      </div>
     </header>
   );
 }

@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Admin Setup",
-  description: "Secure first-admin setup for SetuAI.org.",
+  description: "Secure first-admin setup for SetuAI.",
   path: "/admin/setup",
 });
 

@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { EyeOff, Loader2, Trash2 } from "lucide-react";
+import { EyeOff, Loader2, Mail, Trash2 } from "lucide-react";
 
 type AdminMutationButtonProps = {
   label: string;
   endpoint: string;
-  method?: "PATCH" | "DELETE";
+  method?: "PATCH" | "POST" | "DELETE";
   body?: Record<string, unknown>;
   destructive?: boolean;
 };
@@ -45,7 +45,7 @@ export function AdminMutationButton({
           : "border-[#e4d9dc] bg-white text-[#2a1b22] hover:bg-[#f7eef1]"
       }`}
     >
-      {loading ? <Loader2 aria-hidden="true" className="animate-spin" size={15} /> : destructive ? <Trash2 aria-hidden="true" size={15} /> : <EyeOff aria-hidden="true" size={15} />}
+      {loading ? <Loader2 aria-hidden="true" className="animate-spin" size={15} /> : destructive ? <Trash2 aria-hidden="true" size={15} /> : method === "POST" ? <Mail aria-hidden="true" size={15} /> : <EyeOff aria-hidden="true" size={15} />}
       {label}
     </button>
   );

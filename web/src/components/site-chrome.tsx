@@ -1,32 +1,16 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Chatbot } from "@/components/chatbot";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SiteMotion } from "@/components/site-motion";
-import { fallbackSiteContent, type EditableSiteContent } from "@/content/editable-site";
+import type { EditableSiteContent } from "@/content/editable-site";
 
-export function SiteChrome({ children }: { children: React.ReactNode }) {
+export function SiteChrome({ children, content }: { children: React.ReactNode; content: EditableSiteContent }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  const [content, setContent] = useState<EditableSiteContent>(fallbackSiteContent);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/site-content")
-      .then((response) => (response.ok ? response.json() : null))
-      .then((payload) => {
-        if (!cancelled && payload?.content) setContent(payload.content);
-      })
-      .catch(() => null);
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   if (isAdmin) {
     return <main id="main">{children}</main>;

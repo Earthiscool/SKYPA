@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Send } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 import { translatePhrase } from "@/lib/i18n";
@@ -20,12 +21,14 @@ const interestOptions = {
 
 export function LeadForm({ formType, title = "Start the conversation", compact = false }: LeadFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
   const { locale } = useLanguage();
   const t = (value: string) => translatePhrase(value, locale);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("loading");
+    setStatusMessage("");
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
@@ -37,14 +40,15 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
         body: JSON.stringify({ formType, payload }),
       });
 
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
+      const result = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(result?.error || "Form submission failed");
 
       form.reset();
       setStatus("success");
-    } catch {
+      setStatusMessage(result?.subscription === "confirmation-sent" ? "Thanks. Your inquiry was received. Check your email to confirm the separate updates subscription." : "Thanks. Your inquiry was received.");
+    } catch (error) {
       setStatus("error");
+      setStatusMessage(error instanceof Error ? error.message : "Something went wrong. Please try again or contact SetuAI another way.");
     }
   }
 
@@ -73,6 +77,7 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
             required
             name="name"
             autoComplete="name"
+            maxLength={120}
             className={fieldClass}
           />
         </label>
@@ -84,6 +89,7 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
             name="email"
             autoComplete="email"
             spellCheck={false}
+            maxLength={160}
             className={fieldClass}
           />
         </label>
@@ -92,6 +98,7 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
           <input
             name="organization"
             autoComplete="organization"
+            maxLength={160}
             className={fieldClass}
           />
         </label>
@@ -116,10 +123,22 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
           required
           name="message"
           rows={compact ? 3 : 5}
+          maxLength={2000}
           className={`${fieldClass} py-3`}
           placeholder={t("Tell us about grade levels, timeline, location, or how you would like to help…")}
         />
       </label>
+
+      <div className="mt-4 grid gap-3 border-t border-[var(--color-line)] pt-4">
+        <label className="flex items-start gap-3 text-sm leading-6 text-[var(--color-muted)]">
+          <input required type="checkbox" name="privacyAcknowledged" className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-coral)]" />
+          <span>I understand SetuAI will use this message to respond, as described in the <Link href="/privacy" className="font-medium text-[var(--color-ink)] underline underline-offset-4">privacy notice</Link>.</span>
+        </label>
+        <label className="flex items-start gap-3 text-sm leading-6 text-[var(--color-muted)]">
+          <input type="checkbox" name="updatesOptIn" className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-coral)]" />
+          <span>Also send me SetuAI progress updates. This is optional and requires email confirmation.</span>
+        </label>
+      </div>
 
       <button
         type="submit"
@@ -132,12 +151,12 @@ export function LeadForm({ formType, title = "Start the conversation", compact =
 
       {status === "success" ? (
         <p className="mt-4 border border-[var(--color-coral)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-medium text-[var(--color-deep)]" role="status" aria-live="polite">
-          {t("Thanks. Your inquiry was received.")}
+          {statusMessage || t("Thanks. Your inquiry was received.")}
         </p>
       ) : null}
       {status === "error" ? (
         <p className="mt-4 border border-[var(--color-coral)] bg-[var(--color-teal-soft)] px-4 py-3 text-sm font-medium text-[var(--color-deep)]" role="alert">
-          {t("Something went wrong. Please try again or email SetuAI directly.")}
+          {statusMessage || t("Something went wrong. Please try again or contact SetuAI another way.")}
         </p>
       ) : null}
     </form>

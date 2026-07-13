@@ -16,7 +16,7 @@ export default async function AdminPagesPage() {
   const pages = await getPages();
 
   return (
-    <AdminShell active="pages" title="Pages" description="Edit the exact public pages visitors read across the site.">
+    <AdminShell active="pages" title="Pages" description="Edit the exact public pages visitors read across the site." actions={<Link href="/admin/pages/new" className="rounded-md bg-[#9f0038] px-4 py-3 text-sm font-black text-white hover:bg-[#7e002c]">New page</Link>}>
       <div className="grid gap-4 lg:grid-cols-2">
         {pages.map((page) => (
           <Link key={page.id} href={`/admin/pages/${page.id}/edit`} className="rounded-md border border-[#e4d9dc] bg-white p-5 hover:bg-[#f7eef1]">

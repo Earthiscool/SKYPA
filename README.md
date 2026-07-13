@@ -1,16 +1,26 @@
-# SKYPA Foundation Website
+# SetuAI Website
 
-Production-oriented monorepo for SKYPA Foundation, an AI literacy nonprofit helping children, schools, families, and partners understand and use AI responsibly.
+SetuAI is a pre-registration AI literacy initiative in formation. This monorepo
+contains its public Next.js website and a separate Sanity Studio. The public
+site must not present SetuAI as a registered nonprofit, tax-exempt entity, or
+active delivery organization until those facts are formally verified.
 
-## What This Site Does
+## Source of Truth
 
-- Presents SKYPA Foundation as a credible nonprofit with strong storytelling and conversion paths.
-- Supports school partnerships, volunteers, sponsors, corporate partners, textbook interest, and general contact through forms.
-- Keeps Sanity Studio standalone in `studio/` so editors can manage pages, programs, updates, subscribers, stories, resources, partners, impact stats, SEO, navigation, form submissions, and chatbot knowledge.
-- Includes a Vercel AI Gateway-powered chatbot at `/api/chat`, with `amazon/nova-micro` as the default low-cost model as of July 8, 2026.
-- Includes a custom Upstash-backed admin dashboard for editor-friendly updates, pages, programs, gallery albums, submissions, settings, and subscribers.
-- Includes update subscription and notification routes using Upstash subscribers plus Resend, with Sanity as a fallback.
-- Generates SEO metadata, `robots.txt`, and `sitemap.xml` through Next.js App Router conventions.
+- `web/`: public Next.js 16 website and protected custom admin workspace.
+- `web/src/lib/cms.ts`: Upstash-backed public content source of truth.
+- `studio/`: standalone Sanity Studio for future editorial work. It is not
+  queried by the public site unless `SANITY_CONTENT_ENABLED=true` is set after
+  a deliberate, reviewed migration.
+
+## Content Rules
+
+- Publish only verified facts, dated updates, approved images, and reviewed
+  learning materials.
+- Keep proposed work, active pilots, and completed outcomes visibly distinct.
+- Do not publish student names, school names, personal data, tax claims, or
+  impact metrics without documented permission and evidence.
+- The custom admin defaults new pages and learning pathways to drafts.
 
 ## Commands
 
@@ -18,40 +28,54 @@ Production-oriented monorepo for SKYPA Foundation, an AI literacy nonprofit help
 npm run dev:web
 npm run dev:studio
 npm run lint:web
+npm run typecheck
 npm run build:web
-npm run build:studio
 ```
 
-## Environment
+## Required Production Environment
 
-Copy `web/.env.example` to `web/.env.local` for the website. Copy `studio/.env.example` to `studio/.env.local` for Sanity CLI tasks.
+Set these in Vercel or another private deployment environment. Never commit
+real values.
 
 ```bash
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-AI_GATEWAY_API_KEY=your_vercel_ai_gateway_key
-VERCEL_AI_GATEWAY_API_KEY=your_vercel_ai_gateway_key
+NEXT_PUBLIC_SITE_URL=https://your-confirmed-domain.example
+UPSTASH_REDIS_REST_URL=...
+UPSTASH_REDIS_REST_TOKEN=...
+ADMIN_SESSION_SECRET=at-least-32-random-characters
+ADMIN_BOOTSTRAP_TOKEN=a-long-one-time-setup-token
+ADMIN_ALLOWED_EMAILS=owner@example.org
+AI_GATEWAY_API_KEY=...
 AI_GATEWAY_MODEL=amazon/nova-micro
-NEXT_PUBLIC_SANITY_PROJECT_ID=c243kj7a
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_WRITE_TOKEN=optional_sanity_write_token
-RESEND_API_KEY=your_resend_key
-UPDATES_WEBHOOK_SECRET=choose_a_long_random_secret
-UPSTASH_REDIS_REST_URL=your_upstash_rest_url
-UPSTASH_REDIS_REST_TOKEN=your_upstash_rest_token
+RESEND_API_KEY=...
+UPDATES_FROM_EMAIL=updates@your-verified-domain.example
+INQUIRY_FROM_EMAIL=inquiries@your-verified-domain.example
+INQUIRY_NOTIFY_TO=team@your-verified-domain.example
+UPDATES_WEBHOOK_SECRET=...
 ```
 
-Secrets must stay in `.env.local` or Vercel environment variables. Do not commit real API keys.
+Optional, standalone Sanity configuration is documented in `studio/README.md`.
 
-## Architecture
+## Assistant and Language Gates
 
-- `web/` is the Next.js website.
-- `studio/` is the standalone Sanity Studio.
-- `studio/schemaTypes` defines the CMS editing model.
-- `web/src/content/site.ts` contains rich fallback content, public route inventory, and chatbot grounding facts.
-- `web/src/lib/cms.ts` is the structured Upstash CMS layer used by the custom admin dashboard.
-- `web/src/sanity/loaders.ts` lets pages read Sanity content when configured and fall back to local content otherwise.
-- `web/src/app` contains public routes, API routes, sitemap, and robots.
+- The public assistant is configured to use `amazon/nova-micro`, the lowest-cost
+  text model currently available through this project's Vercel AI Gateway
+  account. The key must be active and the Vercel account must have AI Gateway
+  billing activation completed before live replies are available.
+- Hindi is intentionally held behind `NEXT_PUBLIC_HINDI_CONTENT_REVIEWED` until
+  a qualified Hindi reviewer has approved the editorial content. Do not claim a
+  complete Hindi edition while untranslated or unreviewed pages remain.
 
-## Important Next.js Note
+## Verification Before Launch
 
-The website uses Next.js 16. Read `web/node_modules/next/dist/docs/` before changing routing, metadata, route handlers, caching, or file conventions. In this version, route `params` and `searchParams` are promise-based in App Router pages and route handlers.
+Run the build and type checks, configure the actual domain and mailboxes,
+complete admin bootstrap and authenticator-app enrollment, review every public
+claim, complete legal/policy review, and test the confirmed email flow with a
+non-production subscriber. Confirm that AI Gateway billing is active before
+announcing the public assistant, and complete Hindi editorial review before
+enabling the Hindi edition.
+
+## Next.js 16 Note
+
+Read `web/node_modules/next/dist/docs/` before changing routing, metadata,
+route handlers, caching, or file conventions. In this version, App Router
+`params` and `searchParams` are promise-based.

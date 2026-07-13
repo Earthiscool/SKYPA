@@ -20,6 +20,7 @@ export async function PATCH(request: Request, context: Context) {
   if (!existing) return NextResponse.json({ error: "Program not found" }, { status: 404 });
 
   const program = await saveProgram({ ...existing, ...body, id: existing.id });
+  revalidatePath("/", "layout");
   revalidatePath("/programs");
   revalidatePath(`/programs/${existing.slug}`);
   revalidatePath(`/programs/${program.slug}`);

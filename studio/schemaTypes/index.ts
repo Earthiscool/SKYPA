@@ -155,7 +155,7 @@ const siteSettings = defineType({
   title: "Site settings",
   type: "document",
   fields: [
-    defineField({ name: "title", title: "Site title", type: "string", initialValue: "SKYPA Foundation" }),
+    defineField({ name: "title", title: "Site title", type: "string", initialValue: "SetuAI" }),
     defineField({ name: "tagline", title: "Tagline", type: "string" }),
     defineField({ name: "announcement", title: "Announcement", type: "text", rows: 2 }),
     defineField({ name: "primaryCta", title: "Primary CTA", type: "cta" }),

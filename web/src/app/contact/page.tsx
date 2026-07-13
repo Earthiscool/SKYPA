@@ -4,7 +4,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "Contact",
   description:
-    "Contact SetuAI.org about school partnerships, AI literacy workshops, textbook sponsorship, volunteering, or general questions.",
+    "Contact SetuAI about an early school, education nonprofit, sponsorship, volunteer, textbook, or general conversation.",
   path: "/contact",
 });
 
@@ -16,19 +16,16 @@ export default function ContactPage() {
           <div>
             <p className="section-kicker">Contact</p>
             <h1 className="balance mt-5 text-[clamp(3rem,7vw,5.5rem)] font-light leading-none tracking-tight text-[var(--color-ink)]">
-              Contact SetuAI.
+              Start a conversation.
             </h1>
             <p className="pretty mt-5 text-lg leading-8 text-[var(--color-ink-soft)]">
-              Use this form for school partnerships, sponsorship interest, volunteer roles, textbook
-              distribution, or general questions. Payment processing is intentionally not enabled yet;
-              donation and sponsorship interest is collected through the form.
+              SetuAI is in formation. Use this form to share a school or community context, prospective sponsorship interest, future volunteer interest, textbook questions, or a general question. A submission opens a discovery conversation; it does not confirm a workshop, a donation, or a student-facing activity.
             </p>
             <div className="soft-card mt-8 grid gap-4 p-5">
               <div>
                 <h2 className="text-base font-medium text-[var(--color-ink)]">Best details to include</h2>
                 <p className="pretty mt-2 text-sm leading-6 text-[var(--color-muted)]">
-                  School or organization name, grade levels, location, timeline, budget or sponsor
-                  interest, and what kind of AI literacy support you need.
+                  School or organization name, grade levels, location, timing, access needs, existing guidance, and what you hope to explore. Do not submit student records, payment details, or sensitive personal information.
                 </p>
               </div>
             </div>
@@ -47,19 +44,19 @@ export default function ContactPage() {
             {[
               {
                 title: "School inquiry",
-                body: "Mention grade levels, number of students, timing, location, and whether you want a workshop, assembly, pilot, or textbook distribution.",
+                body: "Mention grade levels, timing, location, existing guidance, and the questions you want a future collaboration to address.",
               },
               {
                 title: "Sponsor inquiry",
-                body: "Mention whether you are interested in textbooks, school pilots, workshop materials, volunteer programs, or general operating support.",
+                body: "Mention the kind of future support you are considering. This site does not process donations or make tax-receipt promises.",
               },
               {
                 title: "Volunteer inquiry",
-                body: "Mention your skills, availability, location, languages, and whether you prefer student-facing support or behind-the-scenes work.",
+                body: "Mention your skills, availability, location, languages, and whether you are interested in future reviewed roles. No role is confirmed through this form.",
               },
               {
                 title: "General question",
-                body: "Ask what you need to know. SetuAI can route the conversation to programs, resources, partnerships, or updates.",
+                body: "Ask what you need to know. SetuAI can record the question and respond as the organization establishes its public information.",
               },
             ].map((item) => (
               <article key={item.title} className="bg-[var(--background)] p-6">

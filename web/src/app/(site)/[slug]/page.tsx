@@ -5,7 +5,6 @@ import { PageSections } from "@/components/page-sections";
 import { getCorePage } from "@/content/site";
 import { getPage } from "@/lib/cms";
 import { breadcrumbJsonLd, createMetadata } from "@/lib/seo";
-import { loadSitePage } from "@/sanity/loaders";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -18,9 +17,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const basePage = (await loadSitePage(slug)) || getCorePage(slug);
   const cmsPage = await getPage(slug);
-  const page = basePage && cmsPage?.status === "published" ? { ...basePage, ...cmsPage } : basePage;
+  const page = cmsPage?.status === "published" ? cmsPage : getCorePage(slug);
 
   if (!page) return {};
 
@@ -34,9 +32,8 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function CorePage({ params }: Props) {
   const { slug } = await params;
-  const basePage = (await loadSitePage(slug)) || getCorePage(slug);
   const cmsPage = await getPage(slug);
-  const page = basePage && cmsPage?.status === "published" ? { ...basePage, ...cmsPage } : basePage;
+  const page = cmsPage?.status === "published" ? cmsPage : getCorePage(slug);
 
   if (!page) notFound();
 

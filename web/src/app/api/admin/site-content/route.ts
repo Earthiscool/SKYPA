@@ -11,6 +11,7 @@ export async function PUT(request: Request) {
 
   const body = await request.json().catch(() => null);
   const content = await saveSiteContent(body || {});
+  revalidatePath("/", "layout");
 
   for (const path of ["/", "/admin", "/admin/site-content", "/contact", "/programs", "/partners", "/get-involved"]) {
     revalidatePath(path);

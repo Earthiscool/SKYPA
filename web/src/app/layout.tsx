@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Noto_Sans_Devanagari } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { JsonLd } from "@/components/json-ld";
 import { SiteChrome } from "@/components/site-chrome";
+import { getSiteContent } from "@/lib/cms";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
@@ -29,12 +32,12 @@ const notoDevanagari = Noto_Sans_Devanagari({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://setuai.org"),
   title: {
-    default: "SetuAI.org | AI Literacy for Schools and Communities",
-    template: "%s | SetuAI.org",
+    default: "SetuAI | Practical AI Literacy in Formation",
+    template: "%s | SetuAI",
   },
   description:
-    "SetuAI.org is a joint AI literacy initiative helping schools, education nonprofits, and sponsors bring practical AI learning to students.",
-  applicationName: "SetuAI.org",
+    "SetuAI is a pre-registration AI literacy initiative being built with founding partners and prospective education collaborators.",
+  applicationName: "SetuAI",
   keywords: [
     "AI literacy",
     "AI education for kids",
@@ -45,9 +48,14 @@ export const metadata: Metadata = {
     "Hindi AI education",
     "AI literacy partnerships",
   ],
-  authors: [{ name: "SetuAI.org" }],
-  creator: "SetuAI.org",
-  publisher: "SetuAI.org",
+  authors: [{ name: "SetuAI" }],
+  creator: "SetuAI",
+  publisher: "SetuAI",
+  icons: {
+    icon: { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/site.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -68,11 +76,13 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getSiteContent();
+
   return (
     <html
       lang="en"
@@ -81,7 +91,9 @@ export default function RootLayout({
       <body className="min-h-full bg-[var(--background)] text-[var(--color-ink)]">
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
-        <SiteChrome>{children}</SiteChrome>
+        <SiteChrome content={content}>{children}</SiteChrome>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

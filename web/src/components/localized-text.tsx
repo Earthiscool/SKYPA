@@ -10,6 +10,7 @@ type LocalizedTextProps = {
 
 export function LocalizedText({ en, hi }: LocalizedTextProps) {
   const { locale } = useLanguage();
+  const useReviewedHindiContent = process.env.NEXT_PUBLIC_HINDI_CONTENT_REVIEWED === "true";
 
-  return <>{locale === "hi" ? hi || translatePhrase(en, "hi") : en}</>;
+  return <>{locale === "hi" ? (useReviewedHindiContent ? hi || translatePhrase(en, "hi") : translatePhrase(en, "hi")) : en}</>;
 }

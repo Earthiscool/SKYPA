@@ -48,6 +48,7 @@ export default async function AdminPostsPage() {
               <Link href={`/updates/${post.slug}`} className="grid h-10 w-10 place-items-center rounded-md border border-[#e4d9dc] hover:bg-[#f7eef1]" aria-label="View update"><ExternalLink size={16} /></Link>
               <Link href={`/admin/posts/${post.id}/edit`} className="grid h-10 w-10 place-items-center rounded-md border border-[#e4d9dc] hover:bg-[#f7eef1]" aria-label="Edit update"><PenLine size={16} /></Link>
               <AdminMutationButton label={post.status === "published" ? "Unpublish" : "Publish"} endpoint={`/api/admin/posts/${post.id}`} body={{ status: post.status === "published" ? "draft" : "published" }} />
+              {post.status === "published" && post.notificationStatus !== "sent" ? <AdminMutationButton label="Send update" method="POST" endpoint={`/api/admin/posts/${post.id}/send`} /> : null}
               <AdminMutationButton label="Delete" endpoint={`/api/admin/posts/${post.id}`} method="DELETE" destructive />
             </div>
           </div>

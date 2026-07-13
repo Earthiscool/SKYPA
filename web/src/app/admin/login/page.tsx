@@ -10,7 +10,7 @@ type Props = {
 
 export const metadata = createMetadata({
   title: "Admin Login",
-  description: "Secure SetuAI.org admin login.",
+  description: "Secure SetuAI admin login.",
   path: "/admin/login",
 });
 
