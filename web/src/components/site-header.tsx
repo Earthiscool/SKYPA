@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ButtonLink } from "@/components/button-link";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useLanguage } from "@/components/language-provider";
+import { SetuAiMark } from "@/components/setuai-mark";
 import type { EditableSiteContent } from "@/content/editable-site";
 import { translatePhrase } from "@/lib/i18n";
 
@@ -26,8 +27,8 @@ export function SiteHeader({ content }: { content: EditableSiteContent }) {
       </a>
       <div className="mx-auto flex min-h-20 w-full max-w-6xl items-center justify-between gap-4 px-4 md:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label={`${global.siteName} home`}>
-          <span className="grid h-12 w-12 place-items-center border border-[var(--color-line)] bg-[var(--color-surface)]">
-            {global.logo.src ? (
+          {global.logo.src ? (
+            <span className="grid h-12 w-12 place-items-center border border-[var(--color-line)] bg-[var(--color-surface)]">
               <Image
                 src={global.logo.src}
                 alt=""
@@ -36,10 +37,14 @@ export function SiteHeader({ content }: { content: EditableSiteContent }) {
                 className="h-11 w-11 object-contain"
                 priority
               />
-            ) : (
-              <span className="text-xl font-semibold tracking-tight text-[var(--color-ink)]">S</span>
-            )}
-          </span>
+            </span>
+          ) : (
+            <SetuAiMark
+              className="h-12 w-12 border border-[var(--color-line)] bg-[var(--color-surface)]"
+              preload
+              sizes="48px"
+            />
+          )}
           <span className="leading-tight">
             <span className="block text-lg font-semibold tracking-tight text-[var(--color-ink)]" translate="no">{global.siteName}</span>
             <span className="block text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-muted)]">

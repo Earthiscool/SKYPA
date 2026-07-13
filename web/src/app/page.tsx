@@ -19,6 +19,7 @@ import { ButtonLink } from "@/components/button-link";
 import { JsonLd } from "@/components/json-ld";
 import { LocalizedText } from "@/components/localized-text";
 import { MissionHeartbeat } from "@/components/mission-heartbeat";
+import { SetuAiMark } from "@/components/setuai-mark";
 import type { EditableCard } from "@/content/editable-site";
 import { siteConfig } from "@/content/site";
 import { getSiteContent } from "@/lib/cms";
@@ -219,9 +220,12 @@ export default async function Home() {
         ) : null}
         <div className="relative mx-auto grid min-h-[min(820px,calc(88dvh-76px))] w-full max-w-6xl grid-cols-12 items-center px-4 py-16 md:px-8">
           <div className={["col-span-12 max-w-[60ch] motion-reveal lg:col-span-7", visuals.motionEnabled ? "motion-rise" : ""].join(" ")} data-animate>
-            <p className="section-kicker section-kicker-accent">
-              <LocalizedText en={home.hero.kicker} hi={hiHome.hero.kicker} />
-            </p>
+            <div className="flex items-center gap-3">
+              <SetuAiMark className="h-10 w-10 border border-stone-50/25 sm:h-11 sm:w-11" preload sizes="44px" />
+              <p className="section-kicker section-kicker-accent">
+                <LocalizedText en={home.hero.kicker} hi={hiHome.hero.kicker} />
+              </p>
+            </div>
             <h1 className="balance mt-6 max-w-4xl text-[clamp(3.25rem,8vw,5.8rem)] font-light leading-none tracking-tight">
               <LocalizedText en={home.hero.title} hi={hiHome.hero.title} />
             </h1>
@@ -288,9 +292,12 @@ export default async function Home() {
         <div className="section-shell">
           <div className="motion-reveal grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end" data-animate>
             <div>
-              <p className="section-kicker">
-                <LocalizedText en="Founding collaboration" hi={hiHome.founding.kicker} />
-              </p>
+              <div className="flex items-center gap-3">
+                <SetuAiMark className="h-8 w-8 border border-[var(--color-line)]" sizes="32px" />
+                <p className="section-kicker">
+                  <LocalizedText en="Founding collaboration" hi={hiHome.founding.kicker} />
+                </p>
+              </div>
               <h2 className="balance mt-5 text-4xl font-light leading-tight tracking-tight text-[var(--color-ink)] sm:text-5xl">
                 <LocalizedText
                   en="Three founding partners, one deliberate starting point."
@@ -468,9 +475,12 @@ export default async function Home() {
             </div>
           </div>
           <div className="motion-reveal flex flex-col justify-center" data-animate>
-            <p className="section-kicker section-kicker-accent">
-              <LocalizedText en={home.textbook.kicker} hi={hiHome.textbook.kicker} />
-            </p>
+            <div className="flex items-center gap-3">
+              <SetuAiMark className="h-8 w-8 border border-stone-50/25" sizes="32px" />
+              <p className="section-kicker section-kicker-accent">
+                <LocalizedText en={home.textbook.kicker} hi={hiHome.textbook.kicker} />
+              </p>
+            </div>
             <h2 className="balance mt-5 text-4xl font-light leading-tight tracking-tight sm:text-5xl">
               <LocalizedText en={home.textbook.title} hi={hiHome.textbook.title} />
             </h2>

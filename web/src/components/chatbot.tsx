@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Bot, Loader2, MessageCircle, Send, X } from "lucide-react";
+import { Loader2, Send, X } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
+import { SetuAiMark } from "@/components/setuai-mark";
 import { translatePhrase, type Locale } from "@/lib/i18n";
 
 type ChatMessage = {
@@ -85,9 +86,7 @@ export function Chatbot() {
         <div className="mb-3 flex h-[min(620px,calc(100dvh-120px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden border border-[var(--color-line)] bg-[var(--background)]">
           <div className="flex items-center justify-between bg-[var(--color-deep)] px-4 py-3 text-white">
             <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center border border-white/15">
-                <Bot aria-hidden="true" size={19} />
-              </span>
+              <SetuAiMark className="h-9 w-9 border border-white/15" sizes="36px" />
               <div>
                 <p className="text-sm font-semibold">SetuAI Assistant</p>
                 <p className="text-xs font-normal text-white/68">{t("AI literacy support")}</p>
@@ -107,8 +106,9 @@ export function Chatbot() {
             {visibleMessages.map((message, index) => (
               <div
                 key={`${message.role}-${index}-${message.content.slice(0, 20)}`}
-                className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
+                className={message.role === "user" ? "flex justify-end" : "flex items-start gap-2"}
               >
+                {message.role === "assistant" ? <SetuAiMark className="mt-1 h-6 w-6 border border-[var(--color-line)]" sizes="24px" /> : null}
                 <div
                   className={
                     message.role === "user"
@@ -163,10 +163,10 @@ export function Chatbot() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="focus-ring grid h-12 w-12 place-items-center bg-[var(--color-coral)] text-white transition-colors duration-150 hover:bg-[var(--color-coral-deep)] sm:h-14 sm:w-14"
+          className="focus-ring grid h-12 w-12 place-items-center bg-[var(--color-deep)] p-1 transition-colors duration-150 hover:bg-[var(--color-coral)] sm:h-14 sm:w-14"
           aria-label={t("Open SetuAI assistant")}
         >
-          <MessageCircle aria-hidden="true" size={24} />
+          <SetuAiMark className="h-10 w-10 sm:h-12 sm:w-12" sizes="56px" />
         </button>
       ) : null}
     </div>

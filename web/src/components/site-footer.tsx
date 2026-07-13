@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
 import { BuiltBySummit } from "@/components/built-by-summit";
 import { useLanguage } from "@/components/language-provider";
+import { SetuAiMark } from "@/components/setuai-mark";
 import type { EditableSiteContent } from "@/content/editable-site";
 import { translatePhrase } from "@/lib/i18n";
 
@@ -18,8 +19,8 @@ export function SiteFooter({ content }: { content: EditableSiteContent }) {
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-16 md:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Link href="/" className="flex items-center gap-3" aria-label={`${global.siteName} home`}>
-            <span className="grid h-14 w-14 place-items-center border border-stone-50/20 bg-stone-50">
-              {global.logo.src ? (
+            {global.logo.src ? (
+              <span className="grid h-14 w-14 place-items-center border border-stone-50/20 bg-stone-50">
                 <Image
                   src={global.logo.src}
                   alt=""
@@ -27,10 +28,10 @@ export function SiteFooter({ content }: { content: EditableSiteContent }) {
                   height={48}
                   className="h-12 w-12 object-contain"
                 />
-              ) : (
-                <span className="text-xl font-semibold tracking-tight text-[var(--color-ink)]">S</span>
-              )}
-            </span>
+              </span>
+            ) : (
+              <SetuAiMark className="h-14 w-14 border border-stone-50/20" sizes="56px" />
+            )}
             <span>
               <span className="block text-xl font-semibold tracking-tight" translate="no">{global.siteName}</span>
               <span className="block text-sm font-normal text-stone-50/70">{t(global.tagline)}</span>
