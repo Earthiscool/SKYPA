@@ -12,7 +12,7 @@
   "dependencies": {
     "@sanity/vision": "^6.4.0",
     "sanity": "^6.4.0",
-    "styled-components": "^6.4.3"
+    "styled-components": "^6.5.2"
   },
   "devDependencies": {
     "typescript": "^5"
